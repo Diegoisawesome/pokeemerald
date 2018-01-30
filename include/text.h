@@ -88,20 +88,25 @@
 
 #define TEXT_SPEED_FF 0xFF
 
-struct TextPrinterSubStruct
+struct TextPrinterSubSubStruct
 {
     u8 font_type:4;  // 0x14
     u8 font_type_upper:1;
     u8 font_type_5:3;
     u8 field_1:5;
     u8 field_1_upmid:2;
-    u8 field_1_top:1;
+    bool8 field_1_top:1;
     u8 frames_visible_counter;
     u8 field_3;
+};
+
+struct TextPrinterSubStruct
+{
+    struct TextSubSubStruct sub;
     u8 field_4; // 0x18
     u8 field_5;
     u8 field_6;
-    u8 active;
+    bool8 active;
 };
 
 struct TextSubPrinter // TODO: Better name
@@ -129,7 +134,6 @@ struct TextPrinter
 
     union {
         struct TextPrinterSubStruct sub;
-
         u8 sub_fields[8];
     } sub_union;
 
