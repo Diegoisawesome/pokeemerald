@@ -89,7 +89,7 @@ extern void (*gFieldCallback)(void);
 // this file's functions
 static void DoBattlePikeWildBattle(void);
 static void DoSafariBattle(void);
-static void DoStandardWildBattle(void);
+static void DoStandardWildBattle(bool32 wildDouble);
 static void CB2_EndWildBattle(void);
 static void CB2_EndScriptedWildBattle(void);
 static u8 GetWildBattleTransition(void);
@@ -387,7 +387,12 @@ void BattleSetup_StartWildBattle(void)
     if (GetSafariZoneFlag())
         DoSafariBattle();
     else
-        DoStandardWildBattle();
+        DoStandardWildBattle(FALSE);
+}
+
+void BattleSetup_StarDoubleWildBattle(void)
+{
+    DoStandardWildBattle(TRUE);
 }
 
 void BattleSetup_StartBattlePikeWildBattle(void)
@@ -395,7 +400,7 @@ void BattleSetup_StartBattlePikeWildBattle(void)
     DoBattlePikeWildBattle();
 }
 
-static void DoStandardWildBattle(void)
+static void DoStandardWildBattle(bool32 wildDouble)
 {
     ScriptContext2_Enable();
     FreezeMapObjects();
@@ -407,6 +412,9 @@ static void DoStandardWildBattle(void)
         VarSet(VAR_0x400E, 0);
         gBattleTypeFlags |= BATTLE_TYPE_PYRAMID;
     }
+    if (wildDouble)
+        gBattleTypeFlags |= BATTLE_TYPE_DOUBLE;
+
     CreateBattleStartTask(GetWildBattleTransition(), 0);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);

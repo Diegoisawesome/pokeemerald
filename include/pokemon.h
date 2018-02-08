@@ -562,6 +562,7 @@ u8 GetSecretBaseTrainerPicIndex(void);
 bool8 TryIncrementMonLevel(struct Pokemon *mon);
 void BoxMonToMon(struct BoxPokemon *srcMon, struct Pokemon *dstMon);
 u8 GetLevelUpMovesBySpecies(u16 species, u16 *moves);
+u8 GetMonsStateToDoubles(void);
 u8 GetMonsStateToDoubles_2(void);
 
 #include "sprite.h"

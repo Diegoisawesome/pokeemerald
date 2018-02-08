@@ -198,7 +198,7 @@ static void HandleAction_ActionFinished(void);
 
 // EWRAM vars
 EWRAM_DATA static u32 sUnusedUnknownArray[25] = {0};
-EWRAM_DATA u32 gBattleTypeFlags = 0;
+EWRAM_DATA u64 gBattleTypeFlags = 0;
 EWRAM_DATA u8 gBattleTerrain = 0;
 EWRAM_DATA u32 gUnknown_02022FF4 = 0;
 EWRAM_DATA struct UnknownPokemonStruct2 gUnknown_02022FF8[3] = {0}; // what is it used for?

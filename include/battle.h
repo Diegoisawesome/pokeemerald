@@ -641,7 +641,7 @@ struct MonSpritesGfx
 };
 
 // all battle variables are declared in battle_main.c
-extern u32 gBattleTypeFlags;
+extern u64 gBattleTypeFlags;
 extern u8 gBattleTerrain;
 extern u32 gUnknown_02022FF4;
 extern u8 *gUnknown_0202305C;
