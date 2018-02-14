@@ -148,7 +148,7 @@ _0809F8E4:
 	lsls r0, 24
 	lsrs r0, 24
 	movs r1, 0
-	bl sub_81973FC
+	bl NewMenuHelpers_DrawStdWindowFrame
 	ldr r1, =gUnknown_02037619
 	movs r0, 0
 	strb r0, [r1, 0x1]
@@ -418,7 +418,7 @@ _0809FAFE:
 	cmp r1, r0
 	bne _0809FB34
 	movs r0, 0
-	bl pokedex_count
+	bl GetNationalPokedexCount
 	lsls r0, 16
 	cmp r0, 0
 	beq _0809FBA0
@@ -1615,7 +1615,7 @@ _080A0506:
 	thumb_func_start sub_80A0514
 sub_80A0514: @ 80A0514
 	push {lr}
-	ldr r0, =gUnknown_030026F8
+	ldr r0, =gMain+0x438
 	bl sub_80A03E4
 	cmp r0, 0
 	beq _080A052E
@@ -1712,7 +1712,7 @@ _080A05AC:
 	movs r2, 0x10
 	movs r3, 0
 	bl BeginNormalPaletteFade
-	ldr r0, =gLinkVSyncDisabled
+	ldr r0, =gWirelessCommType
 	ldrb r0, [r0]
 	cmp r0, 0
 	beq _080A0620
@@ -1832,7 +1832,7 @@ _080A06EC:
 	strb r0, [r6]
 	ldrb r0, [r6]
 	movs r1, 0
-	bl sub_81973FC
+	bl NewMenuHelpers_DrawStdWindowFrame
 	ldr r0, =gSaveBlock2Ptr
 	ldr r0, [r0]
 	ldrb r0, [r0, 0x8]

@@ -20,7 +20,7 @@
 #include "field_map_obj.h"
 #include "list_menu.h"
 #include "menu_helpers.h"
-#include "new_menu_helpers.h"
+#include "menu.h"
 #include "menu_indicators.h"
 #include "sound.h"
 #include "event_scripts.h"
@@ -727,7 +727,7 @@ void sub_81271CC(u8 taskId)
 {
     sub_8126A58(1);
     sub_8126A88();
-    sub_81973C4(0, 0);
+    NewMenuHelpers_DrawDialogueFrame(0, 0);
     sub_8126C08();
     gTasks[taskId].func = sub_8126B80;
 }
@@ -2542,7 +2542,7 @@ void sub_812A0E8(u8 taskId)
     }
 }
 #else
-__attribute__((naked)) void sub_812A0E8(u8 taskId)
+ASM_DIRECT void sub_812A0E8(u8 taskId)
 {
     asm_unified("\tpush {r4-r7,lr}\n"
                     "\tlsls r0, 24\n"
@@ -2712,7 +2712,7 @@ void sub_812A334(void)
     u8 taskId;
 
     pal_fill_black();
-    sub_81973C4(0, 1);
+    NewMenuHelpers_DrawDialogueFrame(0, 1);
     sub_8126ABC();
     taskId = CreateTask(sub_812A2C4, 8);
     gTasks[taskId].data[2] = 0;

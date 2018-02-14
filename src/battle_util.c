@@ -20,7 +20,6 @@
 #include "battle_ai_script_commands.h"
 #include "battle_controllers.h"
 #include "event_data.h"
-#include "calculate_base_damage.h"
 #include "link.h"
 #include "berry.h"
 
@@ -1059,7 +1058,7 @@ u8 TurnBasedEffects(void)
                 }
                 gBattleStruct->turnEffectsTracker++;
                 break;
-            case 19:  // done
+            case TURNBASED_MAX_CASE:  // done
                 gBattleStruct->turnEffectsTracker = 0;
                 gBattleStruct->turnEffectsBattlerId++;
                 break;
@@ -2381,35 +2380,6 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                 }
             }
             break;
-        case ABILITYEFFECT_FIELD_SPORT: // 14
-            switch (gLastUsedAbility)
-            {
-            case 0xFD:
-                for (i = 0; i < gBattlersCount; i++)
-                {
-                    if (gStatuses3[i] & STATUS3_MUDSPORT)
-                        effect = i + 1;
-                }
-                break;
-            case 0xFE:
-                for (i = 0; i < gBattlersCount; i++)
-                {
-                    if (gStatuses3[i] & STATUS3_WATERSPORT)
-                        effect = i + 1;
-                }
-                break;
-            default:
-                for (i = 0; i < gBattlersCount; i++)
-                {
-                    if (gBattleMons[i].ability == ability)
-                    {
-                        gLastUsedAbility = ability;
-                        effect = i + 1;
-                    }
-                }
-                break;
-            }
-            break;
         case ABILITYEFFECT_CHECK_ON_FIELD: // 19
             for (i = 0; i < gBattlersCount; i++)
             {
@@ -3388,4 +3358,39 @@ u8 IsMonDisobedient(void)
             return 1;
         }
     }
+}
+
+u8 GetBattlerAbility(u32 battlerId, bool32 checkMoldBreaker)
+{
+    u8 abilityId = gBattleMons[battlerId].ability;
+    if (gStatuses3[battlerId] & STATUS3_GASTRO_ACID)
+        abilityId = 0;
+    if (checkMoldBreaker)
+    {
+        // todo
+    }
+
+    return abilityId;
+}
+
+u32 GetBattlerHoldEffect(u32 battlerId, bool32 checkNegating)
+{
+    u32 holdEffect;
+
+    if (gBattleMons[battlerId].item == ITEM_ENIGMA_BERRY)
+        holdEffect = gEnigmaBerries[battlerId].holdEffect;
+    else
+        holdEffect = ItemId_GetHoldEffect(gBattleMons[battlerId].item);
+
+    if (checkNegating)
+    {
+        if (gFieldStatuses & FIELD_STATUS_MAGIC_ROOM)
+            holdEffect = HOLD_EFFECT_NONE;
+        else if (gStatuses3[battlerId] & STATUS3_EMBARGO)
+            holdEffect = HOLD_EFFECT_NONE;
+        else if (GetBattlerAbility(battlerId, FALSE) == ABILITY_KLUTZ)
+            holdEffect = HOLD_EFFECT_NONE;
+    }
+
+    return holdEffect;
 }

@@ -69,4 +69,8 @@
 #define HOLD_EFFECT_THICK_CLUB     65
 #define HOLD_EFFECT_STICK          66
 
+// new ones
+#define HOLD_EFFECT_FOCUS_SASH     67
+#define HOLD_EFFECT_POWER_HERB     68
+
 #endif // GUARD_HOLD_EFFECTS_H

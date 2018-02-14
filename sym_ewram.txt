@@ -1,8 +1,5 @@
     .include "src/decompress.o"
-
-gTrainerId: @ 2020000
-	.space 0x4
-
+	.include "src/main.o"
     .include "src/window.o"
     .include "src/text.o"
     .include "src/sprite.o"
@@ -21,66 +18,8 @@ gStringVar4: @ 2021FC4
 	.space 0x3E8
 
 	.include "src/string_util.o"
-
-gUnknown_020223BC: @ 20223BC
-	.space 0x1
-
-gUnknown_020223BD: @ 20223BD
-	.space 0x3
-
-gUnknown_020223C0: @ 20223C0
-	.space 0x4
-
-gBlockRecvBuffer: @ 20223C4
-	.space 0x500
-
-gBlockSendBuffer: @ 20228C4 gBlockSendBuffer
-	.space 0x100
-
-gUnknown_020229C4: @ 20229C4
-	.space 0x2
-
-gLinkType: @ 20229C6
-	.space 0x2
-
-gUnknown_020229C8: @ 20229C8
-	.space 0x4
-
-gUnknown_020229CC: @ 20229CC
-	.space 0x1C
-
-gLinkPlayers: @ 20229E8
-	.space 0x24
-    
-gUnknown_02022A0C: @ 2022A0C
-	.space 0x68
-
-gUnknown_02022A74: @ 2022A74
-	.space 0x8C
-
-gUnknown_02022B00: @ 2022B00
-	.space 0x8
-
-gUnknown_02022B08: @ 2022B08
-	.space 0x4
-
-gUnknown_02022B0C: @ 2022B0C
-	.space 0x4
-
-gUnknown_02022B10: @ 2022B10
-	.space 0x4
-
-gUnknown_02022B14: @ 2022B14
-	.space 0xE
-
-gUnknown_02022B22: @ 2022B22
-	.space 0xA
-
-gUnknown_02022B2C: @ 2022B2C
-	.space 0x18
-
-gUnknown_02022B44: @ 2022B44
-	.space 0xDC
+	.include "src/link.o"
+	.include "src/link_rfu.o"
 
 gUnknown_02022C20: @ 2022C20
 	.space 0xC
@@ -178,6 +117,7 @@ gUnknown_02022CFC: @ 2022CFC
 gUnknown_02022D00: @ 2022D00
 	.space 0x4
 
+@ src/main_menu.c
 gUnknown_02022D04: @ 2022D04
 	.space 0x2
 
@@ -196,8 +136,7 @@ gUnknown_02022D0A: @ 2022D0A
 gUnknown_02022D0C: @ 2022D0C
 	.space 0x4
 
-gBattleBuffersTransferData: @ 2022D10
-	.space 0x100
+	.include "src/battle_controllers.o"
 
 gUnknown_02022E10: @ 2022E10
 	.space 0x4
@@ -241,27 +180,7 @@ gBattle_WIN1V: @ 2022E2A
     .include "src/battle_message.o"
 	.include "src/battle_main.o"
 
-sLearningMoveTableID: @ 20244E8
-	.space 0x1
-
-gPlayerPartyCount: @ 20244E9
-	.space 0x1
-
-gEnemyPartyCount: @ 20244EA
-	.space 0x2
-
-gPlayerParty: @ 20244EC
-	.space 600
-
-gEnemyParty: @ 2024744
-	.space 600
-
-gUnknown_0202499C: @ 202499C
-	.space 0x18
-
-gUnknown_020249B4: @ 20249B4
-	.space 0x8
-
+	.include "src/pokemon.o"
 	.include "src/random.o"
 	.include "src/daycare.o"
     .include "src/load_save.o"
@@ -1006,36 +925,9 @@ gUnknown_0203CD80: @ 203CD80
 gUnknown_0203CD88: @ 203CD88
 	.space 0x4
 
-gUnknown_0203CD8C: @ 203CD8C
-	.space 0x1
+    .include "src/menu.o"
 
-gUnknown_0203CD8D: @ 203CD8D
-	.space 0x3
-
-gUnknown_0203CD90: @ 203CD90
-	.space 0xC
-
-gUnknown_0203CD9C: @ 203CD9C
-	.space 0x2
-
-gUnknown_0203CD9E: @ 203CD9E
-	.space 0x1
-
-gUnknown_0203CD9F: @ 203CD9F
-	.space 0x1
-
-gUnknown_0203CDA0: @ 203CDA0
-	.space 0x4
-
-gUnknown_0203CDA4: @ 203CDA4
-	.space 0x4
-
-gUnknown_0203CDA8: @ 203CDA8
-	.space 0x4
-
-gUnknown_0203CDAC: @ 203CDAC
-	.space 0x80
-
+    .align 2
 gUnknown_0203CE2C: @ 203CE2C
 	.space 0x4
 
@@ -1067,37 +959,9 @@ gUnknown_0203CE50: @ 203CE50
 	.space 0x4
 
 gUnknown_0203CE54: @ 203CE54
-	.space 0x4
-
-gUnknown_0203CE58: @ 203CE58
-	.space 0x5
-
-gUnknown_0203CE5D: @ 203CE5D
-	.space 0x1
-
-gUnknown_0203CE5E: @ 203CE5E
-	.space 0x2
-
-gUnknown_0203CE60: @ 203CE60
-	.space 0xA
-
-gUnknown_0203CE6A: @ 203CE6A
-	.space 0x6
-
-gUnknown_0203CE70: @ 203CE70
-	.space 0x4
-
-gUnknown_0203CE74: @ 203CE74
-	.space 0x4
-
-gUnknown_0203CE78: @ 203CE78
-	.space 0x4
-
-gSpecialVar_ItemId: @ 203CE7C
-	.space 0x4
-
-gUnknown_0203CE80: @ 203CE80
-	.space 0x4
+	.align 2
+    
+    .include "src/item_menu.o"
 
 gUnknown_0203CE84: @ 203CE84
 	.space 0x8

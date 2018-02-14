@@ -87,7 +87,6 @@ extern void sub_81ABA88(u8);
 extern void sub_80B7CC8(void);
 extern void flagmods_08054D70(void);
 extern u8* sub_806CF78(u16);
-extern bool8 ExecuteTableBasedItemEffect_(struct Pokemon*, u16, u8, u8);
 extern void sub_81B89F0(void);
 extern u8 GetItemEffectType(u16);
 extern struct MapConnection *sub_8088A8C(s16, s16);
@@ -114,7 +113,7 @@ void sub_80FE024(u8 taskId);
 void sub_80FE124(u8 taskId);
 void sub_80FE164(u8 taskId);
 
-void DisplayItemMessage(u8 taskId, u8 a, u8* str, void(*callback)(u8 taskId));
+void DisplayItemMessage(u8 taskId, u8 a, const u8* str, void(*callback)(u8 taskId));
 void DisplayItemMessageInBattlePyramid(u8 taskId, u8* str, void(*callback)(u8 taskId));
 void DisplayItemMessageOnField(u8 taskId, u8* str, void(*callback)(u8 taskId));
 void sub_81C6714(u8 taskId);
@@ -780,7 +779,7 @@ void ItemUseOutOfBattle_RareCandy(u8 taskId)
 
 void ItemUseOutOfBattle_TMHM(u8 taskId)
 {
-    if (gSpecialVar_ItemId >= ITEM_HM01)
+    if (gSpecialVar_ItemId >= ITEM_HM01_CUT)
         DisplayItemMessage(taskId, 1, gText_BootedUpHM, sub_80FDF90); // HM
     else
         DisplayItemMessage(taskId, 1, gText_BootedUpTM, sub_80FDF90); // TM
@@ -984,7 +983,7 @@ void ItemUseInBattle_StatIncrease(u8 taskId)
 {
     u16 partyId = gBattlerPartyIndexes[gBattlerInMenuId];
 
-    if (ExecuteTableBasedItemEffect_(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
+    if (ExecuteTableBasedItemEffect(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
     {
         if (!InBattlePyramid())
             DisplayItemMessage(taskId, 1, gText_WontHaveEffect, bag_menu_inits_lists_menu);

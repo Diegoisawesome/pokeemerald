@@ -198,7 +198,7 @@ gItems:: @ 85839A0
 	.string "POTION$", 14
 	.2byte ITEM_POTION
 	.2byte 300 @ price
-	.byte 0
+	.byte 68
 	.byte 20
 	.4byte gPotionItemDescription
 	.byte 0

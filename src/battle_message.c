@@ -13,6 +13,9 @@
 #include "palette.h"
 #include "battle_controllers.h"
 #include "battle_setup.h"
+#include "menu.h"
+#include "recorded_battle.h"
+#include "international_string_util.h"
 
 extern u8 gBattlerAbilities[MAX_BATTLERS_COUNT];
 extern u8 gUnknown_0203C7B4;
@@ -41,9 +44,6 @@ extern void GetEreaderTrainerName(u8 *txtPtr);
 extern void sub_81A36D0(u8 arg0, u16 trainerId); // battle_frontier_2
 extern void sub_81D572C(u8 arg0, u16 trainerId); // pokenav
 extern void GetFrontierTrainerName(u8 *dst, u16 trainerId);
-extern s32 GetStringCenterAlignXOffsetWithLetterSpacing(u8 fontId, const u8 *str, s32 totalWidth, s16 letterSpacing);
-extern u8 GetTextSpeedInRecordedBattle(void);
-extern u8 GetPlayerTextSpeed(void);
 
 // this file's functions
 static void sub_814F8F8(u8 *textPtr);
@@ -497,6 +497,8 @@ const u8 gText_ItemAllowsOnlyYMove[] = _("{B_LAST_ITEM} allows the\nuse of only 
 const u8 gText_PkmnHungOnWithX[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nusing its {B_LAST_ITEM}!");
 const u8 gText_EmptyString3[] = _("");
 const u8 gText_YouThrowABallNowRight[] = _("You throw a BALL now, right?\nI… I’ll do my best!");
+const u8 gText_EnduredViaSturdy[] = _("{B_DEF_NAME_WITH_PREFIX} ENDURED\nthe hit using {B_DEF_ABILITY}!");
+const u8 gText_PowerHerbActivation[] = _("{B_ATK_NAME_WITH_PREFIX} became fully charged\ndue to its {B_LAST_ITEM}!");
 
 // early declaration of strings
 const u8 gText_PkmnIncapableOfPower[];
@@ -885,6 +887,8 @@ const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 	gText_PkmnBoxLanettesPCFull,
 	gText_Trainer1WinText,
 	gText_Trainer2WinText,
+	gText_EnduredViaSturdy,
+	gText_PowerHerbActivation,
 };
 
 const u16 gMissStringIds[] =
@@ -1968,7 +1972,7 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                 break;
             case B_TXT_TRAINER1_CLASS: // trainer class name
                 if (gBattleTypeFlags & BATTLE_TYPE_SECRET_BASE)
-                    toCpy = gTrainerClassNames[GetSecretBaseTrainerNameIndex()];
+                    toCpy = gTrainerClassNames[GetSecretBaseTrainerClass()];
                 else if (gTrainerBattleOpponent_A == TRAINER_OPPONENT_C00)
                     toCpy = gTrainerClassNames[sub_8068BB0()];
                 else if (gTrainerBattleOpponent_A == TRAINER_OPPONENT_3FE)
@@ -2425,7 +2429,7 @@ void BattleHandleAddTextPrinter(const u8 *text, u8 arg1)
     textSubPrinter.letterSpacing = r8[(12 * arg1) + 4];
     textSubPrinter.lineSpacing = r8[(12 * arg1) + 5];
     textSubPrinter.fontColor_l = 0;
-    textSubPrinter.fontColor_h = r8[(12 * arg1) + 7];
+    textSubPrinter.fgColor = r8[(12 * arg1) + 7];
     textSubPrinter.bgColor = r8[(12 * arg1) + 8];
     textSubPrinter.shadowColor = r8[(12 * arg1) + 9];
 

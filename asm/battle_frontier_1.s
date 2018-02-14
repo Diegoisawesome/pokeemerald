@@ -1591,7 +1591,7 @@ _0818F7E8:
 	lsrs r1, 16
 	ldr r0, [sp, 0x18]
 	movs r2, 0x1
-	bl nature_stat_mod
+	bl ModifyStatByNature
 	lsls r0, 24
 	lsrs r0, 24
 	mov r1, r8
@@ -1618,7 +1618,7 @@ _0818F820:
 	lsrs r1, 16
 	ldr r0, [sp, 0x18]
 	movs r2, 0x2
-	bl nature_stat_mod
+	bl ModifyStatByNature
 	lsls r0, 24
 	lsrs r0, 24
 	mov r1, r8
@@ -1645,7 +1645,7 @@ _0818F858:
 	lsrs r1, 16
 	ldr r0, [sp, 0x18]
 	movs r2, 0x3
-	bl nature_stat_mod
+	bl ModifyStatByNature
 	lsls r0, 24
 	lsrs r0, 24
 	mov r1, r8
@@ -1672,7 +1672,7 @@ _0818F890:
 	lsrs r1, 16
 	ldr r0, [sp, 0x18]
 	movs r2, 0x4
-	bl nature_stat_mod
+	bl ModifyStatByNature
 	lsls r0, 24
 	lsrs r0, 24
 	mov r1, r8
@@ -1699,7 +1699,7 @@ _0818F8C8:
 	lsrs r1, 16
 	ldr r0, [sp, 0x18]
 	movs r2, 0x5
-	bl nature_stat_mod
+	bl ModifyStatByNature
 	lsls r0, 24
 	lsrs r0, 24
 	mov r1, r8
@@ -1941,7 +1941,7 @@ sub_818FA74: @ 818FA74
 	str r4, [sp, 0x4]
 	ldr r7, [sp, 0x14]
 	str r7, [sp, 0x8]
-	bl sub_8068634
+	bl CreateMonWithEVSpreadPersonalityOTID
 	add r0, sp, 0xC
 	movs r1, 0x1
 	negs r1, r1
@@ -7171,7 +7171,7 @@ _0819270A:
 	ldr r4, [sp, 0x24]
 	cmp r4, r0
 	bne _08192784
-	ldr r0, =gTrainerClassToNameIndex
+	ldr r0, =gFacilityClassToTrainerClass
 	adds r0, 0x3C
 	ldrb r5, [r0]
 	b _081927A2
@@ -12991,7 +12991,7 @@ sub_8195938: @ 8195938
 	push {r4,lr}
 	adds r3, r0, 0
 	movs r2, 0
-	ldr r4, =gTrainers + TRAINER_TUCKER * 0x28 + 0x4 @ Tucker's name
+	ldr r4, =(gTrainers + 806 * 0x28 + 0x4) @ TRAINER_TUCKER name
 _08195940:
 	adds r0, r3, r2
 	adds r1, r2, r4
@@ -15923,11 +15923,11 @@ sub_8197080: @ 8197080
 	b _0819715C
 _081970A2:
 	movs r0, 0
-	bl sub_80C0844
+	bl GetHoennPokedexCount
 	lsls r0, 16
 	lsrs r4, r0, 16
 	movs r0, 0x1
-	bl sub_80C0844
+	bl GetHoennPokedexCount
 	lsls r0, 16
 	lsrs r6, r0, 16
 	ldr r0, =gStringVar1
@@ -15977,11 +15977,11 @@ _081970A2:
 	strb r6, [r5]
 	adds r5, 0x1
 	movs r0, 0
-	bl pokedex_count
+	bl GetNationalPokedexCount
 	lsls r0, 16
 	lsrs r4, r0, 16
 	movs r0, 0x1
-	bl pokedex_count
+	bl GetNationalPokedexCount
 	lsls r0, 16
 	lsrs r6, r0, 16
 	mov r0, r10
@@ -16009,6 +16009,44 @@ _0819715C:
 	pop {r0}
 	bx r0
 	.pool
+
 	thumb_func_end sub_8197080
+	thumb_func_start sub_8197184
+sub_8197184: @ 8197184
+	push {r4,r5,lr}
+	adds r4, r1, 0
+	adds r5, r2, 0
+	lsls r0, 24
+	lsrs r0, 24
+	movs r1, 0
+	bl GetWindowAttribute
+	lsls r0, 24
+	lsrs r0, 24
+	ldr r1, =gUnknown_0860EA6C
+	movs r2, 0x80
+	lsls r2, 1
+	lsls r4, 16
+	lsrs r4, 16
+	adds r3, r4, 0
+	bl LoadBgTiles
+	ldr r0, =gUnknown_0860EA4C
+	lsls r5, 20
+	lsrs r5, 16
+	adds r1, r5, 0
+	movs r2, 0x20
+	bl LoadPalette
+	pop {r4,r5}
+	pop {r0}
+	bx r0
+	.pool
+	thumb_func_end sub_8197184
+
+	thumb_func_start sub_81971C4
+sub_81971C4: @ 81971C4
+	push {lr}
+	bl sub_819645C
+	pop {r0}
+	bx r0
+	thumb_func_end sub_81971C4
 
 	.align 2, 0 @ Don't pad with nop.

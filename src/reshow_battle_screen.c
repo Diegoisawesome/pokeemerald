@@ -22,13 +22,9 @@ extern u16 gBattle_BG2_X;
 extern u16 gBattle_BG2_Y;
 extern u16 gBattle_BG3_X;
 extern u16 gBattle_BG3_Y;
-extern struct SpriteTemplate gUnknown_0202499C;
 
 extern const union AnimCmd * const * const gMonAnimationsSpriteAnimsPtrTable[];
 
-extern void sub_8035658(void);
-extern u8 GetSubstituteSpriteDefault_Y(u8 bank);
-extern u8 sub_80A82E4(u8 bank);
 extern void sub_806A068(u16 species, u8 bankIdentity);
 extern void sub_806A12C(u16 backPicId, u8 bankIdentity);
 
@@ -165,10 +161,10 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
 
             ActionSelectionCreateCursorAt(gActionSelectionCursor[gBattlerInMenuId], 0);
 
-            if (gLinkVSyncDisabled != 0 && gReceivedRemoteLinkPlayers != 0)
+            if (gWirelessCommType != 0 && gReceivedRemoteLinkPlayers != 0)
             {
                 sub_800E0E8();
-                sub_800DFB4(0, 0);
+                CreateWirelessStatusIndicatorSprite(0, 0);
             }
         }
         break;

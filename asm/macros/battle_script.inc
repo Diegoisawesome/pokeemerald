@@ -1214,6 +1214,14 @@
 	.byte \param0
 	.endm
 	
+	.macro jumpifholdeffect battler, negate, holdeffect, ptr
+	.byte 0xf9
+	.byte \battler
+	.byte \negate
+	.byte \holdeffect
+	.4byte \ptr
+	.endm
+	
 @ various command changed to more readable macros
 	.macro cancelmultiturnmoves bank
 	various \bank, VARIOUS_CANCEL_MULTI_TURN_MOVES
@@ -1389,7 +1397,7 @@
 	.endm
 	
 	.macro jumpifmovehadnoeffect jumpptr
-	jumpifbyte CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_NO_EFFECT, \jumpptr
+	jumpifhalfword CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_NO_EFFECT, \jumpptr
 	.endm
 	
 	.macro jumpifbattletype flags, jumpptr

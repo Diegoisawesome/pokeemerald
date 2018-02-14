@@ -1957,11 +1957,11 @@ void sub_80EDB44(void)
         show->rivalTrainer.badgeCount = nBadges;
         if (IsNationalPokedexEnabled())
         {
-            show->rivalTrainer.dexCount = pokedex_count(0x01);
+            show->rivalTrainer.dexCount = GetNationalPokedexCount(0x01);
         }
         else
         {
-            show->rivalTrainer.dexCount = sub_80C0844(0x01);
+            show->rivalTrainer.dexCount = GetHoennPokedexCount(0x01);
         }
         show->rivalTrainer.location = gMapHeader.regionMapSectionId;
         show->rivalTrainer.mapDataId = gMapHeader.mapDataId;
@@ -2154,7 +2154,7 @@ void sub_80EDE98(TVShow *show)
     }
 }
 #else
-__attribute__((naked))
+ASM_DIRECT
 void sub_80EDE98(TVShow *show)
 {
     asm_unified("\tpush {r4-r7,lr}\n"
@@ -4110,7 +4110,7 @@ void sub_80F0708(void) // FIXME: register allocation shenanigans
     }
 }
 #else
-__attribute__((naked)) void sub_80F0708(void)
+ASM_DIRECT void sub_80F0708(void)
 {
     asm_unified("\tpush {r4-r7,lr}\n"
                     "\tmov r7, r9\n"

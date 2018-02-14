@@ -48,7 +48,6 @@ extern u16 gBattle_BG2_X;
 extern u16 gBattle_BG2_Y;
 extern u16 gBattle_BG3_X;
 extern u16 gBattle_BG3_Y;
-extern struct SpriteTemplate gUnknown_0202499C;
 extern bool8 gAffineAnimsDisabled;
 extern u16 gMoveToLearn;
 extern const u8 gSpeciesNames[][11];
@@ -67,9 +66,6 @@ extern const u8 gText_PkmnStoppedEvolving[];
 extern const u8 gText_EllipsisQuestionMark[];
 extern const u8 gText_CommunicationStandby5[];
 
-extern void copy_decompressed_tile_data_to_vram_autofree(u8 arg0, const void *arg1, bool32 arg2, u16 arg3, u8 arg4);
-extern u32 sub_80391E0(u8, u8);
-extern void SpriteCallbackDummy_2(struct Sprite *sprite);
 extern void sub_80356D0(void);
 extern void sub_807B154(void);
 extern void sub_806A068(u16, u8);
@@ -471,10 +467,10 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
         }
         break;
     case 6:
-        if (gLinkVSyncDisabled)
+        if (gWirelessCommType)
         {
             sub_800E0E8();
-            sub_800DFB4(0, 0);
+            CreateWirelessStatusIndicatorSprite(0, 0);
         }
         BlendPalettes(-1,0x10, 0);
         gMain.state++;
@@ -573,16 +569,16 @@ static void CB2_TradeEvolutionSceneUpdate(void)
 static void CreateShedinja(u16 preEvoSpecies, struct Pokemon* mon)
 {
     u32 data = 0;
-    if (gEvolutionTable[preEvoSpecies].evolutions[0].method == EVO_LEVEL_NINJASK && gPlayerPartyCount < 6)
+    if (gEvolutionTable[preEvoSpecies][0].method == EVO_LEVEL_NINJASK && gPlayerPartyCount < 6)
     {
         s32 i;
-        struct Pokemon* Shedinja = &gPlayerParty[gPlayerPartyCount];
-        const struct EvolutionData* evoTable;
-        const struct EvolutionData* evos;
+        struct Pokemon* shedinja = &gPlayerParty[gPlayerPartyCount];
+        const struct Evolution *evos;
+        const struct Evolution *evos2;
 
         CopyMon(&gPlayerParty[gPlayerPartyCount], mon, sizeof(struct Pokemon));
-        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_SPECIES, (&gEvolutionTable[preEvoSpecies].evolutions[1].targetSpecies));
-        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_NICKNAME, (gSpeciesNames[gEvolutionTable[preEvoSpecies].evolutions[1].targetSpecies]));
+        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_SPECIES, (&gEvolutionTable[preEvoSpecies][1].targetSpecies));
+        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_NICKNAME, (gSpeciesNames[gEvolutionTable[preEvoSpecies][1].targetSpecies]));
         SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_HELD_ITEM, (&data));
         SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_MARKINGS, (&data));
         SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_10, (&data));
@@ -600,15 +596,16 @@ static void CreateShedinja(u16 preEvoSpecies, struct Pokemon* mon)
         CalculatePlayerPartyCount();
 
         // can't match it otherwise, ehh
-        evoTable = gEvolutionTable;
-        evos = evoTable + preEvoSpecies;
-        GetSetPokedexFlag(SpeciesToNationalPokedexNum(evos->evolutions[1].targetSpecies), FLAG_SET_SEEN);
-        GetSetPokedexFlag(SpeciesToNationalPokedexNum(evos->evolutions[1].targetSpecies), FLAG_SET_CAUGHT);
+        evos2 = gEvolutionTable[0];
+        evos = evos2 + EVOS_PER_MON * preEvoSpecies;
 
-        if (GetMonData(Shedinja, MON_DATA_SPECIES) == SPECIES_SHEDINJA
-            && GetMonData(Shedinja, MON_DATA_LANGUAGE) == LANGUAGE_JAPANESE
+        GetSetPokedexFlag(SpeciesToNationalPokedexNum(evos[1].targetSpecies), FLAG_SET_SEEN);
+        GetSetPokedexFlag(SpeciesToNationalPokedexNum(evos[1].targetSpecies), FLAG_SET_CAUGHT);
+
+        if (GetMonData(shedinja, MON_DATA_SPECIES) == SPECIES_SHEDINJA
+            && GetMonData(shedinja, MON_DATA_LANGUAGE) == LANGUAGE_JAPANESE
             && GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NINJASK)
-                SetMonData(Shedinja, MON_DATA_NICKNAME, Text_ShedinjaJapaneseName);
+                SetMonData(shedinja, MON_DATA_NICKNAME, Text_ShedinjaJapaneseName);
     }
 }
 
@@ -1254,7 +1251,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
         case 5:
             if (!gPaletteFade.active)
             {
-                if (gLinkVSyncDisabled)
+                if (gWirelessCommType)
                     sub_800E084();
 
                 Free(GetBgTilemapBuffer(3));

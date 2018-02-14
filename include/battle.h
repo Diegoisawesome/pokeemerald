@@ -240,7 +240,7 @@ struct SpecialStatus
     u8 flag20 : 1;
     u8 flag40 : 1;
     u8 focusBanded : 1;
-    u8 field1[3];
+    u8 focusSashed : 1;
     s32 dmg;
     s32 physicalDmg;
     s32 specialDmg;
@@ -264,6 +264,17 @@ struct SideTimer
     /*0x09*/ u8 followmeTarget;
     /*0x0A*/ u8 spikesAmount;
     /*0x0B*/ u8 fieldB;
+};
+
+struct FieldTimer
+{
+    u8 mudSportTimer;
+    u8 waterSportTimer;
+    u8 wonderRoomTimer;
+    u8 magicRoomTimer;
+    u8 trickRoomTimer;
+    u8 terrainTimer;
+    u8 fairyLockTimer;
 };
 
 struct WishFutureKnock
@@ -493,6 +504,8 @@ struct BattleStruct
 #define IS_MOVE_PHYSICAL(moveType)(moveType < TYPE_MYSTERY)
 #define IS_MOVE_SPECIAL(moveType)(moveType > TYPE_MYSTERY)
 
+#define BATTLER_MAX_HP(battlerId)(gBattleMons[battlerId].hp == gBattleMons[battlerId].maxHP)
+
 #define GET_STAT_BUFF_ID(n)((n & 0xF))              // first four bits 0x1, 0x2, 0x4, 0x8
 #define GET_STAT_BUFF_VALUE(n)(((n >> 4) & 7))      // 0x10, 0x20, 0x40
 #define STAT_BUFF_NEGATIVE 0x80                     // 0x80, the sign bit
@@ -690,7 +703,7 @@ extern u16 gLastResultingMoves[MAX_BATTLERS_COUNT];
 extern u16 gLockedMoves[MAX_BATTLERS_COUNT];
 extern u8 gLastHitBy[MAX_BATTLERS_COUNT];
 extern u16 gChosenMoveByBattler[MAX_BATTLERS_COUNT];
-extern u8 gMoveResultFlags;
+extern u16 gMoveResultFlags;
 extern u32 gHitMarker;
 extern u8 gTakenDmgByBattler[MAX_BATTLERS_COUNT];
 extern u8 gUnknown_0202428C;
@@ -731,6 +744,8 @@ extern struct BattleHealthboxInfo *gUnknown_020244DC;
 extern u16 gBattleMovePower;
 extern u16 gMoveToLearn;
 extern u8 gBattleMonForms[MAX_BATTLERS_COUNT];
+extern u32 gFieldStatuses;
+extern struct FieldTimer gFieldTimers;
 
 extern void (*gPreBattleCallback1)(void);
 extern void (*gBattleMainFunc)(void);

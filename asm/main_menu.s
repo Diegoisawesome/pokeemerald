@@ -1608,7 +1608,7 @@ _08030578:
 	ldr r0, =gUnknown_02022D06
 	strh r4, [r0]
 	bl FreeAllWindowBuffers
-	ldr r0, =c2_title_screen_1
+	ldr r0, =CB2_InitTitleScreen
 	bl SetMainCallback2
 	adds r0, r5, 0
 	bl DestroyTask
@@ -3940,7 +3940,7 @@ AddBirchSpeechObjects: @ 803192C
 	strb r1, [r2]
 	strh r0, [r5, 0x1A]
 	movs r0, 0x3C
-	bl sub_806EFF0
+	bl FacilityClassToPicIndex
 	lsls r0, 24
 	lsrs r0, 24
 	ldr r4, =0x0201c000
@@ -3970,7 +3970,7 @@ AddBirchSpeechObjects: @ 803192C
 	strb r1, [r2, 0x5]
 	strh r0, [r5, 0x1C]
 	movs r0, 0x3F
-	bl sub_806EFF0
+	bl FacilityClassToPicIndex
 	lsls r0, 24
 	lsrs r0, 24
 	ldr r1, =0x0201c000
@@ -4654,12 +4654,12 @@ fmt_pokedex: @ 8031F7C
 	cmp r0, 0
 	beq _08031FA4
 	movs r0, 0x1
-	bl pokedex_count
+	bl GetNationalPokedexCount
 	b _08031FAA
 	.pool
 _08031FA4:
 	movs r0, 0x1
-	bl sub_80C0844
+	bl GetHoennPokedexCount
 _08031FAA:
 	lsls r0, 16
 	lsrs r7, r0, 16

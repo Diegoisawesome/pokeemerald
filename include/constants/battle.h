@@ -143,11 +143,13 @@
 #define STATUS3_IMPRISONED_OTHERS       0x2000
 #define STATUS3_GRUDGE                  0x4000
 #define STATUS3_CANT_SCORE_A_CRIT       0x8000
-#define STATUS3_MUDSPORT                0x10000
-#define STATUS3_WATERSPORT              0x20000
+#define STATUS3_PLACEHOLDER1            0x10000 // was mudsport
+#define STATUS3_PLACEHOLDER2            0x20000 // was watersport
 #define STATUS3_UNDERWATER              0x40000
 #define STATUS3_INTIMIDATE_POKES        0x80000
 #define STATUS3_TRACE                   0x100000
+#define STATUS3_EMBARGO                 0x200000
+#define STATUS3_GASTRO_ACID             0x400000
 #define STATUS3_SEMI_INVULNERABLE       (STATUS3_UNDERGROUND | STATUS3_ON_AIR | STATUS3_UNDERWATER)
 
 // Not really sure what a "hitmarker" is.
@@ -188,6 +190,17 @@
 #define SIDE_STATUS_MIST             (1 << 8)
 #define SIDE_STATUS_SPIKES_DAMAGED   (1 << 9)
 
+// Per-side statuses that affect an entire field
+#define FIELD_STATUS_MUD_SPORT          (1 << 0)
+#define FIELD_STATUS_WATER_SPORT        (1 << 1)
+#define FIELD_STATUS_TRICK_ROOM         (1 << 2)
+#define FIELD_STATUS_WONDER_ROOM        (1 << 3)
+#define FIELD_STATUS_MAGIC_ROOM         (1 << 4)
+#define FIELD_STATUS_PSYCHIC_TERRAIN    (1 << 5)
+#define FIELD_STATUS_MISTY_TERRAIN      (1 << 6)
+#define FIELD_STATUS_ELECTRIC_TERRAIN   (1 << 7)
+#define FIELD_STATUS_FAIRY_LOCK         (1 << 8)
+
 // Flags describing move's result
 #define MOVE_RESULT_MISSED             (1 << 0)
 #define MOVE_RESULT_SUPER_EFFECTIVE    (1 << 1)
@@ -197,6 +210,7 @@
 #define MOVE_RESULT_FAILED             (1 << 5)
 #define MOVE_RESULT_FOE_ENDURED        (1 << 6)
 #define MOVE_RESULT_FOE_HUNG_ON        (1 << 7)
+#define MOVE_RESULT_FOE_STURDIED       (1 << 8)
 #define MOVE_RESULT_NO_EFFECT          (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE | MOVE_RESULT_FAILED)
 
 // Battle Weather flags

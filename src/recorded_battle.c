@@ -15,7 +15,7 @@
 #include "text.h"
 #include "battle_setup.h"
 
-#define BANK_RECORD_SIZE 664
+#define BATTLER_RECORD_SIZE 664
 #define ILLEGAL_BATTLE_TYPES ((BATTLE_TYPE_LINK | BATTLE_TYPE_SAFARI | BATTLE_TYPE_FIRST_BATTLE                  \
                               | BATTLE_TYPE_WALLY_TUTORIAL | BATTLE_TYPE_ROAMER | BATTLE_TYPE_EREADER_TRAINER   \
                               | BATTLE_TYPE_KYOGRE_GROUDON | BATTLE_TYPE_LEGENDARY | BATTLE_TYPE_REGI           \
@@ -50,7 +50,7 @@ struct RecordedBattleSave
     u8 playersLanguage[MAX_BATTLERS_COUNT];
     u32 rngSeed;
     u32 battleFlags;
-    u8 playersBattler[MAX_BATTLERS_COUNT];
+    u8 playersBattlers[MAX_BATTLERS_COUNT];
     u16 opponentA;
     u16 opponentB;
     u16 partnerId;
@@ -67,13 +67,13 @@ struct RecordedBattleSave
     u16 field_50E[6];
     u8 field_51A;
     u8 field_51B;
-    u8 battleRecord[MAX_BATTLERS_COUNT][BANK_RECORD_SIZE];
+    u8 battleRecord[MAX_BATTLERS_COUNT][BATTLER_RECORD_SIZE];
     u32 checksum;
 };
 
 EWRAM_DATA u32 gRecordedBattleRngSeed = 0;
 EWRAM_DATA u32 gBattlePalaceMoveSelectionRngValue = 0;
-EWRAM_DATA static u8 sBattleRecords[MAX_BATTLERS_COUNT][BANK_RECORD_SIZE] = {0};
+EWRAM_DATA static u8 sBattleRecords[MAX_BATTLERS_COUNT][BATTLER_RECORD_SIZE] = {0};
 EWRAM_DATA static u16 sRecordedBytesNo[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA static u16 sUnknown_0203C79C[4] = {0};
 EWRAM_DATA static u16 sUnknown_0203C7A4[4] = {0};
@@ -100,7 +100,6 @@ EWRAM_DATA static u16 sUnknown_0203CCDC[6] = {0};
 EWRAM_DATA static u8 sUnknown_0203CCE8 = 0;
 
 extern u32 sub_81A513C(void);
-extern void PlayMapChosenOrBattleBGM(bool8);
 
 // this file's functions
 static u8 sub_8185278(u8 *arg0, u8 *arg1, u8 *arg2);
@@ -123,7 +122,7 @@ void sub_8184DA4(u8 arg0)
 
         if (arg0 == 1)
         {
-            for (j = 0; j < BANK_RECORD_SIZE; j++)
+            for (j = 0; j < BATTLER_RECORD_SIZE; j++)
             {
                 sBattleRecords[i][j] |= 0xFF;
             }
@@ -194,7 +193,7 @@ void sub_8184E58(void)
 
 void RecordedBattle_SetBattlerAction(u8 battlerId, u8 action)
 {
-    if (sRecordedBytesNo[battlerId] < BANK_RECORD_SIZE && sUnknown_0203C7AC != 2)
+    if (sRecordedBytesNo[battlerId] < BATTLER_RECORD_SIZE && sUnknown_0203C7AC != 2)
     {
         sBattleRecords[battlerId][sRecordedBytesNo[battlerId]++] = action;
     }
@@ -216,7 +215,7 @@ void RecordedBattle_ClearBattlerAction(u8 battlerId, u8 bytesToClear)
 u8 RecordedBattle_GetBattlerAction(u8 battlerId)
 {
     // trying to read past array or invalid action byte, battle is over
-    if (sRecordedBytesNo[battlerId] >= BANK_RECORD_SIZE || sBattleRecords[battlerId][sRecordedBytesNo[battlerId]] == 0xFF)
+    if (sRecordedBytesNo[battlerId] >= BATTLER_RECORD_SIZE || sBattleRecords[battlerId][sRecordedBytesNo[battlerId]] == 0xFF)
     {
         gSpecialVar_Result = gBattleOutcome = B_OUTCOME_PLAYER_TELEPORTED; // hah
         ResetPaletteFadeControl();
@@ -350,7 +349,7 @@ u32 MoveRecordedBattleToSaveData(void)
         }
         battleSave->playersGender[i] = sRecordedBattle_Players[i].gender;
         battleSave->playersLanguage[i] = sRecordedBattle_Players[i].language;
-        battleSave->playersBattler[i] = sRecordedBattle_Players[i].battlerId;
+        battleSave->playersBattlers[i] = sRecordedBattle_Players[i].battlerId;
         battleSave->playersTrainerId[i] = sRecordedBattle_Players[i].trainerId;
     }
 
@@ -476,7 +475,7 @@ u32 MoveRecordedBattleToSaveData(void)
 }
 
 #else
-__attribute__((naked))
+ASM_DIRECT
 u32 MoveRecordedBattleToSaveData(void)
 {
     asm(".syntax unified\n\
@@ -1341,7 +1340,7 @@ static void SetRecordedBattleVarsFromSave(struct RecordedBattleSave *src)
         }
         gLinkPlayers[i].gender = src->playersGender[i];
         gLinkPlayers[i].language = src->playersLanguage[i];
-        gLinkPlayers[i].lp_field_18 = src->playersBattler[i];
+        gLinkPlayers[i].lp_field_18 = src->playersBattlers[i];
         gLinkPlayers[i].trainerId = src->playersTrainerId[i];
 
         if (var)
@@ -1380,7 +1379,7 @@ static void SetRecordedBattleVarsFromSave(struct RecordedBattleSave *src)
 
     for (i = 0; i < MAX_BATTLERS_COUNT; i++)
     {
-        for (j = 0; j < BANK_RECORD_SIZE; j++)
+        for (j = 0; j < BATTLER_RECORD_SIZE; j++)
         {
             sBattleRecords[i][j] = src->battleRecord[i][j];
         }
