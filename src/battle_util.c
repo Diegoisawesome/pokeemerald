@@ -748,7 +748,7 @@ u8 UpdateTurnCounters(void)
     return (gBattleMainFunc != BattleTurnPassed);
 }
 
-#define TURNBASED_MAX_CASE 19
+#define TURNBASED_MAX_CASE 20
 
 u8 TurnBasedEffects(void)
 {
@@ -1070,6 +1070,39 @@ u8 TurnBasedEffects(void)
                         BattleScriptExecute(BattleScript_YawnMakesAsleep);
                         effect++;
                     }
+                }
+                gBattleStruct->turnEffectsTracker++;
+                break;
+            case 19: // toxic/flame orb
+                switch (GetBattlerHoldEffect(gActiveBattler, TRUE))
+                {
+                case HOLD_EFFECT_FLAME_ORB:
+                    if (gBattleMons[gActiveBattler].status1 == 0
+                        && !IsBattlerOfType(gActiveBattler, TYPE_FIRE)
+                        && GetBattlerAbility(gActiveBattler, FALSE) != ABILITY_WATER_VEIL)
+                    {
+                        gBattleMons[gActiveBattler].status1 = STATUS1_BURN;
+                        BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gActiveBattler].status1);
+                        MarkBattlerForControllerExec(gActiveBattler);
+                        gEffectBattler = gActiveBattler;
+                        BattleScriptExecute(BattleScript_ToxicFlameOrb);
+                        effect++;
+                    }
+                    break;
+                case HOLD_EFFECT_TOXIC_ORB:
+                    if (gBattleMons[gActiveBattler].status1 == 0
+                        && !IsBattlerOfType(gActiveBattler, TYPE_POISON)
+                        && !IsBattlerOfType(gActiveBattler, TYPE_STEEL)
+                        && GetBattlerAbility(gActiveBattler, FALSE) != ABILITY_IMMUNITY)
+                    {
+                        gBattleMons[gActiveBattler].status1 = STATUS1_TOXIC_POISON;
+                        BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gActiveBattler].status1);
+                        MarkBattlerForControllerExec(gActiveBattler);
+                        gEffectBattler = gActiveBattler;
+                        BattleScriptExecute(BattleScript_ToxicFlameOrb);
+                        effect++;
+                    }
+                    break;
                 }
                 gBattleStruct->turnEffectsTracker++;
                 break;
@@ -2638,6 +2671,29 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     BattleScriptExecute(BattleScript_WhiteHerbEnd2);
                 }
                 break;
+            case HOLD_EFFECT_STICKY_BARB:
+                if (!moveTurn)
+                {
+                    gBattleMoveDamage = gBattleMons[battlerId].maxHP / 8;
+                    if (gBattleMoveDamage == 0)
+                        gBattleMoveDamage = 1;
+                    BattleScriptExecute(BattleScript_IteamTakeHP_End2);
+                    effect = ITEM_HP_CHANGE;
+                    RecordItemEffectBattle(battlerId, bankHoldEffect);
+                }
+                break;
+            case HOLD_EFFECT_BLACK_SLUDGE:
+                if (!IsBattlerOfType(battlerId, TYPE_POISON) && !moveTurn)
+                {
+                    gBattleMoveDamage = gBattleMons[battlerId].maxHP / 8;
+                    if (gBattleMoveDamage == 0)
+                        gBattleMoveDamage = 1;
+                    BattleScriptExecute(BattleScript_IteamTakeHP_End2);
+                    effect = ITEM_HP_CHANGE;
+                    RecordItemEffectBattle(battlerId, bankHoldEffect);
+                    break;
+                }
+            // fall through since Black Sludge acts like Leftovers for Poison typed mons
             case HOLD_EFFECT_LEFTOVERS:
                 if (gBattleMons[battlerId].hp < gBattleMons[battlerId].maxHP && !moveTurn)
                 {
@@ -3421,4 +3477,16 @@ u32 GetBattlerHoldEffect(u32 battlerId, bool32 checkNegating)
     }
 
     return holdEffect;
+}
+
+bool32 IsBattlerOfType(u32 battlerId, u32 typeId)
+{
+    if (gBattleMons[battlerId].type1 == typeId)
+        return TRUE;
+    else if (gBattleMons[battlerId].type2 == typeId)
+        return TRUE;
+    else if (gBattleMons[battlerId].type3 == typeId)
+        return TRUE;
+    else
+        return FALSE;
 }

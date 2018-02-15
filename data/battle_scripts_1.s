@@ -1518,7 +1518,7 @@ BattleScript_EffectMinimize::
 	goto BattleScript_EffectStatUpAfterAtkCanceler
 
 BattleScript_EffectCurse::
-	jumpiftype2 BS_ATTACKER, TYPE_GHOST, BattleScript_GhostCurse
+	jumpiftype BS_ATTACKER, TYPE_GHOST, BattleScript_GhostCurse
 	attackcanceler
 	attackstring
 	ppreduce
@@ -3946,6 +3946,18 @@ BattleScript_YawnMakesAsleep::
 	waitstate
 	makevisible BS_EFFECT_BATTLER
 	end2
+	
+BattleScript_ToxicFlameOrb::
+	jumpifstatus BS_EFFECT_BATTLER, STATUS1_BURN BattleScript_FlameOrb
+	printstring STRINGID_PSNBYITEM
+	goto BattleScript_ToxicFlameOrbIcon
+BattleScript_FlameOrb:
+	printstring STRINGID_BRNBYITEM
+BattleScript_ToxicFlameOrbIcon:
+	statusanimation BS_EFFECT_BATTLER
+	updatestatusicon BS_EFFECT_BATTLER
+	waitstate
+	end2
 
 BattleScript_MoveEffectPoison::
 	statusanimation BS_EFFECT_BATTLER
@@ -4449,6 +4461,20 @@ BattleScript_BerryPPHealEnd2::
 BattleScript_ItemHealHP_End2::
 	call BattleScript_ItemHealHP_Ret
 	end2
+	
+BattleScript_IteamTakeHP_End2::
+	call BattleScript_IteamTakeHP_Ret
+	end2
+	
+BattleScript_IteamTakeHP_Ret::
+	playanimation BS_ATTACKER, B_ANIM_MON_HIT, NULL
+	printstring STRINGID_HURTBYITEM
+	waitmessage 0x40
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	tryfaintmon BS_ATTACKER, 0, NULL
+	return
 
 BattleScript_ItemHealHP_Ret::
 	playanimation BS_ATTACKER, B_ANIM_ITEM_EFFECT, NULL

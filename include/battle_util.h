@@ -81,5 +81,6 @@ u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 u8 IsMonDisobedient(void);
 u8 GetBattlerAbility(u32 battlerId, bool32 checkMoldBreaker);
 u32 GetBattlerHoldEffect(u32 battlerId, bool32 checkNegating);
+bool32 IsBattlerOfType(u32 battlerId, u32 typeId);
 
 #endif // GUARD_BATTLE_UTIL_H

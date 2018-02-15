@@ -181,7 +181,7 @@ static void atk3E_end2(void);
 static void atk3F_end3(void);
 static void atk40_jumpifaffectedbyprotect(void);
 static void atk41_call(void);
-static void atk42_jumpiftype2(void);
+static void atk42_placeholder1(void);
 static void atk43_jumpifabilitypresent(void);
 static void atk44_endselectionscript(void);
 static void atk45_playanimation(void);
@@ -435,7 +435,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     atk3F_end3,
     atk40_jumpifaffectedbyprotect,
     atk41_call,
-    atk42_jumpiftype2,
+    atk42_placeholder1,
     atk43_jumpifabilitypresent,
     atk44_endselectionscript,
     atk45_playanimation,
@@ -3277,7 +3277,7 @@ static void atk22_jumpiftype(void)
     u8 type = gBattlescriptCurrInstr[2];
     const u8* jumpPtr = BS2ScriptReadPtr(gBattlescriptCurrInstr + 3);
 
-    if (gBattleMons[battlerId].type1 == type || gBattleMons[battlerId].type2 == type)
+    if (IsBattlerOfType(battlerId, type))
         gBattlescriptCurrInstr = jumpPtr;
     else
         gBattlescriptCurrInstr += 7;
@@ -4303,14 +4303,9 @@ static void atk41_call(void)
     gBattlescriptCurrInstr = BSScriptReadPtr(gBattlescriptCurrInstr + 1);
 }
 
-static void atk42_jumpiftype2(void)
+static void atk42_placeholder1(void)
 {
-    u8 battlerId = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
-
-    if (gBattlescriptCurrInstr[2] == gBattleMons[battlerId].type1 || gBattlescriptCurrInstr[2] == gBattleMons[battlerId].type2)
-        gBattlescriptCurrInstr = BSScriptReadPtr(gBattlescriptCurrInstr + 3);
-    else
-        gBattlescriptCurrInstr += 7;
+    gBattlescriptCurrInstr++;
 }
 
 static void atk43_jumpifabilitypresent(void)
@@ -7478,11 +7473,17 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
     else
         ability = GetBattlerAbility(gActiveBattler, TRUE);
 
-    // check contrary
+    // check contrary and simple
     if (ability == ABILITY_CONTRARY)
     {
         gBattleScripting.statChanger ^= STAT_BUFF_NEGATIVE;
         statValue ^= STAT_BUFF_NEGATIVE;
+    }
+    else if (ability == ABILITY_SIMPLE)
+    {
+        bool32 lowers = (statValue & STAT_BUFF_NEGATIVE) ? 1 : 0;
+        SET_STATCHANGER(statId, GET_STAT_BUFF_VALUE(statValue) * 2, lowers);
+        statValue = gBattleScripting.statChanger & 0xF0;
     }
 
     PREPARE_STAT_BUFFER(gBattleTextBuff1, statId);
@@ -7571,7 +7572,7 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
             statValue = -GET_STAT_BUFF_VALUE(statValue);
             gBattleTextBuff2[0] = B_BUFF_PLACEHOLDER_BEGIN;
             index = 1;
-            if (statValue == -2)
+            if (statValue == -2 && gBattleMons[gActiveBattler].statStages[statId] >= 2)
             {
                 gBattleTextBuff2[1] = B_BUFF_STRING;
                 gBattleTextBuff2[2] = STRINGID_STATHARSHLY;
@@ -7598,7 +7599,7 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
         statValue = GET_STAT_BUFF_VALUE(statValue);
         gBattleTextBuff2[0] = B_BUFF_PLACEHOLDER_BEGIN;
         index = 1;
-        if (statValue == 2)
+        if (statValue == 2 && gBattleMons[gActiveBattler].statStages[statId] <= 0xA)
         {
             gBattleTextBuff2[1] = B_BUFF_STRING;
             gBattleTextBuff2[2] = STRINGID_STATSHARPLY;

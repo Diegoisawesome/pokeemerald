@@ -499,6 +499,9 @@ const u8 gText_EmptyString3[] = _("");
 const u8 gText_YouThrowABallNowRight[] = _("You throw a BALL now, right?\nI… I’ll do my best!");
 const u8 gText_EnduredViaSturdy[] = _("{B_DEF_NAME_WITH_PREFIX} ENDURED\nthe hit using {B_DEF_ABILITY}!");
 const u8 gText_PowerHerbActivation[] = _("{B_ATK_NAME_WITH_PREFIX} became fully charged\ndue to its {B_LAST_ITEM}!");
+const u8 gText_HurtByItem[] = _("{B_ATK_NAME_WITH_PREFIX} was hurt\nby its {B_LAST_ITEM}!");
+const u8 gText_BadlyPoisonedByItem[] = _("{B_EFF_NAME_WITH_PREFIX} was badly \npoisoned by the {B_LAST_ITEM}!");
+const u8 gText_BurnedByItem[] = _("{B_EFF_NAME_WITH_PREFIX} was burned\nby the {B_LAST_ITEM}!");
 
 // early declaration of strings
 const u8 gText_PkmnIncapableOfPower[];
@@ -889,6 +892,9 @@ const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 	gText_Trainer2WinText,
 	gText_EnduredViaSturdy,
 	gText_PowerHerbActivation,
+	gText_HurtByItem,
+	gText_BadlyPoisonedByItem,
+	gText_BurnedByItem,
 };
 
 const u16 gMissStringIds[] =
