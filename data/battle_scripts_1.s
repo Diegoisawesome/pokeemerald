@@ -4118,6 +4118,16 @@ BattleScript_DroughtActivates::
 	playanimation BS_BANK_0, B_ANIM_SUN_CONTINUES, NULL
 	call BattleScript_WeatherFormChanges
 	end3
+	
+BattleScript_ImposterActivates::
+	pause 0x20
+	transformdataexecution
+	chosenmoveanimation BS_ATTACKER, MOVE_TRANSFORM
+	waitanimation
+	printstring STRINGID_PKMNTRANSFORMEDINTO
+	waitmessage 0x40
+	switchinability BS_ATTACKER
+	end3
 
 BattleScript_TookAttack::
 	attackstring

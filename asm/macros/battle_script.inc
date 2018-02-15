@@ -1222,6 +1222,12 @@
 	.4byte \ptr
 	.endm
 	
+	.macro chosenmoveanimation battler, move
+	.byte 0xfa
+	.byte \battler
+	.2byte \move
+	.endm
+	
 @ various command changed to more readable macros
 	.macro cancelmultiturnmoves bank
 	various \bank, VARIOUS_CANCEL_MULTI_TURN_MOVES
@@ -1329,6 +1335,10 @@
 	
 	.macro playtrainerdefeatbgm bank
 	various \bank, VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC
+	.endm
+	
+	.macro switchinability bank
+	various \bank, VARIOUS_SWITCHIN_ABILITY
 	.endm
 	
 @ helpful macros
