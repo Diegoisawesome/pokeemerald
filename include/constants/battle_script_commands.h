@@ -74,6 +74,7 @@
 #define VARIOUS_SET_TELEPORT_OUTCOME            25
 #define VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC     26
 #define VARIOUS_SWITCHIN_ABILITY                27
+#define VARIOUS_PREP_MEGA_TRIGGER_STRINGS       28
 
 // atk80, dmg manipulation
 #define ATK80_DMG_CHANGE_SIGN                               0

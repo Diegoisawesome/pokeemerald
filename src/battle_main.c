@@ -3077,6 +3077,7 @@ void FaintClearSetData(void)
 
     gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
     gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
+    gBattleMons[gActiveBattler].type3 = TYPE_MYSTERY;
 
     ClearBattlerMoveHistory(gActiveBattler);
     ClearBattlerAbilityHistory(gActiveBattler);
@@ -3145,6 +3146,7 @@ static void BattleIntroDrawTrainersOrMonsSprites(void)
 
             gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
             gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
+            gBattleMons[gActiveBattler].type3 = TYPE_MYSTERY;
             gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].altAbility);
             hpOnSwitchout = &gBattleStruct->hpOnSwitchout[GetBattlerSide(gActiveBattler)];
             *hpOnSwitchout = gBattleMons[gActiveBattler].hp;
@@ -4605,6 +4607,7 @@ static void SetActionsAndBattlersTurnOrder(void)
             }
             gBattleMainFunc = CheckFocusPunch_ClearVarsBeforeTurnStarts;
             gBattleStruct->focusPunchBattlerId = 0;
+            gBattleStruct->megaEvoBattlerId = 0;
             return;
         }
         else
@@ -4647,6 +4650,7 @@ static void SetActionsAndBattlersTurnOrder(void)
     }
     gBattleMainFunc = CheckFocusPunch_ClearVarsBeforeTurnStarts;
     gBattleStruct->focusPunchBattlerId = 0;
+    gBattleStruct->megaEvoBattlerId = 0;
 }
 
 static void TurnValuesCleanUp(bool8 var0)
@@ -4684,6 +4688,7 @@ static void TurnValuesCleanUp(bool8 var0)
 
     gSideTimers[0].followmeTimer = 0;
     gSideTimers[1].followmeTimer = 0;
+    ClearBattlersToMegaEvolve();
 }
 
 static void SpecialStatusesClear(void)
@@ -4704,14 +4709,25 @@ static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void)
     {
         while (gBattleStruct->focusPunchBattlerId < gBattlersCount)
         {
-            gActiveBattler = gBattlerAttacker = gBattleStruct->focusPunchBattlerId;
-            gBattleStruct->focusPunchBattlerId++;
+            gActiveBattler = gBattlerAttacker = gBattleStruct->focusPunchBattlerId++;
             if (gChosenMoveByBattler[gActiveBattler] == MOVE_FOCUS_PUNCH
                 && !(gBattleMons[gActiveBattler].status1 & STATUS1_SLEEP)
                 && !(gDisableStructs[gBattlerAttacker].truantCounter)
                 && !(gProtectStructs[gActiveBattler].onlyStruggle))
             {
                 BattleScriptExecute(BattleScript_FocusPunchSetUp);
+                return;
+            }
+        }
+        while (gBattleStruct->megaEvoBattlerId < gBattlersCount)
+        {
+            gActiveBattler = gBattlerAttacker = gBattleStruct->megaEvoBattlerId++;
+            if (gChosenActionByBattler[gActiveBattler] == B_ACTION_USE_MOVE
+                && !(gDisableStructs[gBattlerAttacker].truantCounter)
+                && IsBattlerToMegaEvolve(gBattlerAttacker))
+            {
+                gLastUsedItem = gBattleMons[gActiveBattler].item;
+                BattleScriptExecute(BattleScript_MegaEvolve);
                 return;
             }
         }

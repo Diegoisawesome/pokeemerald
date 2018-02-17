@@ -10,6 +10,7 @@
 #include "battle_gfx_sfx_util.h"
 #include "battle_util2.h"
 #include "battle_bg.h"
+#include "battle_mega_evo.h"
 
 #define GET_BATTLER_POSITION(battler)     (gBattlerPositions[battler])
 #define GET_BATTLER_SIDE(battler)         (GetBattlerPosition(battler) & BIT_SIDE)
@@ -491,6 +492,7 @@ struct BattleStruct
     u8 field_2A0;
     u8 field_2A1;
     u8 field_2A2;
+    u8 megaEvoBattlerId;
 };
 
 #define GET_MOVE_TYPE(move, typeArg)                        \

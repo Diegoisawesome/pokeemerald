@@ -45,6 +45,8 @@ void AllocateBattleResources(void)
         u16 currSecretBaseId = VarGet(VAR_0x4054);
         CreateSecretBaseEnemyParty(&gSaveBlock1Ptr->secretBases[currSecretBaseId]);
     }
+
+    AllocateMegaEvo();
 }
 
 void FreeBattleResources(void)
@@ -72,6 +74,8 @@ void FreeBattleResources(void)
         FREE_AND_SET_NULL(gUnknown_0202305C);
         FREE_AND_SET_NULL(gUnknown_02023060);
     }
+
+    FreeMegaEvo();
 }
 
 void AdjustFriendshipOnBattleFaint(u8 battlerId)

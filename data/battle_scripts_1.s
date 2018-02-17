@@ -3776,6 +3776,14 @@ BattleScript_FocusPunchSetUp::
 	printstring STRINGID_PKMNTIGHTENINGFOCUS
 	waitmessage 0x40
 	end2
+	
+BattleScript_MegaEvolve::
+	printstring STRINGID_EMPTYSTRING3
+	waitmessage 0x1
+	printstring STRINGID_MEGAEVOTRIGGER
+	waitmessage 0x40
+	
+	end2
 
 BattleScript_MoveUsedIsAsleep::
 	printstring STRINGID_PKMNFASTASLEEP

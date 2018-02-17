@@ -7011,6 +7011,17 @@ static void atk76_various(void)
     case VARIOUS_SWITCHIN_ABILITY:
         AbilityBattleEffects(ABILITYEFFECT_ON_SWITCHIN, gActiveBattler, 0, 0, 0);
         break;
+    case VARIOUS_PREP_MEGA_TRIGGER_STRINGS:
+        switch (GetBattlerPosition(gActiveBattler))
+        {
+        case B_POSITION_PLAYER_LEFT:
+            StringCopy(gBattleTextBuff2, gSaveBlock2Ptr->playerName);
+            break;
+        case B_POSITION_OPPONENT_LEFT:
+            StringCopy(gBattleTextBuff2);
+            break;
+        }
+        break;
     }
 
     gBattlescriptCurrInstr += 3;

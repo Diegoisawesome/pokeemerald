@@ -1569,6 +1569,8 @@
 #define FLAG_0x95E               (SYSTEM_FLAGS + 0xFE)
 #define FLAG_0x95F               (SYSTEM_FLAGS + 0xFF)
 
+#define FLAG_ABLE_TO_MEGA_EVO    FLAG_SYS_POKEMON_GET
+
 // SPECIAL FLAGS (unknown purpose)
 #define FLAG_SPECIAL_FLAG_0x4000    0x4000
 #define FLAG_SPECIAL_FLAG_0x4001    0x4001

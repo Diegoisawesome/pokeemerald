@@ -502,6 +502,7 @@ const u8 gText_PowerHerbActivation[] = _("{B_ATK_NAME_WITH_PREFIX} became fully 
 const u8 gText_HurtByItem[] = _("{B_ATK_NAME_WITH_PREFIX} was hurt\nby its {B_LAST_ITEM}!");
 const u8 gText_BadlyPoisonedByItem[] = _("{B_EFF_NAME_WITH_PREFIX} was badly \npoisoned by the {B_LAST_ITEM}!");
 const u8 gText_BurnedByItem[] = _("{B_EFF_NAME_WITH_PREFIX} was burned\nby the {B_LAST_ITEM}!");
+const u8 gText_MegaEvoTrigger[] = _("{B_ATK_NAME}'s {B_LAST_ITEM} is reacting to\n{B_BUFF2}'s Key Stone!\p");
 
 // early declaration of strings
 const u8 gText_PkmnIncapableOfPower[];
@@ -895,6 +896,7 @@ const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 	gText_HurtByItem,
 	gText_BadlyPoisonedByItem,
 	gText_BurnedByItem,
+	gText_MegaEvoTrigger,
 };
 
 const u16 gMissStringIds[] =
