@@ -356,11 +356,8 @@
 	.4byte \param0
 	.endm
 
-	.macro jumpiftype2 bank, type, param2
+	.macro placeholder_0
 	.byte 0x42
-	.byte \bank
-	.byte \type
-	.4byte \param2
 	.endm
 
 	.macro jumpifabilitypresent ability, param1
