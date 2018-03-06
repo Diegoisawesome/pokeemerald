@@ -74,7 +74,6 @@
 #define VARIOUS_SET_TELEPORT_OUTCOME            25
 #define VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC     26
 #define VARIOUS_SWITCHIN_ABILITY                27
-#define VARIOUS_PREP_MEGA_TRIGGER_STRINGS       28
 
 // atk80, dmg manipulation
 #define ATK80_DMG_CHANGE_SIGN                               0
@@ -94,6 +93,6 @@
 #define ATK48_STAT_NEGATIVE         0x1
 #define ATK48_STAT_BY_TWO           0x2
 #define ATK48_BIT_x4                0x4
-#define ATK48_LOWER_FAIL_CHECK      0x8
+#define ATK48_DONT_CHECK_LOWER      0x8
 
 #endif // GUARD_CONSTANTS_BATTLE_SCRIPT_COMMANDS_H

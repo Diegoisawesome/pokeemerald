@@ -143,14 +143,21 @@
 #define STATUS3_IMPRISONED_OTHERS       0x2000
 #define STATUS3_GRUDGE                  0x4000
 #define STATUS3_CANT_SCORE_A_CRIT       0x8000
-#define STATUS3_PLACEHOLDER1            0x10000 // was mudsport
-#define STATUS3_PLACEHOLDER2            0x20000 // was watersport
+#define STATUS3_PLACEHOLDER0            0x10000
+#define STATUS3_PLACEHOLDER1            0x20000
 #define STATUS3_UNDERWATER              0x40000
 #define STATUS3_INTIMIDATE_POKES        0x80000
 #define STATUS3_TRACE                   0x100000
-#define STATUS3_EMBARGO                 0x200000
-#define STATUS3_GASTRO_ACID             0x400000
+#define STATUS3_GASTRO_ACID             0x200000
+#define STATUS3_EMBARGO                 0x400000
 #define STATUS3_SEMI_INVULNERABLE       (STATUS3_UNDERGROUND | STATUS3_ON_AIR | STATUS3_UNDERWATER)
+
+// Field affecting statuses.
+#define STATUS_FIELD_MAGIC_ROOM         0x1
+#define STATUS_FIELD_TRICK_ROOM         0x2
+#define STATUS_FIELD_WONDER_ROOM        0x4
+#define STATUS_FIELD_MUDSPORT           0x8
+#define STATUS_FIELD_WATERSPORT         0x10
 
 // Not really sure what a "hitmarker" is.
 #define HITMARKER_x10                   0x00000010
@@ -193,17 +200,6 @@
 #define SIDE_STATUS_SPIKES_DAMAGED          (1 << 9)
 #define SIDE_STATUS_STEALTH_ROCK            (1 << 10)
 #define SIDE_STATUS_STEALTH_ROCK_DAMAGED    (1 << 11)
-
-// Per-side statuses that affect an entire field
-#define FIELD_STATUS_MUD_SPORT          (1 << 0)
-#define FIELD_STATUS_WATER_SPORT        (1 << 1)
-#define FIELD_STATUS_TRICK_ROOM         (1 << 2)
-#define FIELD_STATUS_WONDER_ROOM        (1 << 3)
-#define FIELD_STATUS_MAGIC_ROOM         (1 << 4)
-#define FIELD_STATUS_PSYCHIC_TERRAIN    (1 << 5)
-#define FIELD_STATUS_MISTY_TERRAIN      (1 << 6)
-#define FIELD_STATUS_ELECTRIC_TERRAIN   (1 << 7)
-#define FIELD_STATUS_FAIRY_LOCK         (1 << 8)
 
 // Flags describing move's result
 #define MOVE_RESULT_MISSED             (1 << 0)

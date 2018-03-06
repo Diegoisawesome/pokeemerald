@@ -356,7 +356,7 @@
 	.4byte \param0
 	.endm
 
-	.macro placeholder1
+	.macro placeholder_0
 	.byte 0x42
 	.endm
 
