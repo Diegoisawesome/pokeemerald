@@ -3463,3 +3463,18 @@ u32 GetBattlerAbility(u8 battlerId)
 
     return gBattleMons[battlerId].ability;
 }
+
+u32 GetBattlerHoldEffect(u8 battlerId)
+{
+    if (gStatuses3[battlerId] & STATUS3_EMBARGO)
+        return HOLD_EFFECT_NONE;
+    if (gFieldStatuses & STATUS_FIELD_MAGIC_ROOM)
+        return HOLD_EFFECT_NONE;
+    if (gBattleMons[battlerId].ability == ABILITY_KLUTZ && !(gStatuses3[battlerId] & STATUS3_GASTRO_ACID))
+        return HOLD_EFFECT_NONE;
+
+    if (gBattleMons[battlerId].item == ITEM_ENIGMA_BERRY)
+        return gEnigmaBerries[battlerId].holdEffect;
+    else
+        return ItemId_GetHoldEffect(gBattleMons[battlerId].item);
+}

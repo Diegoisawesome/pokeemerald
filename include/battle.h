@@ -174,7 +174,7 @@ struct DisableStruct
     /*0x18*/ u8 unk18_a_2 : 2;
     /*0x18*/ u8 unk18_b : 4;
     /*0x19*/ u8 rechargeCounter;
-    /*0x1A*/ u8 unk1A[2];
+    /*0x1A*/ u8 embargoTimer;
 };
 
 struct ProtectStruct
@@ -775,6 +775,7 @@ extern u8 gTakenDmgByBattler[MAX_BATTLERS_COUNT];
 extern u8 gUnknown_0202428C;
 extern u16 gSideStatuses[2];
 extern struct SideTimer gSideTimers[2];
+extern u32 gFieldStatuses;
 extern u32 gStatuses3[MAX_BATTLERS_COUNT];
 extern struct DisableStruct gDisableStructs[MAX_BATTLERS_COUNT];
 extern u16 gPauseCounterBattle;

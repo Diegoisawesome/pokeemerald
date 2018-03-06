@@ -248,6 +248,7 @@ EWRAM_DATA u8 gTakenDmgByBattler[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA u8 gUnknown_0202428C = 0;
 EWRAM_DATA u16 gSideStatuses[2] = {0};
 EWRAM_DATA struct SideTimer gSideTimers[2] = {0};
+EWRAM_DATA u32 gFieldStatuses = {0};
 EWRAM_DATA u32 gStatuses3[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA struct DisableStruct gDisableStructs[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA u16 gPauseCounterBattle = 0;
@@ -2994,6 +2995,7 @@ static void BattleStartClearSetData(void)
             dataPtr[j] = 0;
     }
 
+    gFieldStatuses = 0;
     gBattlerAttacker = 0;
     gBattlerTarget = 0;
     gBattleWeather = 0;
