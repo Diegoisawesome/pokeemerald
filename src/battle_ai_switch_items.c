@@ -435,7 +435,7 @@ static bool8 ShouldSwitch(void)
         return FALSE;
     if (AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, gActiveBattler, ABILITY_ARENA_TRAP, 0, 0))
         return FALSE; // misses the flying or levitate check
-    if (AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, ABILITY_MAGNET_PULL, 0, 0))
+    if (AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ABILITY_MAGNET_PULL, 0, 0))
     {
         if (gBattleMons[gActiveBattler].type1 == TYPE_STEEL)
             return FALSE;

@@ -4592,17 +4592,20 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     u8 holdEffect = 0;
     u8 holdEffectParam = 0;
     u16 moveBattler1 = 0, moveBattler2 = 0;
+    u32 abilityBattler1, abilityBattler2;
 
+    abilityBattler1 = GetBattlerAbility(battler1);
+    abilityBattler2 = GetBattlerAbility(battler2);
     if (WEATHER_HAS_EFFECT)
     {
-        if ((gBattleMons[battler1].ability == ABILITY_SWIFT_SWIM && gBattleWeather & WEATHER_RAIN_ANY)
-            || (gBattleMons[battler1].ability == ABILITY_CHLOROPHYLL && gBattleWeather & WEATHER_SUN_ANY))
+        if ((abilityBattler1 == ABILITY_SWIFT_SWIM && gBattleWeather & WEATHER_RAIN_ANY)
+            || (abilityBattler1 == ABILITY_CHLOROPHYLL && gBattleWeather & WEATHER_SUN_ANY))
             speedMultiplierBattler1 = 2;
         else
             speedMultiplierBattler1 = 1;
 
-        if ((gBattleMons[battler2].ability == ABILITY_SWIFT_SWIM && gBattleWeather & WEATHER_RAIN_ANY)
-            || (gBattleMons[battler2].ability == ABILITY_CHLOROPHYLL && gBattleWeather & WEATHER_SUN_ANY))
+        if ((abilityBattler2 == ABILITY_SWIFT_SWIM && gBattleWeather & WEATHER_RAIN_ANY)
+            || (abilityBattler2 == ABILITY_CHLOROPHYLL && gBattleWeather & WEATHER_SUN_ANY))
             speedMultiplierBattler2 = 2;
         else
             speedMultiplierBattler2 = 1;
@@ -5585,7 +5588,7 @@ bool8 TryRunFromBattle(u8 battler)
         gProtectStructs[battler].fleeFlag = 1;
         effect++;
     }
-    else if (gBattleMons[battler].ability == ABILITY_RUN_AWAY)
+    else if (GetBattlerAbility(battler) == ABILITY_RUN_AWAY)
     {
         if (InBattlePyramid())
         {

@@ -2293,9 +2293,9 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         spAttack /= 2;
     if (attacker->ability == ABILITY_HUSTLE)
         attack = (150 * attack) / 100;
-    if (attacker->ability == ABILITY_PLUS && AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, ABILITY_MINUS, 0, 0))
+    if (attacker->ability == ABILITY_PLUS && AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ABILITY_MINUS, 0, 0))
         spAttack = (150 * spAttack) / 100;
-    if (attacker->ability == ABILITY_MINUS && AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, ABILITY_PLUS, 0, 0))
+    if (attacker->ability == ABILITY_MINUS && AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ABILITY_PLUS, 0, 0))
         spAttack = (150 * spAttack) / 100;
     if (attacker->ability == ABILITY_GUTS && attacker->status1)
         attack = (150 * attack) / 100;
@@ -2406,8 +2406,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
             damage /= 2;
 
         // are effects of weather negated with cloud nine or air lock
-        if (!AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, ABILITY_CLOUD_NINE, 0, 0)
-            && !AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, ABILITY_AIR_LOCK, 0, 0))
+        if (!AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ABILITY_CLOUD_NINE, 0, 0)
+            && !AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ABILITY_AIR_LOCK, 0, 0))
         {
             if (gBattleWeather & WEATHER_RAIN_TEMPORARY)
             {
