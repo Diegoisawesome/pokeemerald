@@ -28,7 +28,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_PHYSICAL,
 	},
 	{ // MOVE_KARATE_CHOP
-		.effect = EFFECT_HIGH_CRITICAL,
+		.effect = EFFECT_HIT,
 		.power = 50,
 		.type = TYPE_FIGHTING,
 		.accuracy = 100,
@@ -36,7 +36,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_SELECTED,
 		.priority = 0,
-		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
+		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_PHYSICAL,
 	},
 	{ // MOVE_DOUBLE_SLAP
@@ -904,7 +904,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_STATUS,
 	},
 	{ // MOVE_RAZOR_LEAF
-		.effect = EFFECT_HIGH_CRITICAL,
+		.effect = EFFECT_HIT,
 		.power = 55,
 		.type = TYPE_GRASS,
 		.accuracy = 95,
@@ -912,7 +912,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_BOTH,
 		.priority = 0,
-		.flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
+		.flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_SPECIAL,
 	},
 	{ // MOVE_SOLAR_BEAM
@@ -1180,7 +1180,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_STATUS,
 	},
 	{ // MOVE_QUICK_ATTACK
-		.effect = EFFECT_QUICK_ATTACK,
+		.effect = EFFECT_HIT,
 		.power = 40,
 		.type = TYPE_NORMAL,
 		.accuracy = 100,
@@ -1415,7 +1415,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.pp = 10,
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_USER,
-		.priority = 0,
+		.priority = 1,
 		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_KINGSROCK_AFFECTED,
 		.split = SPLIT_PHYSICAL,
 	},
@@ -1828,7 +1828,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_STATUS,
 	},
 	{ // MOVE_CRABHAMMER
-		.effect = EFFECT_HIGH_CRITICAL,
+		.effect = EFFECT_HIT,
 		.power = 90,
 		.type = TYPE_WATER,
 		.accuracy = 85,
@@ -1836,7 +1836,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_SELECTED,
 		.priority = 0,
-		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
+		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_PHYSICAL,
 	},
 	{ // MOVE_EXPLOSION
@@ -1960,7 +1960,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_PHYSICAL,
 	},
 	{ // MOVE_SLASH
-		.effect = EFFECT_HIGH_CRITICAL,
+		.effect = EFFECT_HIT,
 		.power = 70,
 		.type = TYPE_NORMAL,
 		.accuracy = 100,
@@ -1968,7 +1968,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_SELECTED,
 		.priority = 0,
-		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
+		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_PHYSICAL,
 	},
 	{ // MOVE_SUBSTITUTE
@@ -2128,7 +2128,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_STATUS,
 	},
 	{ // MOVE_AEROBLAST
-		.effect = EFFECT_HIGH_CRITICAL,
+		.effect = EFFECT_HIT,
 		.power = 100,
 		.type = TYPE_FLYING,
 		.accuracy = 95,
@@ -2136,7 +2136,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_SELECTED,
 		.priority = 0,
-		.flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
+		.flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_SPECIAL,
 	},
 	{ // MOVE_COTTON_SPORE
@@ -2200,7 +2200,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_STATUS,
 	},
 	{ // MOVE_MACH_PUNCH
-		.effect = EFFECT_QUICK_ATTACK,
+		.effect = EFFECT_HIT,
 		.power = 40,
 		.type = TYPE_FIGHTING,
 		.accuracy = 100,
@@ -2860,7 +2860,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_SPECIAL,
 	},
 	{ // MOVE_CROSS_CHOP
-		.effect = EFFECT_HIGH_CRITICAL,
+		.effect = EFFECT_HIT,
 		.power = 100,
 		.type = TYPE_FIGHTING,
 		.accuracy = 80,
@@ -2868,7 +2868,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_SELECTED,
 		.priority = 0,
-		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
+		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_PHYSICAL,
 	},
 	{ // MOVE_TWISTER
@@ -2944,14 +2944,14 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_STATUS,
 	},
 	{ // MOVE_EXTREME_SPEED
-		.effect = EFFECT_QUICK_ATTACK,
+		.effect = EFFECT_HIT,
 		.power = 80,
 		.type = TYPE_NORMAL,
 		.accuracy = 100,
 		.pp = 5,
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_SELECTED,
-		.priority = 1,
+		.priority = 2,
 		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
 		.split = SPLIT_PHYSICAL,
 	},
@@ -3592,7 +3592,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_STATUS,
 	},
 	{ // MOVE_BLAZE_KICK
-		.effect = EFFECT_BLAZE_KICK,
+		.effect = EFFECT_BURN_HIT,
 		.power = 85,
 		.type = TYPE_FIRE,
 		.accuracy = 90,
@@ -3600,7 +3600,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 10,
 		.target = MOVE_TARGET_SELECTED,
 		.priority = 0,
-		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED,
+		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_PHYSICAL,
 	},
 	{ // MOVE_MUD_SPORT
@@ -3772,7 +3772,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_STATUS,
 	},
 	{ // MOVE_AIR_CUTTER
-		.effect = EFFECT_HIGH_CRITICAL,
+		.effect = EFFECT_HIT,
 		.power = 55,
 		.type = TYPE_FLYING,
 		.accuracy = 95,
@@ -3780,7 +3780,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_BOTH,
 		.priority = 0,
-		.flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
+		.flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_SPECIAL,
 	},
 	{ // MOVE_OVERHEAT
@@ -4108,7 +4108,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_SPECIAL,
 	},
 	{ // MOVE_POISON_TAIL
-		.effect = EFFECT_POISON_TAIL,
+		.effect = EFFECT_POISON_HIT,
 		.power = 50,
 		.type = TYPE_POISON,
 		.accuracy = 100,
@@ -4116,7 +4116,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 10,
 		.target = MOVE_TARGET_SELECTED,
 		.priority = 0,
-		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
+		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_PHYSICAL,
 	},
 	{ // MOVE_COVET
@@ -4180,7 +4180,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.split = SPLIT_STATUS,
 	},
 	{ // MOVE_LEAF_BLADE
-		.effect = EFFECT_HIGH_CRITICAL,
+		.effect = EFFECT_HIT,
 		.power = 70,
 		.type = TYPE_GRASS,
 		.accuracy = 100,
@@ -4188,7 +4188,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 		.secondaryEffectChance = 0,
 		.target = MOVE_TARGET_SELECTED,
 		.priority = 0,
-		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED,
+		.flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGSROCK_AFFECTED | FLAG_HIGH_CRIT,
 		.split = SPLIT_PHYSICAL,
 	},
 	{ // MOVE_DRAGON_DANCE

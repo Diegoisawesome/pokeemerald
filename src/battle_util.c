@@ -3531,6 +3531,8 @@ u32 GetBattlerHoldEffect(u8 battlerId, bool32 checkNegating)
             return HOLD_EFFECT_NONE;
     }
 
+    gPotentialItemEffectBattler = battlerId;
+
     if (gBattleMons[battlerId].item == ITEM_ENIGMA_BERRY)
         return gEnigmaBerries[battlerId].holdEffect;
     else

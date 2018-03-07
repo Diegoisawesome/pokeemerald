@@ -621,7 +621,7 @@ static const struct StatFractions sAccuracyStageRatios[] =
 };
 
 // The chance is 1/N for each stage.
-static const u16 sCriticalHitChance[] = {16, 8, 4, 3, 2};
+static const u16 sCriticalHitChance[] = {16, 8, 2, 1};
 
 static const u32 sStatusFlagsForMoveEffects[] =
 {
@@ -1276,37 +1276,43 @@ static void atk03_ppreduce(void)
 
 static void atk04_critcalc(void)
 {
-    u8 holdEffect;
-    u16 item, critChance;
-
-    item = gBattleMons[gBattlerAttacker].item;
-
-    if (item == ITEM_ENIGMA_BERRY)
-        holdEffect = gEnigmaBerries[gBattlerAttacker].holdEffect;
-    else
-        holdEffect = ItemId_GetHoldEffect(item);
-
-    gPotentialItemEffectBattler = gBattlerAttacker;
-
-    critChance  = 2 * ((gBattleMons[gBattlerAttacker].status2 & STATUS2_FOCUS_ENERGY) != 0)
-                + (gBattleMoves[gCurrentMove].effect == EFFECT_HIGH_CRITICAL)
-                + (gBattleMoves[gCurrentMove].effect == EFFECT_SKY_ATTACK)
-                + (gBattleMoves[gCurrentMove].effect == EFFECT_BLAZE_KICK)
-                + (gBattleMoves[gCurrentMove].effect == EFFECT_POISON_TAIL)
-                + (holdEffect == HOLD_EFFECT_SCOPE_LENS)
-                + 2 * (holdEffect == HOLD_EFFECT_LUCKY_PUNCH && gBattleMons[gBattlerAttacker].species == SPECIES_CHANSEY)
-                + 2 * (holdEffect == HOLD_EFFECT_STICK && gBattleMons[gBattlerAttacker].species == SPECIES_FARFETCHD);
-
-    if (critChance > 4)
-        critChance = 4;
-
-    if ((GetBattlerAbility(gBattlerTarget) != ABILITY_BATTLE_ARMOR && GetBattlerAbility(gBattlerTarget) != ABILITY_SHELL_ARMOR)
-     && !(gStatuses3[gBattlerAttacker] & STATUS3_CANT_SCORE_A_CRIT)
-     && !(gBattleTypeFlags & (BATTLE_TYPE_WALLY_TUTORIAL | BATTLE_TYPE_FIRST_BATTLE))
-     && !(Random() % sCriticalHitChance[critChance]))
-        gCritMultiplier = 2;
-    else
+    u32 defAbility = GetBattlerAbility(gBattlerTarget);
+    if (defAbility == ABILITY_BATTLE_ARMOR
+        || defAbility == ABILITY_SHELL_ARMOR
+        || gStatuses3[gBattlerAttacker] & STATUS3_CANT_SCORE_A_CRIT
+        || gBattleTypeFlags & (BATTLE_TYPE_WALLY_TUTORIAL | BATTLE_TYPE_FIRST_BATTLE))
+    {
         gCritMultiplier = 1;
+    }
+    else
+    {
+        u32 atkHoldEffect = GetBattlerHoldEffect(gBattlerAttacker, TRUE);
+        u32 atkSpecies = gBattleMons[gBattlerAttacker].species;
+        u32 atkAbility = GetBattlerAbility(gBattlerAttacker);
+        u32 critChance = 0;
+
+        if (gBattleMons[gBattlerAttacker].status2 & STATUS2_FOCUS_ENERGY)
+            critChance += 2;
+        if (gBattleMoves[gCurrentMove].flags & FLAG_HIGH_CRIT)
+            critChance++;
+        if (atkAbility == ABILITY_SUPER_LUCK)
+            critChance++;
+
+        if (atkHoldEffect == HOLD_EFFECT_CRITICAL_UP)
+            critChance++;
+        else if (atkHoldEffect == HOLD_EFFECT_STICK && atkSpecies == SPECIES_FARFETCHD)
+            critChance += 2;
+        else if (atkHoldEffect == HOLD_EFFECT_LUCKY_PUNCH && atkSpecies == SPECIES_CHANSEY)
+            critChance += 2;
+
+        if (critChance > 3)
+            critChance = 3;
+
+        if (Random() % sCriticalHitChance[critChance])
+            gCritMultiplier = 2;
+        else
+            gCritMultiplier = 1;
+    }
 
     gBattlescriptCurrInstr++;
 }

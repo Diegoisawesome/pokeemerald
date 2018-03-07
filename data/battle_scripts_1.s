@@ -58,7 +58,7 @@ gBattleScriptsForMoveEffects:: @ 82D86A8
 	.4byte BattleScript_EffectSuperFang
 	.4byte BattleScript_EffectDragonRage
 	.4byte BattleScript_EffectTrap
-	.4byte BattleScript_EffectHighCritical
+	.4byte BattleScript_EffectPlaceholder43
 	.4byte BattleScript_EffectDoubleHit
 	.4byte BattleScript_EffectRecoilIfMiss
 	.4byte BattleScript_EffectMist
@@ -118,7 +118,7 @@ gBattleScriptsForMoveEffects:: @ 82D86A8
 	.4byte BattleScript_EffectSpite
 	.4byte BattleScript_EffectFalseSwipe
 	.4byte BattleScript_EffectHealBell
-	.4byte BattleScript_EffectQuickAttack
+	.4byte BattleScript_EffectPlaceholder103
 	.4byte BattleScript_EffectTripleKick
 	.4byte BattleScript_EffectThief
 	.4byte BattleScript_EffectMeanLook
@@ -215,7 +215,7 @@ gBattleScriptsForMoveEffects:: @ 82D86A8
 	.4byte BattleScript_EffectSecretPower
 	.4byte BattleScript_EffectDoubleEdge
 	.4byte BattleScript_EffectTeeterDance
-	.4byte BattleScript_EffectBlazeKick
+	.4byte BattleScript_EffectPlaceholder200
 	.4byte BattleScript_EffectMudSport
 	.4byte BattleScript_EffectPoisonFang
 	.4byte BattleScript_EffectWeatherBall
@@ -224,7 +224,7 @@ gBattleScriptsForMoveEffects:: @ 82D86A8
 	.4byte BattleScript_EffectCosmicPower
 	.4byte BattleScript_EffectSkyUppercut
 	.4byte BattleScript_EffectBulkUp
-	.4byte BattleScript_EffectPoisonTail
+	.4byte BattleScript_EffectPlaceholder209
 	.4byte BattleScript_EffectWaterSport
 	.4byte BattleScript_EffectCalmMind
 	.4byte BattleScript_EffectDragonDance
@@ -236,7 +236,7 @@ BattleScript_EffectAccuracyUp::
 BattleScript_EffectAlwaysHit::
 BattleScript_EffectSpecialAttackDown::
 BattleScript_EffectSpecialDefenseDown::
-BattleScript_EffectHighCritical::
+BattleScript_EffectPlaceholder43::
 BattleScript_EffectAccuracyUp2::
 BattleScript_EffectEvasionUp2::
 BattleScript_EffectSpecialAttackDown2::
@@ -246,12 +246,14 @@ BattleScript_EffectEvasionDownHit::
 BattleScript_EffectVitalThrow::
 BattleScript_EffectUnused60::
 BattleScript_EffectFalseSwipe::
-BattleScript_EffectQuickAttack::
+BattleScript_EffectPlaceholder103::
 BattleScript_EffectUnused6e::
 BattleScript_EffectPursuit::
 BattleScript_EffectUnused83::
 BattleScript_EffectUnused8d::
 BattleScript_EffectUnusedA3::
+BattleScript_EffectPlaceholder200::
+BattleScript_EffectPlaceholder209:
 BattleScript_EffectHit::
 	jumpifnotmove MOVE_SURF, BattleScript_HitFromAtkCanceler
 	jumpifnostatus3 BS_TARGET, STATUS3_UNDERWATER, BattleScript_HitFromAtkCanceler
@@ -336,8 +338,7 @@ BattleScript_CantMakeAsleep::
 	waitmessage 0x40
 	goto BattleScript_MoveEnd
 
-BattleScript_EffectPoisonHit::
-BattleScript_EffectPoisonTail::
+BattleScript_EffectPoisonHit:
 	setmoveeffect MOVE_EFFECT_POISON
 	goto BattleScript_EffectHit
 
@@ -381,7 +382,6 @@ BattleScript_AbsorbTryFainting::
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectBurnHit::
-BattleScript_EffectBlazeKick::
 	setmoveeffect MOVE_EFFECT_BURN
 	goto BattleScript_EffectHit
 
