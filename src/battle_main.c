@@ -3275,7 +3275,7 @@ void FaintClearSetData(void)
 
     gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
     gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
-    gBattleMons[gActiveBattler].type3 = TYPE_MYSTERY;
+    gBattleMons[gActiveBattler].type3 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
 
     ClearBattlerMoveHistory(gActiveBattler);
     ClearBattlerAbilityHistory(gActiveBattler);
@@ -3344,7 +3344,7 @@ static void BattleIntroDrawTrainersOrMonsSprites(void)
 
             gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
             gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
-            gBattleMons[gActiveBattler].type3 = TYPE_MYSTERY;
+            gBattleMons[gActiveBattler].type3 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
             gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].altAbility);
             hpOnSwitchout = &gBattleStruct->hpOnSwitchout[GetBattlerSide(gActiveBattler)];
             *hpOnSwitchout = gBattleMons[gActiveBattler].hp;
@@ -4935,7 +4935,7 @@ static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void)
 static void RunTurnActionsFunctions(void)
 {
     if (gBattleOutcome != 0)
-        gCurrentActionFuncId = 12;
+        gCurrentActionFuncId = B_ACTION_FINISHED;
 
     *(&gBattleStruct->savedTurnActionNumber) = gCurrentTurnActionNumber;
     sTurnActionsFuncsTable[gCurrentActionFuncId]();
@@ -5263,6 +5263,7 @@ static void HandleAction_UseMove(void)
 {
     u8 side;
     u8 var = 4;
+    bool32 noTarget = FALSE;
 
     gBattlerAttacker = gBattleTurnOrder[gCurrentTurnActionNumber];
 
@@ -5444,6 +5445,29 @@ static void HandleAction_UseMove(void)
         }
     }
 
+    // check if target is not already fainted
+    switch (gBattleMoves[gChosenMove].target)
+    {
+    case MOVE_TARGET_SELECTED:
+    case MOVE_TARGET_DEPENDS:
+    case MOVE_TARGET_RANDOM:
+    case MOVE_TARGET_BOTH:
+        if (gBattleMons[gBattlerTarget].hp == 0)
+        {
+            if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE)) // one target possible to choose, already fainted
+            {
+                noTarget = TRUE;
+            }
+            else
+            {
+                gBattlerTarget ^= BIT_FLANK;
+                if (gBattleMons[gBattlerTarget].hp == 0)
+                    noTarget = TRUE;
+            }
+        }
+        break;
+    }
+
     // choose battlescript
     if (gBattleTypeFlags & BATTLE_TYPE_PALACE
         && gProtectStructs[gBattlerAttacker].flag_x10)
@@ -5464,6 +5488,10 @@ static void HandleAction_UseMove(void)
             gBattleCommunication[MULTISTRING_CHOOSER] = 4;
             gBattlescriptCurrInstr = BattleScript_MoveUsedLoafingAround;
         }
+    }
+    else if (noTarget)
+    {
+        gBattlescriptCurrInstr = BattleScript_ButItFailed;
     }
     else
     {
@@ -5801,11 +5829,8 @@ static void HandleAction_Action9(void)
 
 static void HandleAction_Action11(void)
 {
-    if (!HandleFaintedMonActions())
-    {
-        gBattleStruct->faintedActionsState = 0;
-        gCurrentActionFuncId = B_ACTION_FINISHED;
-    }
+    gBattleStruct->faintedActionsState = 0;
+    gCurrentActionFuncId = B_ACTION_FINISHED;
 }
 
 static void HandleAction_NothingIsFainted(void)

@@ -35,6 +35,7 @@
 // The exact purposes of these are unclear
 #define B_ACTION_UNKNOWN9               9
 #define B_ACTION_EXEC_SCRIPT            10 // when executing an action
+#define B_ACTION_11                     11 // when executing an action
 #define B_ACTION_CANCEL_PARTNER         12 // when choosing an action
 #define B_ACTION_FINISHED               12 // when executing an action
 #define B_ACTION_NOTHING_FAINTED        13 // when choosing an action
@@ -572,17 +573,18 @@ struct BattleStruct
         typeArg = gBattleMoves[move].type;                  \
 }
 
-#define IS_MOVE_PHYSICAL(moveType)(moveType < TYPE_MYSTERY)
-#define IS_MOVE_SPECIAL(moveType)(moveType > TYPE_MYSTERY)
+#define IS_MOVE_PHYSICAL(move)(gBattleMoves[move].split == SPLIT_PHYSICAL)
+#define IS_MOVE_SPECIAL(move)(gBattleMoves[move].split == SPLIT_SPECIAL)
 
 #define BATTLER_MAX_HP(battlerId)(gBattleMons[battlerId].hp == gBattleMons[battlerId].maxHP)
 #define TARGET_TURN_DAMAGED ((gSpecialStatuses[gBattlerTarget].physicalDmg != 0 || gSpecialStatuses[gBattlerTarget].specialDmg != 0))
 
-#define IS_BATTLER_OF_TYPE(battlerId, type)((gBattleMons[battlerId].type1 == type || gBattleMons[battlerId].type2 == type))
+#define IS_BATTLER_OF_TYPE(battlerId, type)((gBattleMons[battlerId].type1 == type || gBattleMons[battlerId].type2 == type || gBattleMons[battlerId].type3 == type))
 #define SET_BATTLER_TYPE(battlerId, type)   \
 {                                           \
     gBattleMons[battlerId].type1 = type;    \
     gBattleMons[battlerId].type2 = type;    \
+    gBattleMons[battlerId].type3 = type;    \
 }
 
 #define GET_STAT_BUFF_ID(n)((n & 0xF))              // first four bits 0x1, 0x2, 0x4, 0x8

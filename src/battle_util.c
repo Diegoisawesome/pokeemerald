@@ -2498,7 +2498,7 @@ void BattleScriptExecute(const u8 *BS_ptr)
     gBattlescriptCurrInstr = BS_ptr;
     gBattleResources->battleCallbackStack->function[gBattleResources->battleCallbackStack->size++] = gBattleMainFunc;
     gBattleMainFunc = RunBattleScriptCommands_PopCallbacksStack;
-    gCurrentActionFuncId = 0;
+    gCurrentActionFuncId = B_ACTION_USE_MOVE;
 }
 
 void BattleScriptPushCursorAndCallback(const u8 *BS_ptr)
