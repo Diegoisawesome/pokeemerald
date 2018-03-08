@@ -152,6 +152,10 @@ extern void sub_8124610(u8 *a, u8 b);
 extern int GetPlayerIDAsU32();
 extern u8 GetCurrentPpToMaxPpState(u8 a, u8 b);
 
+extern void LoadPSSIconsGfx(void);
+extern void TryDestroyPSSIconSprite(void);
+extern u8 CreatePSSIconSprite(u32 split, s16 xPos, s16 yPos);
+
 void sub_81BFAE4(void);
 void sub_81BFE24();
 u8 sub_81BFEB0();
@@ -271,7 +275,6 @@ union UnkUnion
     struct Pokemon mon[6];
     struct BoxPokemon boxMon[6];
 };
-
 
 u8 sub_80D214C(union UnkUnion* a, u8 b, u8 c, u8 d);
 
@@ -541,6 +544,10 @@ bool8 sub_81BFB10(void)
     case 24:
         BeginNormalPaletteFade(-1, 0, 16, 0, 0);
         gPaletteFade.bufferTransferDisabled = 0;
+        gMain.state++;
+        break;
+    case 25:
+        LoadPSSIconsGfx();
         gMain.state++;
         break;
     default:
@@ -820,6 +827,7 @@ void sub_81C0510(u8 taskId)
         }
         else if (gMain.newKeys & B_BUTTON)
         {
+            TryDestroyPSSIconSprite();
             sub_81C48F0();
             PlaySE(SE_SELECT);
             sub_81C044C(taskId);
@@ -1251,6 +1259,7 @@ void sub_81C1070(s16 *a, s8 b, u8 *c)
     }
     if (*c != 4 && moveIndex == 4 && gUnknown_0203CF1C->unk40C4 == 0)
     {
+        TryDestroyPSSIconSprite();
         ClearWindowTilemap(14);
         ClearWindowTilemap(15);
         schedule_bg_copy_tilemap_to_vram(0);
@@ -1275,6 +1284,7 @@ void sub_81C11F4(u8 taskId)
     sub_81C4064();
     if (gUnknown_0203CF1C->unk40C6 != 4)
     {
+        TryDestroyPSSIconSprite();
         ClearWindowTilemap(14);
         ClearWindowTilemap(15);
         sub_81C1DA4(0, 3);
@@ -1850,6 +1860,7 @@ bool8 sub_81C18A8()
 
 void sub_81C18F4(u8 taskId)
 {
+    TryDestroyPSSIconSprite();
     ClearWindowTilemap(14);
     ClearWindowTilemap(15);
     schedule_bg_copy_tilemap_to_vram(0);
@@ -2753,8 +2764,11 @@ void sub_81C2C38(u8 a)
         case 2:
             if (gUnknown_0203CF1C->unk40BC == 3)
             {
-                if(!(gUnknown_0203CF1C->unk40C4 == 0 && gUnknown_0203CF1C->unk40C6 == 4))
+                if (!(gUnknown_0203CF1C->unk40C4 == 0 && gUnknown_0203CF1C->unk40C6 == 4))
+                {
+                    TryDestroyPSSIconSprite();
                     ClearWindowTilemap(14);
+                }
             }
             else
                 ClearWindowTilemap(5);
@@ -3594,6 +3608,7 @@ void sub_81C3C5C(u16 move)
             ConvertIntToDecimalStringN(gStringVar1, gBattleMoves[move].power, 1, 3);
             text = gStringVar1;
         }
+
         sub_81C25A4(14, text, 0x35, 1, 0, 0);
         if (gBattleMoves[move].accuracy == 0)
             text = gText_ThreeDashes;
@@ -3603,6 +3618,9 @@ void sub_81C3C5C(u16 move)
             text = gStringVar1;
         }
         sub_81C25A4(14, text, 0x35, 17, 0, 0);
+
+        TryDestroyPSSIconSprite();
+        CreatePSSIconSprite(gBattleMoves[move].split, 47, 128);
     }
 }
 

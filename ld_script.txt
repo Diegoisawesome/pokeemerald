@@ -270,6 +270,7 @@ SECTIONS {
         asm/contest_link_81D9DE4.o(.text);
         src/gym_leader_rematch.o(.text);
         src/unk_transition.o(.text);
+        src/move_split_icons.o(.text);
         src/international_string_util.o(.text);
         asm/international_string_util.o(.text);
     } =0
@@ -547,6 +548,7 @@ SECTIONS {
         data/mystery_event_msg.o(.rodata);
         src/m4a_tables.o(.rodata);
         data/sound_data.o(.rodata);
+        src/move_split_icons.o(.rodata);
     } =0
 
     song_data :
