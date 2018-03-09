@@ -290,5 +290,8 @@ extern const u8 BattleScript_SturdiedMsg[];
 extern const u8 BattleScript_ImposterActivates[];
 extern const u8 BattleScript_IteamTakeHP_End2[];
 extern const u8 BattleScript_ToxicFlameOrb[];
+extern const u8 BattleScript_WeakArmorActivates[];
+extern const u8 BattleScript_GooeyActivates[];
+extern const u8 BattleScript_RattledActivates[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

@@ -4281,7 +4281,65 @@ BattleScript_CuteCharmActivates::
 	printstring STRINGID_PKMNSXINFATUATEDY
 	waitmessage 0x40
 	return
+	
+BattleScript_PrintDefAbilityActivates:
+	printstring STRINGID_DEFABILITYIN
+	waitmessage 0x40
+	return
+	
+BattleScript_TryStatChangeDownTarget:
+	statbuffchange 0x1, BattleScript_StatChangeDownPrint
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, 0x2, BattleScript_StatChangeDownPrint
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	waitanimation
+BattleScript_StatChangeDownPrint:
+	printfromtable gStatDownStringIds
+	waitmessage 0x40
+	return
+	
+BattleScript_TryStatChangeDownAttacker:
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | 0x1, BattleScript_StatChangeDownPrint
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, 0x2, BattleScript_StatChangeDownPrint
+	setgraphicalstatchangevalues
+	playanimation BS_ATTACKER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	waitanimation
+	goto BattleScript_StatChangeDownPrint
+	
+BattleScript_TryStatChangeUpTarget:
+	statbuffchange 0x1, BattleScript_StatChangeUpWont
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, 0x2, BattleScript_StatChangeUpWont
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	waitanimation
+BattleScript_StatChangeUpWont:
+	printfromtable gStatUpStringIds
+	waitmessage 0x40
+	return
+	
+BattleScript_WeakArmorActivates::
+	call BattleScript_PrintDefAbilityActivates
+	setstatchanger STAT_DEF, 1, TRUE
+	call BattleScript_TryStatChangeDownTarget
+	setstatchanger STAT_SPEED, 2, FALSE
+	call BattleScript_TryStatChangeUpTarget
+	return
+	
+BattleScript_GooeyActivates::
+	call BattleScript_PrintDefAbilityActivates
+	setstatchanger STAT_SPEED, 1, TRUE
+	call BattleScript_TryStatChangeDownAttacker
+	return
 
+BattleScript_RattledActivates::
+	setstatchanger STAT_SPEED, 1, FALSE
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	waitanimation
+	printstring STRINGID_PKMNRAISEDSPEED
+	waitmessage 0x40
+	return
+	
 BattleScript_ApplySecondaryEffect::
 	waitstate
 	seteffectsecondary

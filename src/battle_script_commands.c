@@ -1308,7 +1308,7 @@ static void atk04_critcalc(void)
         if (critChance > 3)
             critChance = 3;
 
-        if (Random() % sCriticalHitChance[critChance])
+        if (Random() % sCriticalHitChance[critChance] == 0)
             gCritMultiplier = 2;
         else
             gCritMultiplier = 1;

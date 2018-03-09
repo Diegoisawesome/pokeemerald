@@ -518,6 +518,7 @@ static const s8 sText_PowerHerbActivation[] = _("{B_ATK_NAME_WITH_PREFIX} became
 static const s8 sText_HurtByItem[] = _("{B_ATK_NAME_WITH_PREFIX} was hurt\nby its {B_LAST_ITEM}!");
 static const s8 sText_BadlyPoisonedByItem[] = _("{B_EFF_NAME_WITH_PREFIX} was badly \npoisoned by the {B_LAST_ITEM}!");
 static const s8 sText_BurnedByItem[] = _("{B_EFF_NAME_WITH_PREFIX} was burned\nby the {B_LAST_ITEM}!");
+static const s8 sText_TargetAbilityActivates[] = _("{B_DEF_NAME_WITH_PREFIX}’s {B_DEF_ABILITY} activates!");
 
 const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 {
@@ -895,6 +896,7 @@ const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     sText_HurtByItem, // 383
     sText_BadlyPoisonedByItem, // 384
     sText_BurnedByItem, // 385
+    sText_TargetAbilityActivates, // 386
 };
 
 const u16 gMissStringIds[] =

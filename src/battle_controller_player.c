@@ -50,11 +50,6 @@ extern void sub_806A068(u16, u8);
 extern void sub_81A57E4(u8 battlerId, u16 stringId);
 extern void sub_81851A8(u8 *);
 
-extern void LoadPSSIconsGfx(void);
-extern void TryDestroyPSSIconSprite(void);
-extern u8 CreatePSSIconSprite(u32 split, s16 xPos, s16 yPos);
-extern void DestroyPSSIconSpriteIn(s16 frames);
-
 // this file's functions
 static void PlayerHandleGetMonData(void);
 void PlayerHandleGetRawMonData(void);
@@ -120,7 +115,6 @@ static void HandleInputChooseMove(void);
 static void MoveSelectionCreateCursorAt(u8 cursorPos, u8 arg1);
 static void MoveSelectionDestroyCursorAt(u8 cursorPos);
 static void MoveSelectionDisplayPpNumber(void);
-static void MoveSelectionDisplayPSSIcon(void);
 static void MoveSelectionDisplayPpString(void);
 static void MoveSelectionDisplayMoveType(void);
 static void MoveSelectionDisplayMoveNames(void);
@@ -387,7 +381,6 @@ static void HandleInputChooseTarget(void)
     {
         PlaySE(SE_SELECT);
         gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = sub_8039B2C;
-        DestroyPSSIconSpriteIn(9);
         BtlController_EmitTwoReturnValues(1, 10, gMoveSelectionCursor[gActiveBattler] | (gMultiUsePlayerCursor << 8));
         dp11b_obj_free(gMultiUsePlayerCursor, 1);
         PlayerBufferExecCompleted();
@@ -542,11 +535,6 @@ static void HandleInputChooseMove(void)
 
         if (!canSelectTarget)
         {
-            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
-                DestroyPSSIconSpriteIn(1);
-            else
-                DestroyPSSIconSpriteIn(9);
-
             BtlController_EmitTwoReturnValues(1, 10, gMoveSelectionCursor[gActiveBattler] | (gMultiUsePlayerCursor << 8));
             PlayerBufferExecCompleted();
         }
@@ -567,7 +555,6 @@ static void HandleInputChooseMove(void)
     else if (gMain.newKeys & B_BUTTON || gPlayerDpadHoldFrames > 59)
     {
         PlaySE(SE_SELECT);
-        DestroyPSSIconSpriteIn(3);
         BtlController_EmitTwoReturnValues(1, 10, 0xFFFF);
         PlayerBufferExecCompleted();
     }
@@ -579,7 +566,6 @@ static void HandleInputChooseMove(void)
             gMoveSelectionCursor[gActiveBattler] ^= 1;
             PlaySE(SE_SELECT);
             MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
-            MoveSelectionDisplayPSSIcon();
             MoveSelectionDisplayPpNumber();
             MoveSelectionDisplayMoveType();
         }
@@ -593,7 +579,6 @@ static void HandleInputChooseMove(void)
             gMoveSelectionCursor[gActiveBattler] ^= 1;
             PlaySE(SE_SELECT);
             MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
-            MoveSelectionDisplayPSSIcon();
             MoveSelectionDisplayPpNumber();
             MoveSelectionDisplayMoveType();
         }
@@ -606,7 +591,6 @@ static void HandleInputChooseMove(void)
             gMoveSelectionCursor[gActiveBattler] ^= 2;
             PlaySE(SE_SELECT);
             MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
-            MoveSelectionDisplayPSSIcon();
             MoveSelectionDisplayPpNumber();
             MoveSelectionDisplayMoveType();
         }
@@ -620,7 +604,6 @@ static void HandleInputChooseMove(void)
             gMoveSelectionCursor[gActiveBattler] ^= 2;
             PlaySE(SE_SELECT);
             MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
-            MoveSelectionDisplayPSSIcon();
             MoveSelectionDisplayPpNumber();
             MoveSelectionDisplayMoveType();
         }
@@ -636,7 +619,6 @@ static void HandleInputChooseMove(void)
             else
                 gMultiUsePlayerCursor = gMoveSelectionCursor[gActiveBattler] + 1;
 
-            DestroyPSSIconSpriteIn(1);
             MoveSelectionCreateCursorAt(gMultiUsePlayerCursor, 27);
             BattleHandleAddTextPrinter(gText_BattleSwitchWhich, 0xB);
             gBattlerControllerFuncs[gActiveBattler] = HandleMoveSwitchting;
@@ -791,7 +773,6 @@ static void HandleMoveSwitchting(void)
         gMoveSelectionCursor[gActiveBattler] = gMultiUsePlayerCursor;
         MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
         MoveSelectionDisplayPpString();
-        MoveSelectionDisplayPSSIcon();
         MoveSelectionDisplayPpNumber();
         MoveSelectionDisplayMoveType();
     }
@@ -802,7 +783,6 @@ static void HandleMoveSwitchting(void)
         MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
         gBattlerControllerFuncs[gActiveBattler] = HandleInputChooseMove;
         MoveSelectionDisplayPpString();
-        MoveSelectionDisplayPSSIcon();
         MoveSelectionDisplayPpNumber();
         MoveSelectionDisplayMoveType();
     }
@@ -1488,14 +1468,6 @@ static void MoveSelectionDisplayPpString(void)
 {
     StringCopy(gDisplayedStringBattle, gText_MoveInterfacePP);
     BattleHandleAddTextPrinter(gDisplayedStringBattle, 7);
-}
-
-static void MoveSelectionDisplayPSSIcon(void)
-{
-    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct*)(&gBattleBufferA[gActiveBattler][4]);
-    u16 moveId = moveInfo->moves[gMoveSelectionCursor[gActiveBattler]];
-    TryDestroyPSSIconSprite();
-    CreatePSSIconSprite(gBattleMoves[moveId].split, 187, 128);
 }
 
 static void MoveSelectionDisplayPpNumber(void)
@@ -2642,7 +2614,6 @@ static void PlayerChooseMoveInBattlePalace(void)
 
 static void PlayerHandleChooseMove(void)
 {
-    LoadPSSIconsGfx();
     if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
     {
         *(gBattleStruct->field_298 + gActiveBattler) = 8;
@@ -2661,7 +2632,6 @@ void InitMoveSelectionsVarsAndStrings(void)
     gMultiUsePlayerCursor = 0xFF;
     MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
     MoveSelectionDisplayPpString();
-    MoveSelectionDisplayPSSIcon();
     MoveSelectionDisplayPpNumber();
     MoveSelectionDisplayMoveType();
 }
