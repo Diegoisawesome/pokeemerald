@@ -43,7 +43,7 @@ extern void sub_81A36D0(u8 arg0, u16 trainerId); // battle_frontier_2
 extern void sub_81D572C(u8 arg0, u16 trainerId); // pokenav
 extern void GetFrontierTrainerName(u8 *dst, u16 trainerId);
 
-// this file's functions
+// this file’s functions
 static void sub_814F8F8(u8 *textPtr);
 static void sub_814F950(u8 *dst);
 static void ExpandBattleTextBuffPlaceholders(const u8 *src, u8 *dst);
@@ -519,6 +519,50 @@ static const s8 sText_HurtByItem[] = _("{B_ATK_NAME_WITH_PREFIX} was hurt\nby it
 static const s8 sText_BadlyPoisonedByItem[] = _("{B_EFF_NAME_WITH_PREFIX} was badly \npoisoned by the {B_LAST_ITEM}!");
 static const s8 sText_BurnedByItem[] = _("{B_EFF_NAME_WITH_PREFIX} was burned\nby the {B_LAST_ITEM}!");
 static const s8 sText_TargetAbilityActivates[] = _("{B_DEF_NAME_WITH_PREFIX}’s {B_DEF_ABILITY} activates!");
+static const u8 sText_GravityIntensified[] = _("GRAVITY intensified!");
+static const u8 sText_TargetIdentified[] = _("{B_DEF_NAME_WITH_PREFIX} was \nidentified!");
+static const u8 sText_TargetWokeUp[] = _("{B_DEF_NAME_WITH_PREFIX} woke up!");
+static const u8 sText_PkmnStoleAndAteItem[] = _("{B_ATK_NAME_WITH_PREFIX} stole and\nate {B_DEF_NAME_WITH_PREFIX}’s {B_LAST_ITEM}!");
+static const u8 sText_TailWindBlew[] = _("The tailwind blew from\nbehind your team!");
+static const u8 sText_PkmnWentBack[] = _("{B_ATK_NAME_WITH_PREFIX} went back\nto {B_ATK_TRAINER_NAME}");
+static const u8 sText_PkmnCantUseItemsAnymore[] = _("{B_DEF_NAME_WITH_PREFIX} can’t use\nitems anymore!");
+static const u8 sText_PkmnFlung[] = _("{B_ATK_NAME_WITH_PREFIX} flung its\n{B_LAST_ITEM}!");
+static const u8 sText_PkmnPreventedFromHealing[] = _("{B_DEF_NAME_WITH_PREFIX} was prevented\nfrom healing!");
+static const u8 sText_PkmnSwitchedAtkAndDef[] = _("{B_ATK_NAME_WITH_PREFIX} switched its\nAttack and Defense!");
+static const u8 sText_PkmnsAbilitySuppressed[] = _("{B_DEF_NAME_WITH_PREFIX}’s ability\nwas suppressed!");
+static const u8 sText_ShieldedFromCriticalHits[] = _("The {B_CURRENT_MOVE} shielded your\nteam from critical hits!");
+static const u8 sText_SwitchedAtkAndSpAtk[] = _("{B_ATK_NAME_WITH_PREFIX} switched all its\nchanges to its Attack and\pSp. Atk with the target!");
+static const u8 sText_SwitchedDefAndSpDef[] = _("{B_ATK_NAME_WITH_PREFIX} switched all its\nchanges to its Defense and\pSp. Def with the target!");
+static const u8 sText_PkmnAcquiredAbility[] = _("{B_DEF_NAME_WITH_PREFIX} acquired\n{B_LAST_ABILITY}!");
+static const u8 sText_PoisonSpikesScattered[] = _("Poison Spikes were scattered\nall around the foe’s team’s\pfeet!");
+static const u8 sText_PkmnSwitchedStatChanges[] = _("{B_ATK_NAME_WITH_PREFIX} switched stat changes\nwith the target!");
+static const u8 sText_PkmnSurroundedWithVeilOfWater[] = _("{B_ATK_NAME_WITH_PREFIX} surrounded itself\nwith a veil of water!");
+static const u8 sText_PkmnLevitatedOnElectromagnetism[] = _("{B_ATK_NAME_WITH_PREFIX} levitated on\nelectromagnetism!");
+static const u8 sText_PkmnTwistedDimensions[] = _("{B_ATK_NAME_WITH_PREFIX} twisted\nthe dimensions!");
+static const u8 sText_PointedStonesFloat[] =_("Pointed stones float in the air\naround your foe’s team!");
+static const u8 sText_CloakedInMysticalMoonlight[] =_("It became cloaked in mystical\nmoonlight!");
+static const u8 sText_TrappedBySwirlingMagma[] =_("{B_DEF_NAME_WITH_PREFIX} became\ntrapped by swirling magma!");
+static const u8 sText_VanishedInstantly[] =_("{B_ATK_NAME_WITH_PREFIX} Vanished\ninstantly!");
+static const u8 sText_ProtectedTeam[] =_("Wide Guard protected your team!");
+static const u8 sText_SharedItsGuard[] =_("{B_ATK_NAME_WITH_PREFIX} shared its\nguard with the target!");
+static const u8 sText_SharedItsPower[] =_("{B_ATK_NAME_WITH_PREFIX} shared its\npower with the target!");
+static const u8 sText_SwapsDefAndSpDefOfAllPkmn[] =_("It created a bizarre area in which\nthe Defense and Sp.Def stats are swapped!");
+static const u8 sText_BecameNimble[] =_("{B_ATK_NAME_WITH_PREFIX} became nimble!");
+static const u8 sText_HurledIntoTheAir[] =_("{B_DEF_NAME_WITH_PREFIX} was hurled\ninto the air!");
+static const u8 sText_HeldItemsLoseEffects[] =_("It created a bizarra area in which\nPokémon’s held items lose their effects!");
+static const u8 sText_FellStraightDown[] =_("{B_DEF_NAME_WITH_PREFIX} fell\nstraight down!");
+static const u8 sText_TransformedIntoWaterType[] =_("{B_DEF_NAME_WITH_PREFIX} transformed\ninto the water type!");
+static const u8 sText_PkmnAcquiredSimple[] =_("{B_DEF_NAME_WITH_PREFIX} acquired\nSimple!");
+static const u8 sText_KindOffer[] =_("{B_DEF_NAME_WITH_PREFIX}\ntook the kind offer!");
+static const u8 sText_ResetsTargetsStatLevels[] =_("{B_DEF_NAME_WITH_PREFIX} stat changes\nwere removed!");
+static const u8 sText_ProtectsTeamFromPriority[] =_("Quick Guard protected your team!");
+static const u8 sText_AllySwitchPosition[] =_("{B_ATK_NAME_WITH_PREFIX} and\n{B_SCR_ACTIVE_NAME_WITH_PREFIX} switched places!");
+static const u8 sText_RestoreTargetsHealth[] =_("{B_DEF_NAME_WITH_PREFIX}’s HP was restored!");
+static const u8 sText_TookPkmnIntoTheSky[] =_("{B_ATK_NAME_WITH_PREFIX} took\n{B_DEF_NAME_WITH_PREFIX} into the sky!");
+static const u8 sText_FreedFromSkyDrop[] =_("{B_DEF_NAME_WITH_PREFIX} was freed\nfrom the Sky Drop!");
+static const u8 sText_PostponeTargetMove[] =_("{B_DEF_NAME_WITH_PREFIX}’s move\nwas postponed!");
+static const u8 sText_ReflectTargetsType[] =_("{B_ATK_NAME_WITH_PREFIX}’s type\nchanged to match the {B_DEF_NAME_WITH_PREFIX}’s!");
+static const u8 sText_TransferHeldItem[] =_("{B_DEF_NAME_WITH_PREFIX} recieved {B_LAST_ITEM}\nfrom {B_ATK_NAME_WITH_PREFIX}");
 
 const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 {
@@ -897,6 +941,51 @@ const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     sText_BadlyPoisonedByItem, // 384
     sText_BurnedByItem, // 385
     sText_TargetAbilityActivates, // 386
+    sText_GravityIntensified, // 387
+    sText_TargetIdentified, // 388
+    sText_TargetWokeUp, // 389
+    sText_PkmnStoleAndAteItem, // 390
+    sText_TailWindBlew, // 391
+    sText_PkmnWentBack, // 392
+    sText_PkmnCantUseItemsAnymore, // 393
+    sText_PkmnFlung, // 394
+    sText_PkmnPreventedFromHealing, // 395
+    sText_PkmnSwitchedAtkAndDef, // 396
+    sText_PkmnsAbilitySuppressed, // 397
+    sText_ShieldedFromCriticalHits, // 398
+    sText_SwitchedAtkAndSpAtk, // 399
+    sText_SwitchedDefAndSpDef, // 400
+    sText_PkmnAcquiredAbility, // 401
+    sText_PoisonSpikesScattered, // 402
+    sText_PkmnSwitchedStatChanges, // 403
+    sText_PkmnSurroundedWithVeilOfWater, // 404
+    sText_PkmnLevitatedOnElectromagnetism, // 405
+    sText_PkmnTwistedDimensions, // 406
+    sText_PointedStonesFloat, // 407
+    sText_CloakedInMysticalMoonlight, // 408
+    sText_TrappedBySwirlingMagma, // 409
+    sText_VanishedInstantly, // 410
+    sText_ProtectedTeam, // 411
+    sText_SharedItsGuard, // 412
+    sText_SharedItsPower, // 413
+    sText_SwapsDefAndSpDefOfAllPkmn, // 414
+    sText_BecameNimble, // 415
+    sText_HurledIntoTheAir, // 416
+    sText_HeldItemsLoseEffects, // 417
+    sText_FellStraightDown, // 418
+    sText_TransformedIntoWaterType, // 419
+    sText_PkmnAcquiredSimple, // 420
+    sText_EmptyString4, // 421
+    sText_KindOffer, // 422
+    sText_ResetsTargetsStatLevels, // 423
+    sText_ProtectsTeamFromPriority, // 424
+    sText_AllySwitchPosition, // 425
+    sText_RestoreTargetsHealth, // 426
+    sText_TookPkmnIntoTheSky, // 427
+    sText_FreedFromSkyDrop, // 428
+    sText_PostponeTargetMove, // 429
+    sText_ReflectTargetsType, // 430
+    sText_TransferHeldItem, // 431
 };
 
 const u16 gMissStringIds[] =
@@ -2351,7 +2440,7 @@ static void sub_814F8F8(u8* textBuff)
         if (counter <= 2)
             StringCopy(textBuff, sText_SpaceIs); // is
         else if (counter <= 4)
-            StringCopy(textBuff, sText_ApostropheS); // 's
+            StringCopy(textBuff, sText_ApostropheS); // ’s
     }
 }
 
@@ -2359,7 +2448,7 @@ static void sub_814F8F8(u8* textBuff)
 // into the table of moves at sUnknownMoveTable and varied the line accordingly.
 //
 // sText_ExclamationMark was a plain "!", used for any attack not on the list.
-// It resulted in the translation "<NAME>'s <ATTACK>!".
+// It resulted in the translation "<NAME>’s <ATTACK>!".
 //
 // sText_ExclamationMark2 was "を つかった！". This resulted in the translation
 // "<NAME> used <ATTACK>!", which was used for all attacks in English.
@@ -2372,7 +2461,7 @@ static void sub_814F8F8(u8* textBuff)
 // "<NAME> did an <ATTACK>!".
 //
 // sText_ExclamationMark5 was " こうげき！" This resulted in a translation of
-// "<NAME>'s <ATTACK> attack!".
+// "<NAME>’s <ATTACK> attack!".
 static void sub_814F950(u8* dst)
 {
     s32 counter = 0;
