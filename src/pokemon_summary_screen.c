@@ -85,7 +85,7 @@ extern struct CompressedSpriteSheet gUnknown_0861D074;
 extern struct CompressedSpriteSheet gUnknown_0861D0F8;
 extern struct CompressedSpritePalette gUnknown_0861D100;
 extern struct CompressedSpritePalette gUnknown_0861D07C;
-extern u8 gMoveTypes_Pal;
+extern const u8 gMoveTypes_Pal[];
 extern u8 gUnknown_08D97D0C;
 extern void sub_81C1E20(u8 taskId);
 extern u8 *GetMonNickname(struct Pokemon *mon, u8 *dest);
@@ -636,7 +636,7 @@ u8 sub_81BFEB0()
         gUnknown_0203CF1C->unk40F0++;
         break;
     case 12:
-        LoadCompressedPalette(&gMoveTypes_Pal, 0x1D0, 0x60);
+        LoadPalette(gMoveTypes_Pal, 0x1D0, 0x60);
         gUnknown_0203CF1C->unk40F0 = 0;
         return 1;
     }

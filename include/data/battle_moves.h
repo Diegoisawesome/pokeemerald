@@ -2094,7 +2094,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_CURSE
 		.effect = EFFECT_CURSE,
 		.power = 0,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_GHOST,
 		.accuracy = 0,
 		.pp = 10,
 		.secondaryEffectChance = 0,
@@ -2454,7 +2454,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_CHARM
 		.effect = EFFECT_ATTACK_DOWN_2,
 		.power = 0,
-		.type = TYPE_NORMAL,
+		.type = TYPE_FAIRY,
 		.accuracy = 100,
 		.pp = 20,
 		.secondaryEffectChance = 0,
@@ -6894,7 +6894,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_DISARMING_VOICE
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 40,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 0,
 		.pp = 15,
 		.secondaryEffectChance = 0,
@@ -6930,7 +6930,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_DRAINING_KISS
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 50,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 100,
 		.pp = 10,
 		.secondaryEffectChance = 0,
@@ -6942,7 +6942,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_CRAFTY_SHIELD
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 0,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 0,
 		.pp = 10,
 		.secondaryEffectChance = 0,
@@ -6954,7 +6954,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_FLOWER_SHIELD
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 0,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 0,
 		.pp = 10,
 		.secondaryEffectChance = 0,
@@ -6978,7 +6978,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_MISTY_TERRAIN
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 0,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 0,
 		.pp = 10,
 		.secondaryEffectChance = 0,
@@ -7002,7 +7002,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_PLAY_ROUGH
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 90,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 90,
 		.pp = 10,
 		.secondaryEffectChance = 10,
@@ -7014,7 +7014,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_FAIRY_WIND
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 40,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 100,
 		.pp = 30,
 		.secondaryEffectChance = 0,
@@ -7026,7 +7026,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_MOONBLAST
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 95,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 100,
 		.pp = 15,
 		.secondaryEffectChance = 30,
@@ -7050,7 +7050,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_FAIRY_LOCK
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 0,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 0,
 		.pp = 10,
 		.secondaryEffectChance = 0,
@@ -7170,7 +7170,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_AROMATIC_MIST
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 0,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 0,
 		.pp = 20,
 		.secondaryEffectChance = 0,
@@ -7218,7 +7218,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_GEOMANCY
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 0,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 0,
 		.pp = 10,
 		.secondaryEffectChance = 0,
@@ -7266,7 +7266,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_DAZZLING_GLEAM
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 80,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 100,
 		.pp = 10,
 		.secondaryEffectChance = 0,
@@ -7302,7 +7302,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_BABY_DOLL_EYES
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 0,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 100,
 		.pp = 30,
 		.secondaryEffectChance = 0,
@@ -7410,7 +7410,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	{ // MOVE_LIGHT_OF_RUIN
 		.effect = EFFECT_PLACEHOLDER_209,
 		.power = 140,
-		.type = TYPE_MYSTERY,
+		.type = TYPE_FAIRY,
 		.accuracy = 90,
 		.pp = 5,
 		.secondaryEffectChance = 0,

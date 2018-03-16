@@ -3453,7 +3453,7 @@ gMoveTypes_Gfx:: @ 8D971B0
 
 	.align 2
 gMoveTypes_Pal:: @ 8D97B84
-	.incbin "graphics/types/move_types.gbapal.lz"
+	.incbin "graphics/types/move_types.gbapal"
 
 	.align 2
 gUnknown_08D97BEC:: @ 8D97BEC

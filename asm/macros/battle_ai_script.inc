@@ -467,8 +467,10 @@
 	.byte \bank
 	.endm
 
-	.macro nullsub_52
+	.macro if_field_status status ptr
 	.byte 0x52
+	.word \status
+	.word \ptr
 	.endm
 
 	.macro nullsub_53

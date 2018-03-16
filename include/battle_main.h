@@ -66,7 +66,7 @@ void RunBattleScriptCommands_PopCallbacksStack(void);
 void RunBattleScriptCommands(void);
 bool8 TryRunFromBattle(u8 battlerId);
 
-extern const u8 gTypeEffectiveness[336];
+extern const u8 gTypeEffectiveness[366];
 extern const u8 gTypeNames[][TYPE_NAME_LENGTH + 1];
 extern const struct TrainerMoney gTrainerMoneyTable[];
 extern const u8 gAbilityNames[][ABILITY_NAME_LENGTH + 1];

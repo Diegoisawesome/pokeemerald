@@ -570,7 +570,7 @@ AI_CBM_Refresh: @ 82DC713
 	end
 
 AI_CBM_MudSport: @ 82DC71E
-	if_status3 AI_USER, STATUS3_MUDSPORT, Score_Minus10
+	if_field_status STATUS_FIELD_MUDSPORT, Score_Minus10
 	end
 
 AI_CBM_Tickle: @ 82DC729
@@ -589,7 +589,7 @@ AI_CBM_BulkUp: @ 82DC74B
 	end
 
 AI_CBM_WaterSport: @ 82DC75C
-	if_status3 AI_USER, STATUS3_WATERSPORT, Score_Minus10
+	if_field_status STATUS_FIELD_WATERSPORT, Score_Minus10
 	end
 
 AI_CBM_CalmMind: @ 82DC767
@@ -688,7 +688,6 @@ AI_TryToFaint:
 	if_effect EFFECT_RAZOR_WIND, AI_CV_ChargeUpMove
 	if_effect EFFECT_SUPER_FANG, AI_CV_SuperFang
 	if_effect EFFECT_TRAP, AI_CV_Trap
-	if_effect EFFECT_HIGH_CRITICAL, AI_CV_HighCrit
 	if_effect EFFECT_CONFUSE, AI_CV_Confuse
 	if_effect EFFECT_ATTACK_UP_2, AI_CV_AttackUp
 	if_effect EFFECT_DEFENSE_UP_2, AI_CV_DefenseUp
@@ -768,13 +767,11 @@ AI_TryToFaint:
 	if_effect EFFECT_IMPRISON, AI_CV_Imprison
 	if_effect EFFECT_REFRESH, AI_CV_Refresh
 	if_effect EFFECT_SNATCH, AI_CV_Snatch
-	if_effect EFFECT_BLAZE_KICK, AI_CV_HighCrit
 	if_effect EFFECT_MUD_SPORT, AI_CV_MudSport
 	if_effect EFFECT_OVERHEAT, AI_CV_Overheat
 	if_effect EFFECT_TICKLE, AI_CV_DefenseDown
 	if_effect EFFECT_COSMIC_POWER, AI_CV_SpDefUp
 	if_effect EFFECT_BULK_UP, AI_CV_DefenseUp
-	if_effect EFFECT_POISON_TAIL, AI_CV_HighCrit
 	if_effect EFFECT_WATER_SPORT, AI_CV_WaterSport
 	if_effect EFFECT_CALM_MIND, AI_CV_SpDefUp
 	if_effect EFFECT_DRAGON_DANCE, AI_CV_DragonDance
@@ -2771,7 +2768,7 @@ BattleAIScript_82DDE57:
 
 AI_TryToFaint_TryToEncourageQuickAttack:
 	if_effect EFFECT_EXPLOSION, AI_TryToFaint_End
-	if_not_effect EFFECT_QUICK_ATTACK, AI_TryToFaint_ScoreUp4
+	if_target_faster AI_TryToFaint_ScoreUp4
 	score +2
 
 AI_TryToFaint_ScoreUp4:
@@ -2875,7 +2872,6 @@ AI_Risky_EffectsToEncourage:
     .byte EFFECT_EXPLOSION
     .byte EFFECT_MIRROR_MOVE
     .byte EFFECT_OHKO
-    .byte EFFECT_HIGH_CRITICAL
     .byte EFFECT_CONFUSE
     .byte EFFECT_METRONOME
     .byte EFFECT_PSYWAVE
