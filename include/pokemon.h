@@ -391,7 +391,7 @@ struct BattleMove
     u8 secondaryEffectChance;
     u8 target;
     s8 priority;
-    u8 flags;
+    u16 flags;
     u8 split;
 };
 
@@ -402,6 +402,11 @@ struct BattleMove
 #define FLAG_MIRROR_MOVE_AFFECTED   0x10
 #define FLAG_KINGSROCK_AFFECTED     0x20
 #define FLAG_HIGH_CRIT              0x40
+#define FLAG_RECKLESS_BOOST         0x80
+#define FLAG_IRON_FIST_BOOST        0x100
+#define FLAG_SHEER_FORCE_BOOST      0x200
+#define FLAG_STRONG_JAW_BOOST       0x400
+#define FLAG_MEGA_LAUNCHER_BOOST    0x800
 
 #define SPLIT_PHYSICAL  0x0
 #define SPLIT_SPECIAL   0x1
@@ -527,8 +532,7 @@ void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon);
 u16 MonTryLearningNewMove(struct Pokemon *mon, bool8 firstMove);
 void DeleteFirstMoveAndGiveMoveToMon(struct Pokemon *mon, u16 move);
 void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move);
-s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 bankAtk, u8 bankDef);
-
+s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef);
 u8 CountAliveMonsInBattle(u8 caseId);
 #define BATTLE_ALIVE_EXCEPT_ACTIVE  0
 #define BATTLE_ALIVE_ATK_SIDE       1

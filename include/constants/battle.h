@@ -150,6 +150,8 @@
 #define STATUS3_TRACE                   0x100000
 #define STATUS3_GASTRO_ACID             0x200000
 #define STATUS3_EMBARGO                 0x400000
+#define STATUS3_TELEKINESIS             0x800000
+#define STATUS3_SMACKED_DOWN            0x1000000
 #define STATUS3_SEMI_INVULNERABLE       (STATUS3_UNDERGROUND | STATUS3_ON_AIR | STATUS3_UNDERWATER)
 
 // Field affecting statuses.
@@ -158,6 +160,10 @@
 #define STATUS_FIELD_WONDER_ROOM        0x4
 #define STATUS_FIELD_MUDSPORT           0x8
 #define STATUS_FIELD_WATERSPORT         0x10
+#define STATUS_FIELD_GRAVITY            0x20
+#define STATUS_FIELD_GRASSY_TERRAIN     0x40
+#define STATUS_FIELD_MISTY_TERRAIN      0x80
+#define STATUS_FIELD_ELECTRIC_TERRAIN   0x100
 
 // Not really sure what a "hitmarker" is.
 #define HITMARKER_x10                   0x00000010

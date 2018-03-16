@@ -29,6 +29,8 @@
 #define ABILITYEFFECT_CHECK_ON_FIELD            0x13
 #define ABILITYEFFECT_SWITCH_IN_WEATHER         0xFF
 
+#define IS_ABILITY_ON_FIELD(ability)(AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ability, 0, 0))
+
 #define ITEMEFFECT_ON_SWITCH_IN                 0x0
 
 #define WEATHER_HAS_EFFECT ((!AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ABILITY_CLOUD_NINE, 0, 0) && !AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ABILITY_AIR_LOCK, 0, 0)))
@@ -81,5 +83,8 @@ u8 GetMoveTarget(u16 move, u8 setTarget);
 u8 IsMonDisobedient(void);
 u32 GetBattlerAbility(u8 battlerId);
 u32 GetBattlerHoldEffect(u8 battlerId, bool32 checkNegating);
+u32 GetBattlerHoldEffectParam(u8 battlerId);
+bool32 IsMoveMakingContact(u16 move, u8 battlerAtk);
+bool32 IsBattlerGrounded(u8 battlerId);
 
 #endif // GUARD_BATTLE_UTIL_H

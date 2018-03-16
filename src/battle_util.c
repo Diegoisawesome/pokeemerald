@@ -3573,3 +3573,44 @@ u32 GetBattlerHoldEffect(u8 battlerId, bool32 checkNegating)
     else
         return ItemId_GetHoldEffect(gBattleMons[battlerId].item);
 }
+
+u32 GetBattlerHoldEffectParam(u8 battlerId)
+{
+    if (gBattleMons[battlerId].item == ITEM_ENIGMA_BERRY)
+        return gEnigmaBerries[battlerId].holdEffectParam;
+    else
+        return ItemId_GetHoldEffectParam(gBattleMons[battlerId].item);
+}
+
+bool32 IsMoveMakingContact(u16 move, u8 battlerAtk)
+{
+    if (!(gBattleMoves[move].flags & FLAG_MAKES_CONTACT))
+        return FALSE;
+    if (GetBattlerAbility(battlerAtk) == ABILITY_LONG_REACH)
+        return FALSE;
+    if (GetBattlerHoldEffect(battlerAtk, TRUE) == HOLD_EFFECT_PROTECTIVE_PADS)
+        return FALSE;
+
+    return TRUE;
+}
+
+bool32 IsBattlerGrounded(u8 battlerId)
+{
+    if (GetBattlerHoldEffect(battlerId, TRUE) == HOLD_EFFECT_IRON_BALL)
+        return TRUE;
+    if (gFieldStatuses & STATUS_FIELD_GRAVITY)
+        return TRUE;
+    if (gStatuses3[battlerId] & STATUS3_ROOTED)
+        return TRUE;
+    if (gStatuses3[battlerId] & STATUS3_SMACKED_DOWN)
+        return TRUE;
+
+    if (gStatuses3[battlerId] & STATUS3_TELEKINESIS)
+        return FALSE;
+    if (GetBattlerAbility(battlerId) == ABILITY_LEVITATE)
+        return FALSE;
+    if (IS_BATTLER_OF_TYPE(battlerId, TYPE_FLYING))
+        return FALSE;
+
+    return TRUE;
+}
