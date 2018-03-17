@@ -34,6 +34,7 @@
 #include "pokenav.h"
 #include "pokemon_storage_system.h"
 #include "recorded_battle.h"
+#include "battle_interface.h"
 
 struct SpeciesItem
 {
@@ -2190,139 +2191,6 @@ void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
     }
 
     SetBoxMonData(boxMon, MON_DATA_PP_BONUSES, &ppBonuses);
-}
-
-static const u8 sFlailHpScaleToPowerTable[] =
-{
-    1, 200,
-    4, 150,
-    9, 100,
-    16, 80,
-    32, 40,
-    48, 20
-};
-
-static u16 GetMoveBasePower(u16 move, u8 battlerAtk, u8 battlerDef)
-{
-    u32 i;
-    u16 basePower = gBattleMoves[move].power;
-    switch (gBattleMoves[move].effect)
-    {
-    case EFFECT_PLEDGE:
-        // todo
-        break;
-    case EFFECT_FLING:
-        // todo
-        break;
-    case EFFECT_ERUPTION:
-        basePower = gBattleMons[battlerAtk].hp * basePower / gBattleMons[battlerAtk].maxHP;
-        break;
-    case EFFECT_FLAIL:
-        for (i = 0; i < sizeof(sFlailHpScaleToPowerTable); i += 2)
-        {
-            if (GetScaledHPFraction(gBattleMons[battlerAtk].hp, gBattleMons[battlerAtk].maxHP, 48) <= sFlailHpScaleToPowerTable[i])
-                break;
-        }
-        basePower = sFlailHpScaleToPowerTable[i + 1];
-        break;
-    case EFFECT_RETURN:
-        basePower = 10 * (gBattleMons[battlerAtk].friendship) / 25;
-        break;
-    case EFFECT_FRUSTRATION:
-        basePower = 10 * (255 - gBattleMons[battlerAtk].friendship) / 25;
-        break;
-    case EFFECT_FURY_CUTTER:
-        for (i = 1; i < gDisableStructs[battlerAtk].furyCutterCounter; i++)
-            basePower *= 2;
-        break;
-    case EFFECT_ROLLOUT:
-        for (i = 1; i < (5 - gDisableStructs[battlerAtk].rolloutCounter1); i++)
-            basePower *= 2;
-        if (gBattleMons[battlerAtk].status2 & STATUS2_DEFENSE_CURL)
-            basePower *= 2;
-        break;
-    case EFFECT_MAGNITUDE:
-        basePower = gBattleStruct->magnitudeBasePower;
-        break;
-    case EFFECT_PRESENT:
-        basePower = gBattleStruct->presentBasePower;
-        break;
-    case EFFECT_TRIPLE_KICK:
-        basePower += gBattleScripting.tripleKickPower;
-        break;
-    case EFFECT_SPIT_UP:
-        basePower = 100 * gDisableStructs[battlerAtk].stockpileCounter;
-        break;
-    case EFFECT_REVENGE:
-        if ((gProtectStructs[battlerAtk].physicalDmg
-                && gProtectStructs[battlerAtk].physicalBattlerId == battlerDef)
-            || (gProtectStructs[battlerAtk].specialDmg
-                && gProtectStructs[battlerAtk].specialBattlerId == battlerDef))
-            basePower *= 2;
-        break;
-    case EFFECT_WEATHER_BALL:
-        if (WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_ANY)
-            basePower *= 2;
-        break;
-    case EFFECT_PURSUIT:
-        if (gCurrentActionFuncId == B_ACTION_SWITCH)
-            basePower *= 2;
-        break;
-    case EFFECT_NATURAL_GIFT:
-        // todo
-        break;
-    case EFFECT_WAKE_UP_SLAP:
-        if (gBattleMons[battlerDef].status1 & STATUS1_SLEEP)
-            basePower *= 2;
-        break;
-    case EFFECT_SMELLINGSALT:
-        if (gBattleMons[battlerDef].status1 & STATUS1_PARALYSIS)
-            basePower *= 2;
-        break;
-    case EFFECT_WRING_OUT:
-        basePower = 120 * gBattleMons[battlerDef].hp / gBattleMons[battlerDef].maxHP;
-        break;
-    case EFFECT_HEX:
-        if (gBattleMons[battlerDef].status1 & STATUS1_ANY)
-            basePower *= 2;
-        break;
-    case EFFECT_ASSURANCE:
-        if (gSpecialStatuses[battlerDef].physicalDmg != 0 || gSpecialStatuses[battlerDef].specialDmg != 0)
-            basePower *= 2;
-        break;
-    case EFFECT_TRUMP_CARD:
-        i = GetBattleMonMoveSlot(&gBattleMons[battlerAtk], move);
-        if (i != 4)
-        {
-            switch (gBattleMons[battlerAtk].pp[i])
-            {
-            case 0:
-                basePower = 200;
-                break;
-            case 1:
-                basePower = 80;
-                break;
-            case 2:
-                basePower = 60;
-                break;
-            case 3:
-                basePower = 50;
-                break;
-            default:
-                basePower = 40;
-                break;
-            }
-        }
-        break;
-    case EFFECT_ACROBATICS:
-        if (gBattleMons[battlerAtk].heldItem == ITEM_NONE)
-            basePower *= 2;
-        break;
-    }
-
-    if (basePower == 0)
-        basePower = 1;
-    return basePower;
 }
 
 #define APPLY_STAT_MOD(var, mon, stat, statIndex)                                   \

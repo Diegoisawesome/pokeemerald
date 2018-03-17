@@ -816,17 +816,6 @@ static const u16 sNaturePowerMoves[] =
     MOVE_SWIFT
 };
 
-// format: min. weight (hectograms), base power
-static const u16 sWeightToDamageTable[] =
-{
-    100, 20,
-    250, 40,
-    500, 60,
-    1000, 80,
-    2000, 100,
-    0xFFFF, 0xFFFF
-};
-
 static const u16 sPickupItems[] =
 {
     ITEM_POTION,

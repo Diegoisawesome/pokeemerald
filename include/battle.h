@@ -176,6 +176,7 @@ struct DisableStruct
     /*0x18*/ u8 unk18_b : 4;
     /*0x19*/ u8 rechargeCounter;
     /*0x1A*/ u8 embargoTimer;
+    /*0x1B*/ u8 autonomizeCount;
 };
 
 struct ProtectStruct
@@ -249,7 +250,7 @@ struct SideTimer
     /*0x08*/ u8 followmeTimer;
     /*0x09*/ u8 followmeTarget;
     /*0x0A*/ u8 spikesAmount;
-    /*0x0B*/ u8 fieldB;
+    /*0x0B*/ u8 tailwindCount;
 };
 
 struct FieldTimer
@@ -261,6 +262,7 @@ struct FieldTimer
     u8 trickRoomTimer;
     u8 terrainTimer;
     u8 fairyLockTimer;
+    u8 echoVoiceCounter;
 };
 
 struct WishFutureKnock

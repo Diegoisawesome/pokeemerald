@@ -22,6 +22,8 @@
 #include "event_data.h"
 #include "link.h"
 #include "berry.h"
+#include "pokedex.h"
+#include "battle_interface.h"
 
 extern u8 weather_get_current(void);
 
@@ -3625,4 +3627,261 @@ u8 GetBattleMonMoveSlot(struct BattlePokemon *battleMon, u16 move)
             break;
     }
     return i;
+}
+
+u32 GetBattlerWeight(u8 battlerId)
+{
+    u32 weight = GetPokedexHeightWeight(SpeciesToNationalPokedexNum(gBattleMons[battlerId].species), 1);
+    u32 ability = GetBattlerAbility(battlerId);
+    u32 holdEffect = GetBattlerHoldEffect(battlerId, TRUE);
+
+    if (ability == ABILITY_HEAVY_METAL)
+        weight *= 2;
+    if (ability == ABILITY_LIGHT_METAL)
+        weight /= 2;
+
+    if (holdEffect == HOLD_EFFECT_FLOAT_STONE)
+        weight /= 2;
+
+    if (gDisableStructs[battlerId].autonomizeCount)
+        weight -= 1000 * gDisableStructs[battlerId].autonomizeCount;
+
+    if (weight == 0)
+        weight = 1;
+
+    return weight;
+}
+
+u32 CountBattlerStatIncreases(u8 battlerId, bool32 countEvasionAcc)
+{
+    u32 i;
+    u32 count = 0;
+
+    for (i = 0; i < BATTLE_STATS_NO; i++)
+    {
+        if ((i == STAT_ACC || i == STAT_EVASION) && !countEvasionAcc)
+            continue;
+        if (gBattleMons[battlerId].statStages[i] > 6) // is increased
+            count += gBattleMons[battlerId].statStages[i] - 6;
+    }
+
+    return count;
+}
+
+static const u8 sFlailHpScaleToPowerTable[] =
+{
+    1, 200,
+    4, 150,
+    9, 100,
+    16, 80,
+    32, 40,
+    48, 20
+};
+
+// format: min. weight (hectograms), base power
+static const u16 sWeightToDamageTable[] =
+{
+    100, 20,
+    250, 40,
+    500, 60,
+    1000, 80,
+    2000, 100,
+    0xFFFF, 0xFFFF
+};
+
+static const u16 sSpeedDiffToDmgTable[] =
+{
+    40, 60, 80, 120, 150
+};
+
+static u16 GetMoveBasePower(u16 move, u8 battlerAtk, u8 battlerDef)
+{
+    u32 i;
+    u16 basePower = gBattleMoves[move].power;
+    u32 weight, hpFraction, speed;
+
+    switch (gBattleMoves[move].effect)
+    {
+    case EFFECT_PLEDGE:
+        // todo
+        break;
+    case EFFECT_FLING:
+        // todo
+        break;
+    case EFFECT_ERUPTION:
+        basePower = gBattleMons[battlerAtk].hp * basePower / gBattleMons[battlerAtk].maxHP;
+        break;
+    case EFFECT_FLAIL:
+        hpFraction = GetScaledHPFraction(gBattleMons[battlerAtk].hp, gBattleMons[battlerAtk].maxHP, 48);
+        for (i = 0; i < sizeof(sFlailHpScaleToPowerTable); i += 2)
+        {
+            if (hpFraction <= sFlailHpScaleToPowerTable[i])
+                break;
+        }
+        basePower = sFlailHpScaleToPowerTable[i + 1];
+        break;
+    case EFFECT_RETURN:
+        basePower = 10 * (gBattleMons[battlerAtk].friendship) / 25;
+        break;
+    case EFFECT_FRUSTRATION:
+        basePower = 10 * (255 - gBattleMons[battlerAtk].friendship) / 25;
+        break;
+    case EFFECT_FURY_CUTTER:
+        for (i = 1; i < gDisableStructs[battlerAtk].furyCutterCounter; i++)
+            basePower *= 2;
+        break;
+    case EFFECT_ROLLOUT:
+        for (i = 1; i < (5 - gDisableStructs[battlerAtk].rolloutCounter1); i++)
+            basePower *= 2;
+        if (gBattleMons[battlerAtk].status2 & STATUS2_DEFENSE_CURL)
+            basePower *= 2;
+        break;
+    case EFFECT_MAGNITUDE:
+        basePower = gBattleStruct->magnitudeBasePower;
+        break;
+    case EFFECT_PRESENT:
+        basePower = gBattleStruct->presentBasePower;
+        break;
+    case EFFECT_TRIPLE_KICK:
+        basePower += gBattleScripting.tripleKickPower;
+        break;
+    case EFFECT_SPIT_UP:
+        basePower = 100 * gDisableStructs[battlerAtk].stockpileCounter;
+        break;
+    case EFFECT_REVENGE:
+        if ((gProtectStructs[battlerAtk].physicalDmg
+                && gProtectStructs[battlerAtk].physicalBattlerId == battlerDef)
+            || (gProtectStructs[battlerAtk].specialDmg
+                && gProtectStructs[battlerAtk].specialBattlerId == battlerDef))
+            basePower *= 2;
+        break;
+    case EFFECT_WEATHER_BALL:
+        if (WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_ANY)
+            basePower *= 2;
+        break;
+    case EFFECT_PURSUIT:
+        if (gCurrentActionFuncId == B_ACTION_SWITCH)
+            basePower *= 2;
+        break;
+    case EFFECT_NATURAL_GIFT:
+        // todo
+        break;
+    case EFFECT_WAKE_UP_SLAP:
+        if (gBattleMons[battlerDef].status1 & STATUS1_SLEEP)
+            basePower *= 2;
+        break;
+    case EFFECT_SMELLINGSALT:
+        if (gBattleMons[battlerDef].status1 & STATUS1_PARALYSIS)
+            basePower *= 2;
+        break;
+    case EFFECT_WRING_OUT:
+        basePower = 120 * gBattleMons[battlerDef].hp / gBattleMons[battlerDef].maxHP;
+        break;
+    case EFFECT_HEX:
+        if (gBattleMons[battlerDef].status1 & STATUS1_ANY)
+            basePower *= 2;
+        break;
+    case EFFECT_ASSURANCE:
+        if (gSpecialStatuses[battlerDef].physicalDmg != 0 || gSpecialStatuses[battlerDef].specialDmg != 0)
+            basePower *= 2;
+        break;
+    case EFFECT_TRUMP_CARD:
+        i = GetBattleMonMoveSlot(&gBattleMons[battlerAtk], move);
+        if (i != 4)
+        {
+            switch (gBattleMons[battlerAtk].pp[i])
+            {
+            case 0:
+                basePower = 200;
+                break;
+            case 1:
+                basePower = 80;
+                break;
+            case 2:
+                basePower = 60;
+                break;
+            case 3:
+                basePower = 50;
+                break;
+            default:
+                basePower = 40;
+                break;
+            }
+        }
+        break;
+    case EFFECT_ACROBATICS:
+        if (gBattleMons[battlerAtk].item == ITEM_NONE)
+            basePower *= 2;
+        break;
+    case EFFECT_LOW_KICK:
+        weight = GetBattlerWeight(battlerDef);
+        for (i = 0; sWeightToDamageTable[i] != 0xFFFF; i += 2)
+        {
+            if (sWeightToDamageTable[i] > weight)
+                break;
+        }
+        if (sWeightToDamageTable[i] != 0xFFFF)
+            basePower = sWeightToDamageTable[i + 1];
+        else
+            basePower = 120;
+        break;
+    case EFFECT_HEAT_CRASH:
+        weight = GetBattlerWeight(battlerAtk) / GetBattlerWeight(battlerDef);
+        if (weight >= 5)
+            basePower = 120;
+        else if (weight == 4)
+            basePower = 100;
+        else if (weight == 3)
+            basePower = 80;
+        else if (weight == 2)
+            basePower = 60;
+        else
+            basePower = 40;
+        break;
+    case EFFECT_PUNISHMENT:
+        basePower = 60 + (CountBattlerStatIncreases(battlerAtk, FALSE) * 20);
+        if (basePower > 200)
+            basePower = 200;
+        break;
+    case EFFECT_STORED_POWER:
+        basePower = 60 + (CountBattlerStatIncreases(battlerAtk, TRUE) * 20);
+        break;
+    case EFFECT_ELECTRO_BALL:
+        speed = GetBattlerTotalSpeedStat(battlerAtk) / GetBattlerTotalSpeedStat(battlerDef);
+        if (speed >= ARRAY_COUNT(sSpeedDiffToDmgTable))
+            speed = ARRAY_COUNT(sSpeedDiffToDmgTable) - 1;
+        basePower = sSpeedDiffToDmgTable[speed];
+        break;
+    case EFFECT_GYRO_BALL:
+        basePower = ((25 * GetBattlerTotalSpeedStat(battlerDef)) / GetBattlerTotalSpeedStat(battlerAtk)) + 1;
+        if (basePower > 150)
+            basePower = 150;
+        break;
+    case EFFECT_ECHOED_VOICE:
+        if (gFieldTimers.echoVoiceCounter != 0)
+        {
+            if (gFieldTimers.echoVoiceCounter >= 5)
+                basePower *= 5;
+            else
+                basePower *= gFieldTimers.echoVoiceCounter;
+        }
+        break;
+    case EFFECT_PAYBACK:
+        if (GetBattlerTurnOrderNum(battlerAtk) > GetBattlerTurnOrderNum(battlerDef))
+            basePower *= 2;
+        break;
+    case EFFECT_GUST:
+    case EFFECT_TWISTER:
+        if (gStatuses3[battlerDef] & STATUS3_ON_AIR)
+            basePower *= 2;
+        break;
+    case EFFECT_ROUND:
+        if (gChosenMoveByBattler[BATTLE_PARTNER(battlerAtk)] == MOVE_ROUND && !(gAbsentBattlerFlags & gBitTable[BATTLE_PARTNER(battlerAtk)]))
+            basePower *= 2;
+        break;
+    }
+
+    if (basePower == 0)
+        basePower = 1;
+    return basePower;
 }

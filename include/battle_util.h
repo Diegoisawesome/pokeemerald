@@ -87,5 +87,6 @@ u32 GetBattlerHoldEffectParam(u8 battlerId);
 bool32 IsMoveMakingContact(u16 move, u8 battlerAtk);
 bool32 IsBattlerGrounded(u8 battlerId);
 u8 GetBattleMonMoveSlot(struct BattlePokemon *battleMon, u16 move);
+u32 GetBattlerWeight(u8 battlerId);
 
 #endif // GUARD_BATTLE_UTIL_H
