@@ -3885,3 +3885,79 @@ static u16 GetMoveBasePower(u16 move, u8 battlerAtk, u8 battlerDef)
         basePower = 1;
     return basePower;
 }
+
+#define MOD_x0_5    0x800
+#define MOD_x0_75   0xC00
+#define MOD_x1      0x1000
+#define MOD_x1_2    0x1333
+#define MOD_x1_25   0x1400
+#define MOD_x1_3    0x14CD
+#define MOD_x1_5    0x1800
+#define MOD_x2      0x2000
+
+static inline void ChainModifier(u16 *modifier, u16 delta)
+{
+    *modifier = (((*modifier * delta) + 0x800) >> 0xC;
+}
+
+static inline u32 ApplyModifier(u16 modifier, u16 delta)
+{
+    return (modifier * delta) >> 0xC;
+}
+
+static u16 ApplyBasePowerModifier(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, u16 basePower)
+{
+    u16 modifier = MOD_x1;
+
+    // attacker's abilities
+    switch (GetBattlerAbility(battlerAtk))
+    {
+    case ABILITY_TECHNICIAN:
+        if (basePower <= 60)
+            ChainModifier(&modifier, MOD_x1_5);
+        break;
+    case ABILITY_FLARE_BOOST:
+        if (gBattleMons[battlerAtk].status1 & STATUS1_BURN && IS_MOVE_SPECIAL(move))
+            ChainModifier(&modifier, MOD_x1_5);
+        break;
+    case ABILITY_TOXIC_BOOST:
+        if (gBattleMons[battlerAtk].status1 & STATUS1_PSN_ANY && IS_MOVE_PHYSICAL(move))
+            ChainModifier(&modifier, MOD_x1_5);
+        break;
+    case ABILITY_RECKLESS:
+        if (gBattleMoves[move].flags & FLAG_RECKLESS_BOOST)
+            ChainModifier(&modifier, MOD_x1_2);
+        break;
+    case ABILITY_IRON_FIST:
+        if (gBattleMoves[move].flags & FLAG_IRON_FIST_BOOST)
+            ChainModifier(&modifier, MOD_x1_2);
+        break;
+    case ABILITY_SHEER_FORCE:
+        if (gBattleMoves[move].flags & FLAG_SHEER_FORCE_BOOST)
+            ChainModifier(&modifier, MOD_x1_3);
+        break;
+    case ABILITY_SAND_FORCE:
+        if (moveType == TYPE_STEEL || moveType == TYPE_ROCK || moveType == TYPE_GROUND)
+            ChainModifier(&modifier, MOD_x1_3);
+        break;
+    case ABILITY_RIVALRY:
+        if (GetGenderFromSpeciesAndPersonality(gBattleMons[battlerAtk].species, gBattleMons[battlerAtk].personality) != MON_GENDERLESS
+            && GetGenderFromSpeciesAndPersonality(gBattleMons[battlerDef].species, gBattleMons[battlerDef].personality) != MON_GENDERLESS)
+        {
+            if (GetGenderFromSpeciesAndPersonality(gBattleMons[battlerAtk].species, gBattleMons[battlerAtk].personality)
+             == GetGenderFromSpeciesAndPersonality(gBattleMons[battlerDef].species, gBattleMons[battlerDef].personality))
+                ChainModifier(&modifier, MOD_x1_25);
+            else
+                ChainModifier(&modifier, MOD_x0_75);
+        }
+        break;
+    case ABILITY_ANALYTIC:
+        if (GetBattlerTurnOrderNum(battlerAtk) == gBattlersCount - 1 && move != MOVE_FUTURE_SIGHT && move != MOVE_DOOM_DESIRE)
+            ChainModifier(&modifier, MOD_x1_3);
+        break;
+    case ABILITY_TOUGH_CLAWS:
+        if (gBattleMoves[move].flags & FLAG_MAKES_CONTACT)
+            ChainModifier(&modifier, MOD_x1_3);
+        break;
+    }
+}
