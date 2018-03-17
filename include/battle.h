@@ -563,6 +563,8 @@ struct BattleStruct
     u8 field_2A1;
     u8 field_2A2;
     u8 megaEvoBattlerId;
+    u16 presentBasePower;
+    u16 magnitudeBasePower;
 };
 
 #define GET_MOVE_TYPE(move, typeArg)                        \
@@ -599,8 +601,7 @@ struct BattleScripting
 {
     s32 painSplitHp;
     s32 bideDmg;
-    u8 multihitString[6];
-    u8 dmgMultiplier;
+    u8 multihitString[7];
     u8 twoTurnsMoveStringId;
     u8 animArg1;
     u8 animArg2;
@@ -803,7 +804,6 @@ extern u16 gBattleWeather;
 extern struct WishFutureKnock gWishFutureKnock;
 extern u16 gIntroSlideFlags;
 extern u8 gSentPokesToOpponent[2];
-extern u16 gDynamicBasePower;
 extern u16 gExpShareExp;
 extern struct BattleEnigmaBerry gEnigmaBerries[MAX_BATTLERS_COUNT];
 extern struct BattleScripting gBattleScripting;

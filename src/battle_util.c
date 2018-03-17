@@ -3614,3 +3614,15 @@ bool32 IsBattlerGrounded(u8 battlerId)
 
     return TRUE;
 }
+
+u8 GetBattleMonMoveSlot(struct BattlePokemon *battleMon, u16 move)
+{
+    u8 i;
+
+    for (i = 0; i < 4; i++)
+    {
+        if (battleMon->moves[i] == move)
+            break;
+    }
+    return i;
+}

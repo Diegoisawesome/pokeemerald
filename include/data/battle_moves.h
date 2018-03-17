@@ -2849,7 +2849,7 @@ const struct BattleMove gBattleMoves[LAST_MOVE_INDEX + 1] =
 	},
 	{ // MOVE_HIDDEN_POWER
 		.effect = EFFECT_HIDDEN_POWER,
-		.power = 1,
+		.power = 60,
 		.type = TYPE_NORMAL,
 		.accuracy = 100,
 		.pp = 15,
