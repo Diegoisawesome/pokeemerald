@@ -41,6 +41,9 @@
 // Converts a Q4.12 fixed-point format number to a regular integer
 #define Q_4_12_TO_INT(n)  ((int)((n) / 4096))
 
+// Rounding value for Q4.12 fixed-point format
+#define Q_4_12_ROUND ((1) << (12 - 1))
+
 #define PARTY_SIZE 6
 
 #define POKEMON_NAME_LENGTH 10
