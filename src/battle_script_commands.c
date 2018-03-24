@@ -1253,26 +1253,28 @@ static void atk03_ppreduce(void)
     gBattlescriptCurrInstr++;
 }
 
-static void atk04_critcalc(void)
+bool32 IsCriticalHit(u16 move, u8 battlerAtk, u8 battlerDef)
 {
-    u32 defAbility = GetBattlerAbility(gBattlerTarget);
+    bool32 isCrit;
+
+    u32 defAbility = GetBattlerAbility(battlerDef);
     if (defAbility == ABILITY_BATTLE_ARMOR
         || defAbility == ABILITY_SHELL_ARMOR
-        || gStatuses3[gBattlerAttacker] & STATUS3_CANT_SCORE_A_CRIT
+        || gStatuses3[battlerAtk] & STATUS3_CANT_SCORE_A_CRIT
         || gBattleTypeFlags & (BATTLE_TYPE_WALLY_TUTORIAL | BATTLE_TYPE_FIRST_BATTLE))
     {
-        gCritMultiplier = 1;
+        isCrit = FALSE;
     }
     else
     {
-        u32 atkHoldEffect = GetBattlerHoldEffect(gBattlerAttacker, TRUE);
-        u32 atkSpecies = gBattleMons[gBattlerAttacker].species;
-        u32 atkAbility = GetBattlerAbility(gBattlerAttacker);
+        u32 atkHoldEffect = GetBattlerHoldEffect(battlerAtk, TRUE);
+        u32 atkSpecies = gBattleMons[battlerAtk].species;
+        u32 atkAbility = GetBattlerAbility(battlerAtk);
         u32 critChance = 0;
 
-        if (gBattleMons[gBattlerAttacker].status2 & STATUS2_FOCUS_ENERGY)
+        if (gBattleMons[battlerAtk].status2 & STATUS2_FOCUS_ENERGY)
             critChance += 2;
-        if (gBattleMoves[gCurrentMove].flags & FLAG_HIGH_CRIT)
+        if (gBattleMoves[move].flags & FLAG_HIGH_CRIT)
             critChance++;
         if (atkAbility == ABILITY_SUPER_LUCK)
             critChance++;
@@ -1288,42 +1290,27 @@ static void atk04_critcalc(void)
             critChance = 3;
 
         if (Random() % sCriticalHitChance[critChance] == 0)
-            gCritMultiplier = 2;
+            isCrit = TRUE;
         else
-            gCritMultiplier = 1;
+            isCrit = FALSE;
     }
 
+    return isCrit;
+}
+
+static void atk04_critcalc(void)
+{
+    gIsCriticalHit = IsCriticalHit(gCurrentMove, gBattlerAttacker, gBattlerTarget);
     gBattlescriptCurrInstr++;
 }
 
 static void atk05_damagecalc(void)
 {
-    u16 sideStatus = gSideStatuses[GET_BATTLER_SIDE(gBattlerTarget)];
-    gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerTarget], gCurrentMove,
-                                            sideStatus, 0,
-                                            gBattleStruct->dynamicMoveType, gBattlerAttacker, gBattlerTarget);
-    gBattleMoveDamage = gBattleMoveDamage * gCritMultiplier;
-
-    if (gStatuses3[gBattlerAttacker] & STATUS3_CHARGED_UP && gBattleMoves[gCurrentMove].type == TYPE_ELECTRIC)
-        gBattleMoveDamage *= 2;
-    if (gProtectStructs[gBattlerAttacker].helpingHand)
-        gBattleMoveDamage = gBattleMoveDamage * 15 / 10;
+    u8 moveType;
+    GET_MOVE_TYPE(gCurrentMove, moveType);
+    gBattleMoveDamage = CalculateBaseDamage(gCurrentMove, gBattlerAttacker, gBattlerTarget, moveType, gMultiplierTypeEffectiveness, gIsCriticalHit);
 
     gBattlescriptCurrInstr++;
-}
-
-void AI_CalcDmg(u8 attacker, u8 defender)
-{
-    u16 sideStatus = gSideStatuses[GET_BATTLER_SIDE(defender)];
-    gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[attacker], &gBattleMons[defender], gCurrentMove,
-                                            sideStatus, 0,
-                                            gBattleStruct->dynamicMoveType, attacker, defender);
-    gBattleMoveDamage = gBattleMoveDamage * gCritMultiplier;
-
-    if (gStatuses3[attacker] & STATUS3_CHARGED_UP && gBattleMoves[gCurrentMove].type == TYPE_ELECTRIC)
-        gBattleMoveDamage *= 2;
-    if (gProtectStructs[attacker].helpingHand)
-        gBattleMoveDamage = gBattleMoveDamage * 15 / 10;
 }
 
 static void ModulateDmgByType(u8 multiplier)
@@ -1642,33 +1629,10 @@ u8 AI_TypeCalc(u16 move, u16 targetSpecies, u8 targetAbility)
     return flags;
 }
 
-// Multiplies the damage by a random factor between 85% to 100% inclusive
-static inline void ApplyRandomDmgMultiplier(void)
-{
-    u16 rand = Random();
-    u16 randPercent = 100 - (rand % 16);
-
-    if (gBattleMoveDamage != 0)
-    {
-        gBattleMoveDamage *= randPercent;
-        gBattleMoveDamage /= 100;
-        if (gBattleMoveDamage == 0)
-            gBattleMoveDamage = 1;
-    }
-}
-
-static void Unused_ApplyRandomDmgMultiplier(void)
-{
-    ApplyRandomDmgMultiplier();
-}
-
 static void AdjustDamage(bool32 rngMultiplier, bool32 checkFalseSwipe)
 {
     bool32 sturdied = FALSE;
     u8 holdEffect, param;
-
-    if (rngMultiplier)
-        ApplyRandomDmgMultiplier();
 
     holdEffect = GetBattlerHoldEffect(gBattlerTarget, TRUE);
     if (gBattleMons[gBattlerTarget].item == ITEM_ENIGMA_BERRY)
@@ -1966,7 +1930,7 @@ static void atk0D_critmessage(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
-        if (gCritMultiplier == 2 && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
+        if (gIsCriticalHit && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
         {
             PrepareStringBattle(STRINGID_CRITICALHIT, gBattlerAttacker);
             gBattleCommunication[MSG_DISPLAY] = 1;
@@ -3889,7 +3853,7 @@ static void atk24(void)
 static void MoveValuesCleanUp(void)
 {
     gMoveResultFlags = 0;
-    gCritMultiplier = 1;
+    gIsCriticalHit = FALSE;
     gBattleCommunication[MOVE_EFFECT_BYTE] = 0;
     gBattleCommunication[6] = 0;
     gHitMarker &= ~(HITMARKER_DESTINYBOND);
@@ -7081,7 +7045,7 @@ static void atk85_stockpile(void)
 
 static void atk86_stockpiletobasedamage(void)
 {
-    const u8* jumpPtr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    const u8 *jumpPtr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     if (gDisableStructs[gBattlerAttacker].stockpileCounter == 0)
     {
         gBattlescriptCurrInstr = jumpPtr;
@@ -7090,14 +7054,10 @@ static void atk86_stockpiletobasedamage(void)
     {
         if (gBattleCommunication[6] != 1)
         {
-            gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerTarget], gCurrentMove,
-                                                    gSideStatuses[GET_BATTLER_SIDE(gBattlerTarget)], 0,
-                                                    0, gBattlerAttacker, gBattlerTarget)
-                                * gDisableStructs[gBattlerAttacker].stockpileCounter;
-            gBattleScripting.animTurn = gDisableStructs[gBattlerAttacker].stockpileCounter;
+            u8 moveType;
+            GET_MOVE_TYPE(MOVE_SPIT_UP, moveType);
 
-            if (gProtectStructs[gBattlerAttacker].helpingHand)
-                gBattleMoveDamage = gBattleMoveDamage * 15 / 10;
+            gBattleMoveDamage = CalculateBaseDamage(MOVE_SPIT_UP, gBattlerAttacker, gBattlerTarget, moveType, UQ_4_12(1.0), gIsCriticalHit);
         }
 
         gDisableStructs[gBattlerAttacker].stockpileCounter = 0;
@@ -9063,12 +9023,7 @@ static void atkC3_trysetfutureattack(void)
         gWishFutureKnock.futureSightMove[gBattlerTarget] = gCurrentMove;
         gWishFutureKnock.futureSightAttacker[gBattlerTarget] = gBattlerAttacker;
         gWishFutureKnock.futureSightCounter[gBattlerTarget] = 3;
-        gWishFutureKnock.futureSightDmg[gBattlerTarget] = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerTarget], gCurrentMove,
-                                                    gSideStatuses[GET_BATTLER_SIDE(gBattlerTarget)], 0,
-                                                    0, gBattlerAttacker, gBattlerTarget);
-
-        if (gProtectStructs[gBattlerAttacker].helpingHand)
-            gWishFutureKnock.futureSightDmg[gBattlerTarget] = gWishFutureKnock.futureSightDmg[gBattlerTarget] * 15 / 10;
+        gWishFutureKnock.futureSightDmg[gBattlerTarget] = CalculateBaseDamage(gCurrentMove, gBattlerAttacker, gBattlerTarget, gBattleMoves[gCurrentMove].type, UQ_4_12(1.0), gIsCriticalHit);
 
         if (gCurrentMove == MOVE_DOOM_DESIRE)
             gBattleCommunication[MULTISTRING_CHOOSER] = 1;

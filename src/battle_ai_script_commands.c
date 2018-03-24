@@ -1172,7 +1172,6 @@ static void BattleAICmd_get_how_powerful_move_is(void)
     {
         *(&gBattleStruct->dynamicMoveType) = 0;
         gMoveResultFlags = 0;
-        gCritMultiplier = 1;
 
         for (checkedMove = 0; checkedMove < 4; checkedMove++)
         {
@@ -1186,9 +1185,7 @@ static void BattleAICmd_get_how_powerful_move_is(void)
                 && sDiscouragedPowerfulMoveEffects[i] == 0xFFFF
                 && gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].power > 1)
             {
-                gCurrentMove = gBattleMons[sBattler_AI].moves[checkedMove];
-                AI_CalcDmg(sBattler_AI, gBattlerTarget);
-                TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
+                gBattleMoveDamage = AI_CalcBattlerMonDmg(gBattleMons[sBattler_AI].moves[checkedMove], sBattler_AI, gBattlerTarget);
                 moveDmgs[checkedMove] = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[checkedMove] / 100;
                 if (moveDmgs[checkedMove] == 0)
                     moveDmgs[checkedMove] = 1;
@@ -1456,7 +1453,6 @@ static void BattleAICmd_get_highest_type_effectiveness(void)
     dynamicMoveType = &gBattleStruct->dynamicMoveType;
     *dynamicMoveType = 0;
     gMoveResultFlags = 0;
-    gCritMultiplier = 1;
     AI_THINKING_STRUCT->funcResult = 0;
 
     for (i = 0; i < 4; i++)
@@ -1494,7 +1490,6 @@ static void BattleAICmd_if_type_effectiveness(void)
 
     gBattleStruct->dynamicMoveType = 0;
     gMoveResultFlags = 0;
-    gCritMultiplier = 1;
 
     gBattleMoveDamage = AI_EFFECTIVENESS_x1;
     gCurrentMove = AI_THINKING_STRUCT->moveConsidered;
@@ -1703,11 +1698,7 @@ static void BattleAICmd_if_can_faint(void)
 
     gBattleStruct->dynamicMoveType = 0;
     gMoveResultFlags = 0;
-    gCritMultiplier = 1;
-    gCurrentMove = AI_THINKING_STRUCT->moveConsidered;
-    AI_CalcDmg(sBattler_AI, gBattlerTarget);
-    TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
-
+    gBattleMoveDamage = AI_CalcBattlerMonDmg(AI_THINKING_STRUCT->moveConsidered, sBattler_AI, gBattlerTarget);
     gBattleMoveDamage = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex] / 100;
 
     // moves always do at least 1 damage.
@@ -1730,11 +1721,7 @@ static void BattleAICmd_if_cant_faint(void)
 
     gBattleStruct->dynamicMoveType = 0;
     gMoveResultFlags = 0;
-    gCritMultiplier = 1;
-    gCurrentMove = AI_THINKING_STRUCT->moveConsidered;
-    AI_CalcDmg(sBattler_AI, gBattlerTarget);
-    TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
-
+    gBattleMoveDamage = AI_CalcBattlerMonDmg(AI_THINKING_STRUCT->moveConsidered, sBattler_AI, gBattlerTarget);
     gBattleMoveDamage = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex] / 100;
 
     // this macro is missing the damage 0 = 1 assumption.

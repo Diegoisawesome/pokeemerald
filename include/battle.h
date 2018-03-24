@@ -177,6 +177,7 @@ struct DisableStruct
     /*0x19*/ u8 rechargeCounter;
     /*0x1A*/ u8 embargoTimer;
     /*0x1B*/ u8 autonomizeCount;
+    /*0x1C*/ u8 slowStartTimer;
 };
 
 struct ProtectStruct
@@ -772,7 +773,7 @@ extern u8 gBattlerFainted;
 extern u8 gEffectBattler;
 extern u8 gPotentialItemEffectBattler;
 extern u8 gAbsentBattlerFlags;
-extern u8 gCritMultiplier;
+extern bool8 gIsCriticalHit;
 extern u8 gMultiHitCounter;
 extern const u8 *gBattlescriptCurrInstr;
 extern u32 gUnusedBattleMainVar;
@@ -829,6 +830,7 @@ extern u16 gMoveToLearn;
 extern u8 gBattleMonForms[MAX_BATTLERS_COUNT];
 extern u32 gFieldStatuses;
 extern struct FieldTimer gFieldTimers;
+extern u16 gMultiplierTypeEffectiveness;
 
 extern void (*gPreBattleCallback1)(void);
 extern void (*gBattleMainFunc)(void);

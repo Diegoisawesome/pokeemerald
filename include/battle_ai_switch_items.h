@@ -13,5 +13,6 @@ enum
 
 void AI_TrySwitchOrUseItem(void);
 u8 GetMostSuitableMonToSwitchInto(void);
+s32 AI_CalcBattlerMonDmg(u16 move, u8 battlerAtk, u8 battlerDef);
 
 #endif // GUARD_BATTLE_AI_SWITCH_ITEMS_H

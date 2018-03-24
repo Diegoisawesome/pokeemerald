@@ -1983,7 +1983,7 @@ BattleScript_BeatUpLoop::
 	trydobeatup BattleScript_BeatUpEnd, BattleScript_ButItFailed
 	printstring STRINGID_PKMNATTACK
 	critcalc
-	jumpifbyte CMP_NOT_EQUAL, gCritMultiplier, 0x2, BattleScript_BeatUpAttack
+	jumpifbyte CMP_NOT_EQUAL, gIsCriticalHit, TRUE, BattleScript_BeatUpAttack
 	manipulatedamage ATK80_DMG_DOUBLED
 BattleScript_BeatUpAttack::
 	adjustnormaldamage

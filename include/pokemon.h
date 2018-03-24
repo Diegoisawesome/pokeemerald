@@ -391,7 +391,7 @@ struct BattleMove
     u8 secondaryEffectChance;
     u8 target;
     s8 priority;
-    u16 flags;
+    u32 flags;
     u8 split;
 };
 
@@ -407,6 +407,10 @@ struct BattleMove
 #define FLAG_SHEER_FORCE_BOOST      0x200
 #define FLAG_STRONG_JAW_BOOST       0x400
 #define FLAG_MEGA_LAUNCHER_BOOST    0x800
+#define FLAG_STAT_STAGES_IGNORED    0x1000
+#define FLAG_DMG_MINIMIZE           0x2000
+#define FLAG_DMG_UNDERGROUND        0x4000
+#define FLAG_DMG_UNDERWATER         0x8000
 
 #define SPLIT_PHYSICAL  0x0
 #define SPLIT_SPECIAL   0x1
@@ -532,7 +536,6 @@ void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon);
 u16 MonTryLearningNewMove(struct Pokemon *mon, bool8 firstMove);
 void DeleteFirstMoveAndGiveMoveToMon(struct Pokemon *mon, u16 move);
 void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move);
-s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef);
 u8 CountAliveMonsInBattle(u8 caseId);
 #define BATTLE_ALIVE_EXCEPT_ACTIVE  0
 #define BATTLE_ALIVE_ATK_SIDE       1
@@ -573,6 +576,7 @@ void GetSpeciesName(u8 *name, u16 species);
 u8 CalculatePPWithBonus(u16 move, u8 ppBonuses, u8 moveIndex);
 void RemoveMonPPBonus(struct Pokemon *mon, u8 moveIndex);
 void RemoveBattleMonPPBonus(struct BattlePokemon *mon, u8 moveIndex);
+void PokemonToBattleMon(struct Pokemon *src, struct BattlePokemon *dst);
 void CopyPlayerPartyMonToBattleData(u8 battlerId, u8 partyIndex);
 bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex);
 bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex, u8 e);

@@ -13,6 +13,7 @@
 static bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng);
 static bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent);
 static bool8 ShouldUseItem(void);
+static s32 AI_CalcPartyMonDmg(u16 move, u8 battlerAtk, u8 battlerDef, struct Pokemon *mon);
 
 static bool8 ShouldSwitchIfPerishSong(void)
 {
@@ -732,9 +733,9 @@ u8 GetMostSuitableMonToSwitchInto(void)
 
     gBattleStruct->dynamicMoveType = 0;
     gMoveResultFlags = 0;
-    gCritMultiplier = 1;
+    gIsCriticalHit = FALSE;
     bestDmg = 0;
-    bestMonId = 6;
+    bestMonId = PARTY_SIZE;
 
     // if we couldn't find the best mon in terms of typing, find the one that deals most damage
     for (i = firstId; i < lastId; i++)
@@ -758,8 +759,7 @@ u8 GetMostSuitableMonToSwitchInto(void)
             gBattleMoveDamage = 0;
             if (move != MOVE_NONE && gBattleMoves[move].power != 1)
             {
-                AI_CalcDmg(gActiveBattler, opposingBank);
-                TypeCalc(move, gActiveBattler, opposingBank);
+                gBattleMoveDamage = AI_CalcPartyMonDmg(move, gActiveBattler, opposingBank, &party[i]);
             }
             if (bestDmg < gBattleMoveDamage)
             {
@@ -924,4 +924,44 @@ static bool8 ShouldUseItem(void)
     }
 
     return FALSE;
+}
+
+static s32 AI_CalcPartyMonDmg(u16 move, u8 battlerAtk, u8 battlerDef, struct Pokemon *mon)
+{
+    s32 dmg;
+
+    // save battler data
+    struct BattlePokemon savedBattleMonAtk = gBattleMons[battlerAtk];
+    u32 savedStatus3 = gStatuses3[battlerAtk];
+
+    PokemonToBattleMon(mon, &gBattleMons[battlerAtk]);
+    gStatuses3[battlerAtk] = 0;
+
+    dmg = AI_CalcBattlerMonDmg(move, battlerAtk, battlerDef);
+
+    // restore battler data
+    gBattleMons[battlerAtk] = savedBattleMonAtk;
+    gStatuses3[battlerAtk] = savedStatus3;
+
+    return dmg;
+}
+
+s32 AI_CalcBattlerMonDmg(u16 move, u8 battlerAtk, u8 battlerDef)
+{
+    u8 moveType;
+    u16 typeMultiplier;
+    bool32 isCrit;
+    s32 dmg;
+
+    // save battlers items, moves and abilities
+
+    moveType = gBattleMoves[move].type;
+    isCrit = IsCriticalHit(move, battlerAtk, battlerDef);
+    typeMultiplier = UQ_4_12(1.0); // to do
+
+    dmg = CalculateBaseDamage(move, battlerAtk, battlerDef, moveType, typeMultiplier, isCrit);
+
+    // restore battlers items, moves and abilities
+
+    return dmg;
 }

@@ -1485,7 +1485,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                     {
                         gBattleCommunication[MULTISTRING_CHOOSER] = 1;
                         gBattlerTarget = gBattlerAttacker;
-                        gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerAttacker], MOVE_POUND, 0, 40, 0, gBattlerAttacker, gBattlerAttacker);
+                        gBattleMoveDamage = CalculateBaseDamage(MOVE_POUND, gBattlerAttacker, gBattlerAttacker, TYPE_MYSTERY, UQ_4_12(1.0), FALSE);
                         gProtectStructs[gBattlerAttacker].confusionSelfDmg = 1;
                         gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                     }
@@ -3457,7 +3457,7 @@ u8 IsMonDisobedient(void)
         calc -= obedienceLevel;
         if (calc < obedienceLevel)
         {
-            gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerAttacker], MOVE_POUND, 0, 40, 0, gBattlerAttacker, gBattlerAttacker);
+            gBattleMoveDamage = CalculateBaseDamage(MOVE_POUND, gBattlerAttacker, gBattlerAttacker, TYPE_MYSTERY, UQ_4_12(1.0), FALSE);
             gBattlerTarget = gBattlerAttacker;
             gBattlescriptCurrInstr = BattleScript_82DB6F0;
             gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
@@ -3680,6 +3680,31 @@ u32 CountBattlerStatIncreases(u8 battlerId, bool32 countEvasionAcc)
     return count;
 }
 
+u32 GetMoveTargetCount(u16 move, u8 battlerAtk, u8 battlerDef)
+{
+    switch (gBattleMoves[move].target)
+    {
+    case MOVE_TARGET_BOTH:
+        return IsBattlerAlive(battlerDef)
+             + IsBattlerAlive(BATTLE_PARTNER(battlerDef));
+    case MOVE_TARGET_FOES_AND_ALLY:
+        return IsBattlerAlive(battlerDef)
+             + IsBattlerAlive(BATTLE_PARTNER(battlerDef))
+             + IsBattlerAlive(BATTLE_PARTNER(battlerAtk));
+    case MOVE_TARGET_OPPONENTS_FIELD:
+        return 1;
+    case MOVE_TARGET_DEPENDS:
+    case MOVE_TARGET_SELECTED:
+    case MOVE_TARGET_RANDOM:
+    case MOVE_TARGET_USER_OR_SELECTED:
+        return IsBattlerAlive(battlerDef);
+    case MOVE_TARGET_USER:
+        return IsBattlerAlive(battlerAtk);
+    default:
+        return 0;
+    }
+}
+
 static const u8 sFlailHpScaleToPowerTable[] =
 {
     1, 200,
@@ -3706,110 +3731,110 @@ static const u16 sSpeedDiffToDmgTable[] =
     40, 60, 80, 120, 150
 };
 
-// percent in Q_4_12 format
+// percent in UQ_4_12 format
 static const s16 sPercentToModifier[] =
 {
-    Q_4_12(0.00), // 0
-    Q_4_12(0.01), // 1
-    Q_4_12(0.02), // 2
-    Q_4_12(0.03), // 3
-    Q_4_12(0.04), // 4
-    Q_4_12(0.05), // 5
-    Q_4_12(0.06), // 6
-    Q_4_12(0.07), // 7
-    Q_4_12(0.08), // 8
-    Q_4_12(0.09), // 9
-    Q_4_12(0.10), // 10
-    Q_4_12(0.11), // 11
-    Q_4_12(0.12), // 12
-    Q_4_12(0.13), // 13
-    Q_4_12(0.14), // 14
-    Q_4_12(0.15), // 15
-    Q_4_12(0.16), // 16
-    Q_4_12(0.17), // 17
-    Q_4_12(0.18), // 18
-    Q_4_12(0.19), // 19
-    Q_4_12(0.20), // 20
-    Q_4_12(0.21), // 21
-    Q_4_12(0.22), // 22
-    Q_4_12(0.23), // 23
-    Q_4_12(0.24), // 24
-    Q_4_12(0.25), // 25
-    Q_4_12(0.26), // 26
-    Q_4_12(0.27), // 27
-    Q_4_12(0.28), // 28
-    Q_4_12(0.29), // 29
-    Q_4_12(0.30), // 30
-    Q_4_12(0.31), // 31
-    Q_4_12(0.32), // 32
-    Q_4_12(0.33), // 33
-    Q_4_12(0.34), // 34
-    Q_4_12(0.35), // 35
-    Q_4_12(0.36), // 36
-    Q_4_12(0.37), // 37
-    Q_4_12(0.38), // 38
-    Q_4_12(0.39), // 39
-    Q_4_12(0.40), // 40
-    Q_4_12(0.41), // 41
-    Q_4_12(0.42), // 42
-    Q_4_12(0.43), // 43
-    Q_4_12(0.44), // 44
-    Q_4_12(0.45), // 45
-    Q_4_12(0.46), // 46
-    Q_4_12(0.47), // 47
-    Q_4_12(0.48), // 48
-    Q_4_12(0.49), // 49
-    Q_4_12(0.50), // 50
-    Q_4_12(0.51), // 51
-    Q_4_12(0.52), // 52
-    Q_4_12(0.53), // 53
-    Q_4_12(0.54), // 54
-    Q_4_12(0.55), // 55
-    Q_4_12(0.56), // 56
-    Q_4_12(0.57), // 57
-    Q_4_12(0.58), // 58
-    Q_4_12(0.59), // 59
-    Q_4_12(0.60), // 60
-    Q_4_12(0.61), // 61
-    Q_4_12(0.62), // 62
-    Q_4_12(0.63), // 63
-    Q_4_12(0.64), // 64
-    Q_4_12(0.65), // 65
-    Q_4_12(0.66), // 66
-    Q_4_12(0.67), // 67
-    Q_4_12(0.68), // 68
-    Q_4_12(0.69), // 69
-    Q_4_12(0.70), // 70
-    Q_4_12(0.71), // 71
-    Q_4_12(0.72), // 72
-    Q_4_12(0.73), // 73
-    Q_4_12(0.74), // 74
-    Q_4_12(0.75), // 75
-    Q_4_12(0.76), // 76
-    Q_4_12(0.77), // 77
-    Q_4_12(0.78), // 78
-    Q_4_12(0.79), // 79
-    Q_4_12(0.80), // 80
-    Q_4_12(0.81), // 81
-    Q_4_12(0.82), // 82
-    Q_4_12(0.83), // 83
-    Q_4_12(0.84), // 84
-    Q_4_12(0.85), // 85
-    Q_4_12(0.86), // 86
-    Q_4_12(0.87), // 87
-    Q_4_12(0.88), // 88
-    Q_4_12(0.89), // 89
-    Q_4_12(0.90), // 90
-    Q_4_12(0.91), // 91
-    Q_4_12(0.92), // 92
-    Q_4_12(0.93), // 93
-    Q_4_12(0.94), // 94
-    Q_4_12(0.95), // 95
-    Q_4_12(0.96), // 96
-    Q_4_12(0.97), // 97
-    Q_4_12(0.98), // 98
-    Q_4_12(0.99), // 99
-    Q_4_12(1.00), // 100
+    UQ_4_12(0.00), // 0
+    UQ_4_12(0.01), // 1
+    UQ_4_12(0.02), // 2
+    UQ_4_12(0.03), // 3
+    UQ_4_12(0.04), // 4
+    UQ_4_12(0.05), // 5
+    UQ_4_12(0.06), // 6
+    UQ_4_12(0.07), // 7
+    UQ_4_12(0.08), // 8
+    UQ_4_12(0.09), // 9
+    UQ_4_12(0.10), // 10
+    UQ_4_12(0.11), // 11
+    UQ_4_12(0.12), // 12
+    UQ_4_12(0.13), // 13
+    UQ_4_12(0.14), // 14
+    UQ_4_12(0.15), // 15
+    UQ_4_12(0.16), // 16
+    UQ_4_12(0.17), // 17
+    UQ_4_12(0.18), // 18
+    UQ_4_12(0.19), // 19
+    UQ_4_12(0.20), // 20
+    UQ_4_12(0.21), // 21
+    UQ_4_12(0.22), // 22
+    UQ_4_12(0.23), // 23
+    UQ_4_12(0.24), // 24
+    UQ_4_12(0.25), // 25
+    UQ_4_12(0.26), // 26
+    UQ_4_12(0.27), // 27
+    UQ_4_12(0.28), // 28
+    UQ_4_12(0.29), // 29
+    UQ_4_12(0.30), // 30
+    UQ_4_12(0.31), // 31
+    UQ_4_12(0.32), // 32
+    UQ_4_12(0.33), // 33
+    UQ_4_12(0.34), // 34
+    UQ_4_12(0.35), // 35
+    UQ_4_12(0.36), // 36
+    UQ_4_12(0.37), // 37
+    UQ_4_12(0.38), // 38
+    UQ_4_12(0.39), // 39
+    UQ_4_12(0.40), // 40
+    UQ_4_12(0.41), // 41
+    UQ_4_12(0.42), // 42
+    UQ_4_12(0.43), // 43
+    UQ_4_12(0.44), // 44
+    UQ_4_12(0.45), // 45
+    UQ_4_12(0.46), // 46
+    UQ_4_12(0.47), // 47
+    UQ_4_12(0.48), // 48
+    UQ_4_12(0.49), // 49
+    UQ_4_12(0.50), // 50
+    UQ_4_12(0.51), // 51
+    UQ_4_12(0.52), // 52
+    UQ_4_12(0.53), // 53
+    UQ_4_12(0.54), // 54
+    UQ_4_12(0.55), // 55
+    UQ_4_12(0.56), // 56
+    UQ_4_12(0.57), // 57
+    UQ_4_12(0.58), // 58
+    UQ_4_12(0.59), // 59
+    UQ_4_12(0.60), // 60
+    UQ_4_12(0.61), // 61
+    UQ_4_12(0.62), // 62
+    UQ_4_12(0.63), // 63
+    UQ_4_12(0.64), // 64
+    UQ_4_12(0.65), // 65
+    UQ_4_12(0.66), // 66
+    UQ_4_12(0.67), // 67
+    UQ_4_12(0.68), // 68
+    UQ_4_12(0.69), // 69
+    UQ_4_12(0.70), // 70
+    UQ_4_12(0.71), // 71
+    UQ_4_12(0.72), // 72
+    UQ_4_12(0.73), // 73
+    UQ_4_12(0.74), // 74
+    UQ_4_12(0.75), // 75
+    UQ_4_12(0.76), // 76
+    UQ_4_12(0.77), // 77
+    UQ_4_12(0.78), // 78
+    UQ_4_12(0.79), // 79
+    UQ_4_12(0.80), // 80
+    UQ_4_12(0.81), // 81
+    UQ_4_12(0.82), // 82
+    UQ_4_12(0.83), // 83
+    UQ_4_12(0.84), // 84
+    UQ_4_12(0.85), // 85
+    UQ_4_12(0.86), // 86
+    UQ_4_12(0.87), // 87
+    UQ_4_12(0.88), // 88
+    UQ_4_12(0.89), // 89
+    UQ_4_12(0.90), // 90
+    UQ_4_12(0.91), // 91
+    UQ_4_12(0.92), // 92
+    UQ_4_12(0.93), // 93
+    UQ_4_12(0.94), // 94
+    UQ_4_12(0.95), // 95
+    UQ_4_12(0.96), // 96
+    UQ_4_12(0.97), // 97
+    UQ_4_12(0.98), // 98
+    UQ_4_12(0.99), // 99
+    UQ_4_12(1.00), // 100
 };
 
 static const u8 sHoldEffectToType[][2] =
@@ -4026,56 +4051,54 @@ static u16 CalcMoveBasePower(u16 move, u8 battlerAtk, u8 battlerDef)
     return basePower;
 }
 
-#define ROUND_VAL ((1) << (12 - 1))
-
-static void MulModifier(s16 *modifier, s16 val)
+static void MulModifier(u16 *modifier, u16 val)
 {
-    *modifier = Q_4_12_TO_INT((*modifier * val) + Q_4_12_ROUND);
+    *modifier = UQ_4_12_TO_INT((*modifier * val) + UQ_4_12_ROUND);
 }
 
-static s32 ApplyModifier(s16 modifier, s32 val)
+static u32 ApplyModifier(u16 modifier, u32 val)
 {
-    return Q_4_12_TO_INT((modifier * val) + Q_4_12_ROUND);
+    return UQ_4_12_TO_INT((modifier * val) + UQ_4_12_ROUND);
 }
 
-static s32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
+static u32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
 {
     u32 i;
     u32 holdEffectAtk, holdEffectParamAtk;
     u16 basePower = CalcMoveBasePower(move, battlerAtk, battlerDef);
-    s16 holdEffectModifier;
-    s16 modifier = Q_4_12(1.0);
+    u16 holdEffectModifier;
+    u16 modifier = UQ_4_12(1.0);
 
     // attacker's abilities
     switch (GetBattlerAbility(battlerAtk))
     {
     case ABILITY_TECHNICIAN:
         if (basePower <= 60)
-           MulModifier(&modifier, Q_4_12(1.5));
+           MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_FLARE_BOOST:
         if (gBattleMons[battlerAtk].status1 & STATUS1_BURN && IS_MOVE_SPECIAL(move))
-           MulModifier(&modifier, Q_4_12(1.5));
+           MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_TOXIC_BOOST:
         if (gBattleMons[battlerAtk].status1 & STATUS1_PSN_ANY && IS_MOVE_PHYSICAL(move))
-           MulModifier(&modifier, Q_4_12(1.5));
+           MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_RECKLESS:
         if (gBattleMoves[move].flags & FLAG_RECKLESS_BOOST)
-           MulModifier(&modifier, Q_4_12(1.2));
+           MulModifier(&modifier, UQ_4_12(1.2));
         break;
     case ABILITY_IRON_FIST:
         if (gBattleMoves[move].flags & FLAG_IRON_FIST_BOOST)
-           MulModifier(&modifier, Q_4_12(1.2));
+           MulModifier(&modifier, UQ_4_12(1.2));
         break;
     case ABILITY_SHEER_FORCE:
         if (gBattleMoves[move].flags & FLAG_SHEER_FORCE_BOOST)
-           MulModifier(&modifier, Q_4_12(1.3));
+           MulModifier(&modifier, UQ_4_12(1.3));
         break;
     case ABILITY_SAND_FORCE:
         if (moveType == TYPE_STEEL || moveType == TYPE_ROCK || moveType == TYPE_GROUND)
-           MulModifier(&modifier, Q_4_12(1.3));
+           MulModifier(&modifier, UQ_4_12(1.3));
         break;
     case ABILITY_RIVALRY:
         if (GetGenderFromSpeciesAndPersonality(gBattleMons[battlerAtk].species, gBattleMons[battlerAtk].personality) != MON_GENDERLESS
@@ -4083,34 +4106,34 @@ static s32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
         {
             if (GetGenderFromSpeciesAndPersonality(gBattleMons[battlerAtk].species, gBattleMons[battlerAtk].personality)
              == GetGenderFromSpeciesAndPersonality(gBattleMons[battlerDef].species, gBattleMons[battlerDef].personality))
-               MulModifier(&modifier, Q_4_12(1.25));
+               MulModifier(&modifier, UQ_4_12(1.25));
             else
-               MulModifier(&modifier, Q_4_12(0.75));
+               MulModifier(&modifier, UQ_4_12(0.75));
         }
         break;
     case ABILITY_ANALYTIC:
         if (GetBattlerTurnOrderNum(battlerAtk) == gBattlersCount - 1 && move != MOVE_FUTURE_SIGHT && move != MOVE_DOOM_DESIRE)
-           MulModifier(&modifier, Q_4_12(1.3));
+           MulModifier(&modifier, UQ_4_12(1.3));
         break;
     case ABILITY_TOUGH_CLAWS:
         if (gBattleMoves[move].flags & FLAG_MAKES_CONTACT)
-           MulModifier(&modifier, Q_4_12(1.3));
+           MulModifier(&modifier, UQ_4_12(1.3));
         break;
     case ABILITY_STRONG_JAW:
         if (gBattleMoves[move].flags & FLAG_STRONG_JAW_BOOST)
-           MulModifier(&modifier, Q_4_12(1.5));
+           MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_MEGA_LAUNCHER:
         if (gBattleMoves[move].flags & FLAG_MEGA_LAUNCHER_BOOST)
-           MulModifier(&modifier, Q_4_12(1.5));
+           MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_WATER_BUBBLE:
         if (moveType == TYPE_WATER)
-           MulModifier(&modifier, Q_4_12(2.0));
+           MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case ABILITY_STEELWORKER:
         if (moveType == TYPE_STEEL)
-           MulModifier(&modifier, Q_4_12(1.5));
+           MulModifier(&modifier, UQ_4_12(1.5));
         break;
     }
 
@@ -4119,9 +4142,9 @@ static s32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
         || (IS_ABILITY_ON_FIELD(ABILITY_FAIRY_AURA) && moveType == TYPE_FAIRY))
     {
         if (IS_ABILITY_ON_FIELD(ABILITY_AURA_BREAK))
-            MulModifier(&modifier, Q_4_12(0.75));
+            MulModifier(&modifier, UQ_4_12(0.75));
         else
-            MulModifier(&modifier, Q_4_12(1.25));
+            MulModifier(&modifier, UQ_4_12(1.25));
     }
 
     // attacker partner's abilities
@@ -4131,7 +4154,7 @@ static s32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
         {
         case ABILITY_BATTERY:
             if (IS_MOVE_SPECIAL(move))
-                MulModifier(&modifier, Q_4_12(1.3));
+                MulModifier(&modifier, UQ_4_12(1.3));
             break;
         }
     }
@@ -4142,17 +4165,17 @@ static s32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
     case ABILITY_HEATPROOF:
     case ABILITY_WATER_BUBBLE:
         if (moveType == TYPE_FIRE)
-            MulModifier(&modifier, Q_4_12(0.5));
+            MulModifier(&modifier, UQ_4_12(0.5));
         break;
     case ABILITY_DRY_SKIN:
         if (moveType == TYPE_FIRE)
-            MulModifier(&modifier, Q_4_12(1.25));
+            MulModifier(&modifier, UQ_4_12(1.25));
         break;
     case ABILITY_FLUFFY:
         if (IsMoveMakingContact(move, battlerAtk))
-            MulModifier(&modifier, Q_4_12(0.5));
+            MulModifier(&modifier, UQ_4_12(0.5));
         if (moveType == TYPE_FIRE)
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     }
 
@@ -4161,7 +4184,7 @@ static s32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
     if (holdEffectParamAtk > 100)
         holdEffectParamAtk = 100;
 
-    holdEffectModifier = Q_4_12(1.0) + sPercentToModifier[holdEffectParamAtk];
+    holdEffectModifier = UQ_4_12(1.0) + sPercentToModifier[holdEffectParamAtk];
 
     // attacker's hold effect
     switch (holdEffectAtk)
@@ -4225,59 +4248,59 @@ static s32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
     {
     case EFFECT_FACADE:
         if (gBattleMons[battlerAtk].status1 & (STATUS1_BURN | STATUS1_PSN_ANY | STATUS1_PARALYSIS))
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case EFFECT_BRINE:
         if (gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 2))
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case EFFECT_VENOSHOCK:
         if (gBattleMons[battlerAtk].status1 & STATUS1_PSN_ANY)
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case EFFECT_RETALITATE:
         // todo
         break;
     case EFFECT_SOLARBEAM:
         if (WEATHER_HAS_EFFECT && gBattleWeather & (WEATHER_HAIL_ANY | WEATHER_SANDSTORM_ANY | WEATHER_RAIN_ANY))
-            MulModifier(&modifier, Q_4_12(0.5));
+            MulModifier(&modifier, UQ_4_12(0.5));
         break;
     case EFFECT_BULLDOZE:
     case EFFECT_MAGNITUDE:
     case EFFECT_EARTHQUAKE:
         if (gFieldStatuses & STATUS_FIELD_GRASSY_TERRAIN && IsBattlerGrounded(battlerDef))
-            MulModifier(&modifier, Q_4_12(0.5));
+            MulModifier(&modifier, UQ_4_12(0.5));
         break;
     case EFFECT_KNOCK_OFF:
         if (gBattleMons[battlerDef].item != ITEM_NONE && GetBattlerAbility(battlerDef) != ABILITY_STICKY_HOLD)
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     }
 
     // various effecs
     if (gProtectStructs[battlerAtk].helpingHand)
-        MulModifier(&modifier, Q_4_12(1.5));
+        MulModifier(&modifier, UQ_4_12(1.5));
     if (gStatuses3[battlerAtk] & STATUS3_CHARGED_UP && moveType == TYPE_ELECTRIC)
-        MulModifier(&modifier, Q_4_12(2.0));
+        MulModifier(&modifier, UQ_4_12(2.0));
     if (gStatuses3[battlerAtk] & STATUS3_ME_FIRST)
-        MulModifier(&modifier, Q_4_12(1.5));
+        MulModifier(&modifier, UQ_4_12(1.5));
     if (gFieldStatuses & STATUS_FIELD_GRASSY_TERRAIN && moveType == TYPE_GRASS && IsBattlerGrounded(battlerAtk))
-        MulModifier(&modifier, Q_4_12(1.5));
+        MulModifier(&modifier, UQ_4_12(1.5));
     if (gFieldStatuses & STATUS_FIELD_MISTY_TERRAIN && moveType == TYPE_DRAGON && IsBattlerGrounded(battlerDef))
-        MulModifier(&modifier, Q_4_12(0.5));
+        MulModifier(&modifier, UQ_4_12(0.5));
     if (gFieldStatuses & STATUS_FIELD_ELECTRIC_TERRAIN && moveType == TYPE_ELECTRIC && IsBattlerGrounded(battlerAtk))
-        MulModifier(&modifier, Q_4_12(1.5));
+        MulModifier(&modifier, UQ_4_12(1.5));
     if (gFieldStatuses & STATUS_FIELD_PSYCHIC_TERRAIN && moveType == TYPE_PSYCHIC && IsBattlerGrounded(battlerAtk))
-        MulModifier(&modifier, Q_4_12(1.5));
+        MulModifier(&modifier, UQ_4_12(1.5));
 
     return ApplyModifier(modifier, basePower);
 }
 
-static s32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
+static u32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, bool32 isCrit)
 {
     u8 atkStage;
-    s32 atkStat;
-    s16 modifier;
+    u32 atkStat;
+    u16 modifier;
 
     if (gBattleMoves[move].effect == EFFECT_FOUL_PLAY)
     {
@@ -4299,7 +4322,7 @@ static s32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
     }
 
     // critical hits ignore attack stat's stage drops
-    if (gCritMultiplier == 2 && atkStage < 6)
+    if (isCrit && atkStage < 6)
         atkStage = 6;
     // pokemon with unaware ignore attack stat changes while taking damage
     if (GetBattlerAbility(battlerDef) == ABILITY_UNAWARE)
@@ -4309,7 +4332,7 @@ static s32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
     atkStat /= gStatStageRatios[atkStage][1];
 
     // apply attack stat modifiers
-    modifier = Q_4_12(1.0);
+    modifier = UQ_4_12(1.0);
 
     // attacker's abilities
     switch (GetBattlerAbility(battlerAtk))
@@ -4317,39 +4340,39 @@ static s32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
     case ABILITY_HUGE_POWER:
     case ABILITY_PURE_POWER:
         if (IS_MOVE_PHYSICAL(move))
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case ABILITY_SLOW_START:
         if (gDisableStructs[battlerAtk].slowStartTimer != 0)
-            MulModifier(&modifier, Q_4_12(0.5));
+            MulModifier(&modifier, UQ_4_12(0.5));
         break;
     case ABILITY_SOLAR_POWER:
         if (IS_MOVE_SPECIAL(move) && WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_SUN_ANY)
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_DEFEATIST:
         if (gBattleMons[battlerAtk].hp <= (gBattleMons[battlerDef].maxHP / 2))
-            MulModifier(&modifier, Q_4_12(0.5));
+            MulModifier(&modifier, UQ_4_12(0.5));
         break;
     case ABILITY_FLASH_FIRE:
         if (moveType == TYPE_FIRE && gBattleResources->flags->flags[battlerAtk] & UNKNOWN_FLAG_FLASH_FIRE)
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_SWARM:
         if (moveType == TYPE_BUG && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_TORRENT:
         if (moveType == TYPE_WATER && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_BLAZE:
         if (moveType == TYPE_FIRE && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_OVERGROW:
         if (moveType == TYPE_GRASS && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_PLUS:
     case ABILITY_MINUS:
@@ -4357,16 +4380,16 @@ static s32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
         {
             u32 partnerAbility = GetBattlerAbility(BATTLE_PARTNER(battlerAtk));
             if (partnerAbility == ABILITY_PLUS || partnerAbility == ABILITY_MINUS)
-                MulModifier(&modifier, Q_4_12(1.5));
+                MulModifier(&modifier, UQ_4_12(1.5));
         }
         break;
     case ABILITY_FLOWER_GIFT:
         if (gBattleMons[battlerAtk].species == SPECIES_CHERRIM && WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_SUN_ANY)
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_HUSTLE:
         if (IS_MOVE_PHYSICAL(move))
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     }
 
@@ -4375,7 +4398,7 @@ static s32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
     {
     case ABILITY_THICK_FAT:
         if (moveType == TYPE_FIRE || moveType == TYPE_ICE)
-            MulModifier(&modifier, Q_4_12(0.5));
+            MulModifier(&modifier, UQ_4_12(0.5));
         break;
     }
 
@@ -4386,7 +4409,7 @@ static s32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
         {
         case ABILITY_FLOWER_GIFT:
             if (gBattleMons[BATTLE_PARTNER(battlerAtk)].species == SPECIES_CHERRIM)
-                MulModifier(&modifier, Q_4_12(1.5));
+                MulModifier(&modifier, UQ_4_12(1.5));
             break;
         }
     }
@@ -4396,35 +4419,35 @@ static s32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
     {
     case HOLD_EFFECT_THICK_CLUB:
         if ((gBattleMons[battlerAtk].species == SPECIES_CUBONE || gBattleMons[battlerAtk].species == SPECIES_MAROWAK) && IS_MOVE_PHYSICAL(move))
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case HOLD_EFFECT_DEEP_SEA_TOOTH:
         if (gBattleMons[battlerAtk].species == SPECIES_CLAMPERL && IS_MOVE_SPECIAL(move))
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case HOLD_EFFECT_LIGHT_BALL:
         if (gBattleMons[battlerAtk].species == SPECIES_PIKACHU)
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case HOLD_EFFECT_CHOICE_BAND:
         if (IS_MOVE_PHYSICAL(move))
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case HOLD_EFFECT_CHOICE_SPECS:
         if (IS_MOVE_SPECIAL(move))
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     }
 
     return ApplyModifier(modifier, atkStat);
 }
 
-static s32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
+static u32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, bool32 isCrit)
 {
     bool32 usesDefStat;
     u8 defStage;
-    s32 defStat, def, spDef;
-    s16 modifier;
+    u32 defStat, def, spDef;
+    u16 modifier;
 
     if (gFieldStatuses & STATUS_FIELD_WONDER_ROOM) // the defense stats are swapped
     {
@@ -4451,7 +4474,7 @@ static s32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
     }
 
     // critical hits ignore positive stat changes
-    if (gCritMultiplier == 2 && defStage > 6)
+    if (isCrit && defStage > 6)
         defStage = 6;
     // pokemon with unaware ignore defense stat changes while dealing damage
     if (GetBattlerAbility(battlerAtk) == ABILITY_UNAWARE)
@@ -4464,26 +4487,26 @@ static s32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
     defStat /= gStatStageRatios[defStage][1];
 
     // apply defense stat modifiers
-    modifier = Q_4_12(1.0);
+    modifier = UQ_4_12(1.0);
 
     // target's abilities
     switch (GetBattlerAbility(battlerDef))
     {
     case ABILITY_MARVEL_SCALE:
         if (gBattleMons[battlerDef].status1 & STATUS1_ANY && usesDefStat)
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_FUR_COAT:
         if (usesDefStat)
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case ABILITY_GRASS_PELT:
         if (gFieldStatuses & STATUS_FIELD_GRASSY_TERRAIN && usesDefStat)
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     case ABILITY_FLOWER_GIFT:
         if (gBattleMons[battlerDef].species == SPECIES_CHERRIM && WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_SUN_ANY && !usesDefStat)
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     }
 
@@ -4494,7 +4517,7 @@ static s32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
         {
         case ABILITY_FLOWER_GIFT:
             if (gBattleMons[BATTLE_PARTNER(battlerDef)].species == SPECIES_CHERRIM && !usesDefStat)
-                MulModifier(&modifier, Q_4_12(1.5));
+                MulModifier(&modifier, UQ_4_12(1.5));
             break;
         }
     }
@@ -4504,20 +4527,194 @@ static s32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType)
     {
     case HOLD_EFFECT_DEEP_SEA_SCALE:
         if (gBattleMons[battlerDef].species == SPECIES_CLAMPERL && !usesDefStat)
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case HOLD_EFFECT_METAL_POWDER:
         if (gBattleMons[battlerDef].species == SPECIES_DITTO && usesDefStat && !(gBattleMons[battlerDef].status2 & STATUS2_TRANSFORMED))
-            MulModifier(&modifier, Q_4_12(2.0));
+            MulModifier(&modifier, UQ_4_12(2.0));
         break;
     case HOLD_EFFECT_EVIOLITE:
         // todo
         break;
     case HOLD_EFFECT_ASSAULT_VEST:
         if (!usesDefStat)
-            MulModifier(&modifier, Q_4_12(1.5));
+            MulModifier(&modifier, UQ_4_12(1.5));
         break;
     }
 
     return ApplyModifier(modifier, defStat);
+}
+
+static u32 CalcFinalDmg(u32 dmg, u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, u16 typeEffectivenessModifier, bool32 isCrit)
+{
+    u32 abilityAtk = GetBattlerAbility(battlerAtk);
+    u32 abilityDef = GetBattlerAbility(battlerDef);
+    u32 defSide = GET_BATTLER_SIDE(battlerDef);
+    u16 finalModifier = UQ_4_12(1.0);
+
+    // check multiple targets in double battle
+    if (GetMoveTargetCount(move, battlerAtk, battlerDef) >= 2)
+        MulModifier(&finalModifier, UQ_4_12(0.75));
+
+    // take type effectiveness
+    MulModifier(&finalModifier, typeEffectivenessModifier);
+
+    // check crit
+    if (isCrit)
+        dmg = ApplyModifier(UQ_4_12(1.5), dmg);
+
+    // check burn
+    if (gBattleMons[battlerAtk].status1 & STATUS1_BURN && gBattleMoves[move].effect != EFFECT_FACADE && abilityAtk != ABILITY_GUTS)
+        dmg = ApplyModifier(UQ_4_12(0.5), dmg);
+
+    // check sunny/rain weather
+    if (WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_RAIN_ANY)
+    {
+        if (moveType == TYPE_FIRE)
+            dmg = ApplyModifier(UQ_4_12(0.5), dmg);
+        else if (moveType == TYPE_WATER)
+            dmg = ApplyModifier(UQ_4_12(1.5), dmg);
+    }
+    else if (WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_SUN_ANY)
+    {
+        if (moveType == TYPE_FIRE)
+            dmg = ApplyModifier(UQ_4_12(1.5), dmg);
+        else if (moveType == TYPE_WATER)
+            dmg = ApplyModifier(UQ_4_12(0.5), dmg);
+    }
+
+    // check stab
+    if (IS_BATTLER_OF_TYPE(battlerAtk, moveType) && move != MOVE_STRUGGLE)
+    {
+        if (abilityAtk == ABILITY_ADAPTABILITY)
+            MulModifier(&finalModifier, UQ_4_12(2.0));
+        else
+            MulModifier(&finalModifier, UQ_4_12(1.5));
+    }
+
+    // reflect, light screen, aurora veil
+    if ((gSideStatuses[defSide] & SIDE_STATUS_REFLECT && IS_MOVE_PHYSICAL(move))
+        || (gSideStatuses[defSide] & SIDE_STATUS_LIGHTSCREEN && IS_MOVE_SPECIAL(move))
+        || (gSideStatuses[defSide] & SIDE_STATUS_AURORA_VEIL))
+    {
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+            MulModifier(&finalModifier, UQ_4_12(0.66));
+        else
+            MulModifier(&finalModifier, UQ_4_12(0.5));
+    }
+
+    // attacker's abilities
+    switch (abilityAtk)
+    {
+    case ABILITY_TINTED_LENS:
+        if (typeEffectivenessModifier <= UQ_4_12(0.5))
+            MulModifier(&finalModifier, UQ_4_12(2.0));
+        break;
+    case ABILITY_SNIPER:
+        if (isCrit)
+            MulModifier(&finalModifier, UQ_4_12(1.5));
+        break;
+    }
+
+    // target's abilities
+    switch (abilityDef)
+    {
+    case ABILITY_MULTISCALE:
+        if (BATTLER_MAX_HP(battlerDef))
+            MulModifier(&finalModifier, UQ_4_12(0.5));
+        break;
+    case ABILITY_FILTER:
+    case ABILITY_SOLID_ROCK:
+    case ABILITY_PRISM_ARMOR:
+        if (typeEffectivenessModifier >= UQ_4_12(2.0))
+            MulModifier(&finalModifier, UQ_4_12(0.75));
+        break;
+    }
+
+    // target's ally's abilities
+    if (IsBattlerAlive(BATTLE_PARTNER(battlerDef)))
+    {
+        switch (GetBattlerAbility(BATTLE_PARTNER(battlerDef)))
+        {
+        case ABILITY_FRIEND_GUARD:
+            MulModifier(&finalModifier, UQ_4_12(0.75));
+            break;
+        }
+    }
+
+    // attacker's hold effect
+    switch (GetBattlerHoldEffect(battlerAtk, TRUE))
+    {
+    case HOLD_EFFECT_METRONOME:
+        // todo
+        break;
+    case HOLD_EFFECT_EXPERT_BELT:
+        if (typeEffectivenessModifier >= UQ_4_12(2.0))
+            MulModifier(&finalModifier, UQ_4_12(1.2));
+        break;
+    case HOLD_EFFECT_LIFE_ORB:
+        MulModifier(&finalModifier, UQ_4_12(1.3));
+        break;
+    }
+
+    // target's hold effect
+    switch (GetBattlerHoldEffect(battlerDef, TRUE))
+    {
+    case HOLD_EFFECT_BERRY_DMG_REDUCE:
+        if (typeEffectivenessModifier == UQ_4_12(1.0))
+            MulModifier(&finalModifier, sPercentToModifier[GetBattlerHoldEffectParam(battlerDef)]);
+        break;
+    case HOLD_EFFECT_BERRY_DMG_REDUCE_SE:
+        if (typeEffectivenessModifier >= UQ_4_12(2.0))
+            MulModifier(&finalModifier, sPercentToModifier[GetBattlerHoldEffectParam(battlerDef)]);
+        break;
+    case HOLD_EFFECT_BERRY_DMG_REDUCE_NE:
+        if (typeEffectivenessModifier <= UQ_4_12(0.5))
+            MulModifier(&finalModifier, sPercentToModifier[GetBattlerHoldEffectParam(battlerDef)]);
+        break;
+    }
+
+    if (gBattleMoves[move].flags & FLAG_DMG_MINIMIZE    && gStatuses3[battlerDef] & STATUS3_MINIMIZED)
+        MulModifier(&finalModifier, UQ_4_12(2.0));
+    if (gBattleMoves[move].flags & FLAG_DMG_UNDERGROUND && gStatuses3[battlerDef] & STATUS3_UNDERGROUND)
+        MulModifier(&finalModifier, UQ_4_12(2.0));
+    if (gBattleMoves[move].flags & FLAG_DMG_UNDERWATER  && gStatuses3[battlerDef] & STATUS3_UNDERWATER)
+        MulModifier(&finalModifier, UQ_4_12(2.0));
+
+    dmg = ApplyModifier(finalModifier, dmg);
+    if (dmg == 0)
+        dmg = 1;
+
+    return dmg;
+}
+
+u32 CalculateBaseDamage(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, u16 typeEffectivenessModifier, bool32 isCrit)
+{
+    u32 dmg, atkStat, defStat;
+    u16 finalModifier;
+
+    // don't calculate damage if the move has no effect on target
+    if (typeEffectivenessModifier == 0)
+        return 0;
+
+    gBattleMovePower = CalcMoveBasePowerAfterModifiers(move, battlerAtk, battlerDef, moveType);
+
+    // long dmg basic formula
+    dmg = ((gBattleMons[battlerAtk].level * 2) / 5) + 2;
+    dmg *= gBattleMovePower;
+    dmg *= CalcAttackStat(move, battlerAtk, battlerDef, moveType, isCrit);
+    dmg /= CalcDefenseStat(move, battlerAtk, battlerDef, moveType, isCrit);
+    dmg = (dmg / 50) + 2;
+
+    // calculate final modifiers
+    dmg = CalcFinalDmg(dmg, move, battlerAtk, battlerDef, moveType, typeEffectivenessModifier, isCrit);
+
+    // add a random factor
+    dmg *= 100 - (Random() % 16);
+    dmg /= 100;
+
+    if (dmg == 0)
+        dmg = 1;
+
+    return dmg;
 }

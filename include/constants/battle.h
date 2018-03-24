@@ -210,6 +210,7 @@
 #define SIDE_STATUS_STEALTH_ROCK            (1 << 10)
 #define SIDE_STATUS_STEALTH_ROCK_DAMAGED    (1 << 11)
 #define SIDE_STATUS_TAILWIND                (1 << 12)
+#define SIDE_STATUS_AURORA_VEIL             (1 << 13)
 
 // Flags describing move's result
 #define MOVE_RESULT_MISSED             (1 << 0)

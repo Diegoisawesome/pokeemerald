@@ -4,7 +4,7 @@
 #define WINDOW_CLEAR            0x1
 #define WINDOW_x80              0x80
 
-void AI_CalcDmg(u8 battlerIdAtk, u8 battlerIdDef);
+bool32 IsCriticalHit(u16 move, u8 battlerAtk, u8 battlerDef);
 u8 TypeCalc(u16 move, u8 battlerIdAtk, u8 battlerIdDef);
 u8 AI_TypeCalc(u16 move, u16 targetSpecies, u8 targetAbility);
 u8 GetBattlerTurnOrderNum(u8 battlerId);
