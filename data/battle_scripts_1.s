@@ -270,8 +270,8 @@ BattleScript_HitFromAtkString::
 	ppreduce
 BattleScript_HitFromCritCalc::
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	adjustnormaldamage
 BattleScript_HitFromAtkAnimation::
 	attackanimation
@@ -350,8 +350,8 @@ BattleScript_EffectAbsorb::
 	attackstring
 	ppreduce
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	adjustnormaldamage
 	attackanimation
 	waitanimation
@@ -411,8 +411,8 @@ BattleScript_82D8B94::
 BattleScript_82D8B96::
 	movevaluescleanup
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	adjustnormaldamage
 	accuracycheck BattleScript_82D8BCF, ACC_CURR_MOVE
 	effectivenesssound
@@ -461,8 +461,8 @@ BattleScript_82D8C18::
 	attackstring
 	ppreduce
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	adjustnormaldamage
 	attackanimation
 	waitanimation
@@ -643,8 +643,8 @@ BattleScript_DoMultiHit::
 	movevaluescleanup
 	copybyte cEFFECT_CHOOSER, sMULTIHIT_EFFECT
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	jumpifmovehadnoeffect BattleScript_MultiHitNoMoreHits
 	adjustnormaldamage
 	attackanimation
@@ -895,8 +895,8 @@ BattleScript_MoveMissedDoDamage::
 	jumpifhalfword CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE, BattleScript_MoveEnd
 	printstring STRINGID_PKMNCRASHED
 	waitmessage 0x40
-	damagecalc
 	typecalc
+	damagecalc
 	adjustnormaldamage
 	manipulatedamage ATK80_DMG_HALF_BY_TWO_NOT_MORE_THAN_HALF_MAX_HP
 	bichalfword gMoveResultFlags, MOVE_RESULT_MISSED
@@ -1431,8 +1431,8 @@ BattleScript_DoTripleKickAttack::
 	movevaluescleanup
 	addbyte sMULTIHIT_STRING + 4, 0x1
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	adjustnormaldamage
 	addbyte sTRIPLE_KICK_POWER, 10
 	jumpifmovehadnoeffect BattleScript_TripleKickNoMoreHits
@@ -1671,8 +1671,8 @@ BattleScript_EffectFuryCutter::
 BattleScript_FuryCutterHit::
 	furycuttercalc
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	jumpifmovehadnoeffect BattleScript_FuryCutterHit
 	adjustnormaldamage
 	goto BattleScript_HitFromAtkAnimation
@@ -1881,8 +1881,8 @@ BattleScript_HitsAllNoUndergroundBonus::
 BattleScript_DoHitAllWithUndergroundBonus::
 	accuracycheck BattleScript_HitAllWithUndergroundBonusMissed, ACC_CURR_MOVE
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	adjustnormaldamage
 	attackanimation
 	waitanimation
@@ -2454,8 +2454,8 @@ BattleScript_EffectBrickBreak::
 	ppreduce
 	removelightscreenreflect
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	adjustnormaldamage
 	jumpifbyte CMP_EQUAL, sB_ANIM_TURN, 0x0, BattleScript_BrickBreakAnim
 	bichalfword gMoveResultFlags, MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE
@@ -3146,8 +3146,8 @@ BattleScript_PursuitDmgOnSwitchOut::
 	attackstring
 	ppreduce
 	critcalc
-	damagecalc
 	typecalc
+	damagecalc
 	adjustnormaldamage
 	attackanimation
 	waitanimation

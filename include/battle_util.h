@@ -89,5 +89,6 @@ bool32 IsBattlerGrounded(u8 battlerId);
 u8 GetBattleMonMoveSlot(struct BattlePokemon *battleMon, u16 move);
 u32 GetBattlerWeight(u8 battlerId);
 u32 CalculateBaseDamage(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, u16 typeEffectivenessModifier, bool32 isCrit);
+u16 CalculateTypeEffectiveness(u16 move, u8 moveType, u8 battlerAtk, u8 battlerDef, bool32 recordAbilities);
 
 #endif // GUARD_BATTLE_UTIL_H

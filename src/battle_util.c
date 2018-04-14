@@ -4718,3 +4718,77 @@ u32 CalculateBaseDamage(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, u16
 
     return dmg;
 }
+
+static inline void MulByTypeEffectiveness(u16 *modifier, u16 move, u8 moveType, u8 battlerDef, u8 defType)
+{
+    u16 mod = gTypeEffectivenessTable[moveType][defType];
+
+    if ((moveType == TYPE_FIGHTING || moveType == TYPE_NORMAL) && defType == TYPE_GHOST && gBattleMons[battlerDef].status2 & STATUS2_FORESIGHT)
+        mod = UQ_4_12(1.0);
+    if (moveType == TYPE_PSYCHIC && defType == TYPE_DARK && gStatuses3[battlerDef] & STATUS3_MIRACLE_EYED)
+        mod = UQ_4_12(1.0);
+    if (move == MOVE_FREEZE_DRY && defType == TYPE_WATER)
+        mod = UQ_4_12(2.0);
+    if (move == MOVE_STRUGGLE)
+        mod = UQ_4_12(1.0);
+
+    MulModifier(modifier, mod);
+}
+
+u16 CalculateTypeEffectiveness(u16 move, u8 moveType, u8 battlerAtk, u8 battlerDef, bool32 recordAbilities)
+{
+    u16 modifier = UQ_4_12(1.0);
+
+    MulByTypeEffectiveness(&modifier, move, moveType, battlerDef, gBattleMons[battlerDef].type1);
+    if (gBattleMons[battlerDef].type2 != gBattleMons[battlerDef].type1)
+        MulByTypeEffectiveness(&modifier, move, moveType, battlerDef, gBattleMons[battlerDef].type2);
+    if (gBattleMons[battlerDef].type3 != gBattleMons[battlerDef].type2 && gBattleMons[battlerDef].type3 != gBattleMons[battlerDef].type1)
+        MulByTypeEffectiveness(&modifier, move, moveType, battlerDef, gBattleMons[battlerDef].type3);
+
+    if (moveType == TYPE_GROUND && !IsBattlerGrounded(battlerDef))
+    {
+        modifier = UQ_4_12(0.0);
+        if (recordAbilities && GetBattlerAbility(battlerDef) == ABILITY_LEVITATE)
+        {
+            gLastUsedAbility = ABILITY_LEVITATE;
+            gMoveResultFlags |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
+            gLastLandedMoves[battlerDef] = 0;
+            gBattleCommunication[6] = moveType;
+            RecordAbilityBattle(battlerDef, ABILITY_LEVITATE);
+        }
+    }
+    if (GetBattlerAbility(battlerDef) == ABILITY_WONDER_GUARD && modifier <= UQ_4_12(1.0) && gBattleMoves[move].power)
+    {
+        modifier = UQ_4_12(0.0);
+        if (recordAbilities)
+        {
+            gLastUsedAbility = ABILITY_WONDER_GUARD;
+            gMoveResultFlags |= MOVE_RESULT_MISSED;
+            gLastLandedMoves[battlerDef] = 0;
+            gBattleCommunication[6] = 3;
+            RecordAbilityBattle(battlerDef, ABILITY_WONDER_GUARD);
+        }
+    }
+
+    if (modifier == UQ_4_12(0.0))
+    {
+        gMoveResultFlags |= MOVE_RESULT_DOESNT_AFFECT_FOE;
+        gMoveResultFlags &= ~(MOVE_RESULT_NOT_VERY_EFFECTIVE | MOVE_RESULT_SUPER_EFFECTIVE);
+    }
+    else if (modifier == UQ_4_12(1.0))
+    {
+        gMoveResultFlags &= ~(MOVE_RESULT_NOT_VERY_EFFECTIVE | MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_DOESNT_AFFECT_FOE);
+    }
+    else if (modifier > UQ_4_12(1.0))
+    {
+        gMoveResultFlags |= MOVE_RESULT_SUPER_EFFECTIVE;
+        gMoveResultFlags &= ~(MOVE_RESULT_NOT_VERY_EFFECTIVE | MOVE_RESULT_DOESNT_AFFECT_FOE);
+    }
+    else //if (modifier < UQ_4_12(1.0))
+    {
+        gMoveResultFlags |= MOVE_RESULT_NOT_VERY_EFFECTIVE;
+        gMoveResultFlags &= ~(MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_DOESNT_AFFECT_FOE);
+    }
+
+    return modifier;
+}

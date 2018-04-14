@@ -54,8 +54,7 @@ static bool8 ShouldSwitchIfWonderGuard(void)
         if (move == MOVE_NONE)
             continue;
 
-        moveFlags = AI_TypeCalc(move, gBattleMons[opposingBank].species, gBattleMons[opposingBank].ability);
-        if (moveFlags & MOVE_RESULT_SUPER_EFFECTIVE)
+        if (CalculateTypeEffectiveness(move, gBattleMoves[move].type, gActiveBattler, opposingBank, FALSE) > UQ_4_12(1.0))
             return FALSE;
     }
 
@@ -98,7 +97,7 @@ static bool8 ShouldSwitchIfWonderGuard(void)
             if (move == MOVE_NONE)
                 continue;
 
-            moveFlags = AI_TypeCalc(move, gBattleMons[opposingBank].species, gBattleMons[opposingBank].ability);
+            // TODO
             if (moveFlags & MOVE_RESULT_SUPER_EFFECTIVE && Random() % 3 < 2)
             {
                 // we found a mon
@@ -266,7 +265,7 @@ static bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng)
             if (move == MOVE_NONE)
                 continue;
 
-            moveFlags = AI_TypeCalc(move, gBattleMons[opposingBank].species, gBattleMons[opposingBank].ability);
+            // TODO
             if (moveFlags & MOVE_RESULT_SUPER_EFFECTIVE)
             {
                 if (noRng)
@@ -289,7 +288,7 @@ static bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng)
             if (move == MOVE_NONE)
                 continue;
 
-            moveFlags = AI_TypeCalc(move, gBattleMons[opposingBank].species, gBattleMons[opposingBank].ability);
+            // TODO
             if (moveFlags & MOVE_RESULT_SUPER_EFFECTIVE)
             {
                 if (noRng)
@@ -393,7 +392,7 @@ static bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent)
         else
             monAbility = gBaseStats[species].ability1;
 
-        moveFlags = AI_TypeCalc(gLastLandedMoves[gActiveBattler], species, monAbility);
+        // TODO
         if (moveFlags & flags)
         {
             bankIn1 = gLastHitBy[gActiveBattler];
@@ -404,7 +403,7 @@ static bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent)
                 if (move == 0)
                     continue;
 
-                moveFlags = AI_TypeCalc(move, gBattleMons[bankIn1].species, gBattleMons[bankIn1].ability);
+                // TODO
                 if (moveFlags & MOVE_RESULT_SUPER_EFFECTIVE && Random() % moduloPercent == 0)
                 {
                     *(gBattleStruct->AI_monToSwitchIntoId + gActiveBattler) = i;
@@ -596,30 +595,6 @@ void AI_TrySwitchOrUseItem(void)
     BtlController_EmitTwoReturnValues(1, B_ACTION_USE_MOVE, (gActiveBattler ^ BIT_SIDE) << 8);
 }
 
-static void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8 *var)
-{
-    s32 i = 0;
-
-    while (TYPE_EFFECT_ATK_TYPE(i) != TYPE_ENDTABLE)
-    {
-        if (TYPE_EFFECT_ATK_TYPE(i) == TYPE_FORESIGHT)
-        {
-            i += 3;
-            continue;
-        }
-        else if (TYPE_EFFECT_ATK_TYPE(i) == atkType)
-        {
-            // check type1
-            if (TYPE_EFFECT_DEF_TYPE(i) == defType1)
-                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / 10;
-            // check type2
-            if (TYPE_EFFECT_DEF_TYPE(i) == defType2 && defType1 != defType2)
-                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / 10;
-        }
-        i += 3;
-    }
-}
-
 u8 GetMostSuitableMonToSwitchInto(void)
 {
     u8 opposingBank;
@@ -696,8 +671,9 @@ u8 GetMostSuitableMonToSwitchInto(void)
                 u8 type1 = gBaseStats[species].type1;
                 u8 type2 = gBaseStats[species].type2;
                 u8 typeDmg = 10;
-                ModulateByTypeEffectiveness(gBattleMons[opposingBank].type1, type1, type2, &typeDmg);
-                ModulateByTypeEffectiveness(gBattleMons[opposingBank].type2, type1, type2, &typeDmg);
+                // TODO
+                //ModulateByTypeEffectiveness(gBattleMons[opposingBank].type1, type1, type2, &typeDmg);
+                //ModulateByTypeEffectiveness(gBattleMons[opposingBank].type2, type1, type2, &typeDmg);
                 if (bestDmg < typeDmg)
                 {
                     bestDmg = typeDmg;
@@ -716,7 +692,8 @@ u8 GetMostSuitableMonToSwitchInto(void)
             for (i = 0; i < 4; i++)
             {
                 move = GetMonData(&party[bestMonId], MON_DATA_MOVE1 + i);
-                if (move != MOVE_NONE && TypeCalc(move, gActiveBattler, opposingBank) & MOVE_RESULT_SUPER_EFFECTIVE)
+                // TODO
+                if (move != MOVE_NONE)
                     break;
             }
 

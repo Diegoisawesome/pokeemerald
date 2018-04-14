@@ -107,6 +107,7 @@ static void PlayerHandleBattleAnimation(void);
 static void PlayerHandleLinkStandbyMsg(void);
 static void PlayerHandleResetActionMoveSelection(void);
 static void PlayerHandleCmd55(void);
+static void PlayerHandleDebug(void);
 static void nullsub_22(void);
 
 static void PlayerBufferRunCommand(void);
@@ -194,6 +195,7 @@ static void (*const sPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
     PlayerHandleLinkStandbyMsg,
     PlayerHandleResetActionMoveSelection,
     PlayerHandleCmd55,
+    PlayerHandleDebug,
     nullsub_22
 };
 
@@ -342,6 +344,12 @@ static void HandleInputChooseAction(void)
     else if (gMain.newKeys & START_BUTTON)
     {
         SwapHpBarsWithHpText();
+    }
+    else if (DEBUG_BUILD && gMain.newKeys == (L_BUTTON | R_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        BtlController_EmitTwoReturnValues(1, B_ACTION_DEBUG, 0);
+        PlayerBufferExecCompleted();
     }
 }
 
@@ -1375,6 +1383,26 @@ static void OpenBagAndChooseItem(void)
         nullsub_35();
         FreeAllWindowBuffers();
         sub_81AABB0();
+    }
+}
+
+static void CompleteOnDebugMenuDone(void)
+{
+    if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
+    {
+        PlayerBufferExecCompleted();
+    }
+}
+
+extern void CB2_OpenBattleDebugMenu(void);
+
+static void OpenBattleDebugMenu(void)
+{
+    if (!gPaletteFade.active)
+    {
+        gBattlerControllerFuncs[gActiveBattler] = CompleteOnDebugMenuDone;
+        FreeAllWindowBuffers();
+        SetMainCallback2(CB2_OpenBattleDebugMenu);
     }
 }
 
@@ -3109,6 +3137,13 @@ static void PlayerHandleCmd55(void)
     BeginFastPaletteFade(3);
     PlayerBufferExecCompleted();
     gBattlerControllerFuncs[gActiveBattler] = sub_80587B0;
+}
+
+static void PlayerHandleDebug(void)
+{
+    BeginNormalPaletteFade(-1, 0, 0, 0x10, 0);
+    gBattlerControllerFuncs[gActiveBattler] = OpenBattleDebugMenu;
+    gBattlerInMenuId = gActiveBattler;
 }
 
 static void nullsub_22(void)

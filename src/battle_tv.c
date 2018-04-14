@@ -1430,21 +1430,8 @@ static void TrySetBattleSeminarShow(void)
         powerOverride = 0;
         if (ShouldCalculateDamage(gCurrentMove, &dmgByMove[i], &powerOverride))
         {
-            u8 moveResultFlags;
-            u16 sideStatus = gSideStatuses[GET_BATTLER_SIDE(gBattlerTarget)];
-            gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerTarget], gCurrentMove,
-                                                    sideStatus, powerOverride,
-                                                    0, gBattlerAttacker, gBattlerTarget);
-
-            if (gStatuses3[gBattlerAttacker] & STATUS3_CHARGED_UP && gBattleMoves[gCurrentMove].type == TYPE_ELECTRIC)
-                gBattleMoveDamage *= 2;
-            if (gProtectStructs[gBattlerAttacker].helpingHand)
-                gBattleMoveDamage = gBattleMoveDamage * 15 / 10;
-
-            moveResultFlags = TypeCalc(gCurrentMove, gBattlerAttacker, gBattlerTarget);
+            // TODO
             dmgByMove[i] = gBattleMoveDamage;
-            if (dmgByMove[i] == 0 && !(moveResultFlags & MOVE_RESULT_NO_EFFECT))
-                dmgByMove[i] = 1;
         }
     }
 

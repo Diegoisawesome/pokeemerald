@@ -1462,7 +1462,7 @@ static void BattleAICmd_get_highest_type_effectiveness(void)
 
         if (gCurrentMove)
         {
-            TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
+            // TODO
 
             // reduce by 1/3.
             if (gBattleMoveDamage == 120)
@@ -1494,7 +1494,7 @@ static void BattleAICmd_if_type_effectiveness(void)
     gBattleMoveDamage = AI_EFFECTIVENESS_x1;
     gCurrentMove = AI_THINKING_STRUCT->moveConsidered;
 
-    TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
+    // TODO
 
     if (gBattleMoveDamage == 120)
         gBattleMoveDamage = AI_EFFECTIVENESS_x2;

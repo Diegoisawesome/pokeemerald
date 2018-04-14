@@ -1,6 +1,9 @@
 #ifndef GUARD_BATTLE_H
 #define GUARD_BATTLE_H
 
+// to be changed on release
+#define DEBUG_BUILD TRUE
+
 // should they be included here or included individually by every file?
 #include "constants/battle.h"
 #include "battle_main.h"
@@ -39,6 +42,7 @@
 #define B_ACTION_CANCEL_PARTNER         12 // when choosing an action
 #define B_ACTION_FINISHED               12 // when executing an action
 #define B_ACTION_NOTHING_FAINTED        13 // when choosing an action
+#define B_ACTION_DEBUG                  0xFE
 #define B_ACTION_NONE                   0xFF
 
 #define MAX_TRAINER_ITEMS 4
