@@ -182,7 +182,8 @@ static void Task_DebugMenuFadeIn(u8 taskId)
 
 static void Task_DebugMenuProcessInput(u8 taskId)
 {
-    if (gMain.newKeys & B_BUTTON)
+    if (((gMain.heldKeysRaw & L_BUTTON) && (gMain.newKeysRaw & R_BUTTON)) ||
+        ((gMain.heldKeysRaw & R_BUTTON) && (gMain.newKeysRaw & L_BUTTON)))
     {
         gTasks[taskId].func = Task_DebugMenuExit;
     }

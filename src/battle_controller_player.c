@@ -260,7 +260,9 @@ static void HandleInputChooseAction(void)
     else
         gPlayerDpadHoldFrames = 0;
 
-    if (DEBUG_BUILD && gMain.heldKeysRaw == (L_BUTTON | R_BUTTON))
+    if (DEBUG_BUILD &&
+        (((gMain.heldKeysRaw & L_BUTTON) && (gMain.newKeysRaw & R_BUTTON)) ||
+         ((gMain.heldKeysRaw & R_BUTTON) && (gMain.newKeysRaw & L_BUTTON))))
     {
         PlaySE(SE_SELECT);
         BtlController_EmitTwoReturnValues(1, B_ACTION_DEBUG, 0);
