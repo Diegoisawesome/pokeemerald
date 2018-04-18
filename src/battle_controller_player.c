@@ -260,7 +260,13 @@ static void HandleInputChooseAction(void)
     else
         gPlayerDpadHoldFrames = 0;
 
-    if (gMain.newKeys & A_BUTTON)
+    if (DEBUG_BUILD && gMain.heldKeysRaw == (L_BUTTON | R_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        BtlController_EmitTwoReturnValues(1, B_ACTION_DEBUG, 0);
+        PlayerBufferExecCompleted();
+    }
+    else if (gMain.newKeys & A_BUTTON)
     {
         PlaySE(SE_SELECT);
 
@@ -344,12 +350,6 @@ static void HandleInputChooseAction(void)
     else if (gMain.newKeys & START_BUTTON)
     {
         SwapHpBarsWithHpText();
-    }
-    else if (DEBUG_BUILD && gMain.newKeys == (L_BUTTON | R_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        BtlController_EmitTwoReturnValues(1, B_ACTION_DEBUG, 0);
-        PlayerBufferExecCompleted();
     }
 }
 
