@@ -1582,6 +1582,11 @@ static void Task_IntroSpinAndZoomPokeball(u8 taskId)
         gTasks[taskId].func = Task_IntroWaitToSetupPart3LegendsFight;
     }
 
+#ifdef PORTABLE
+    //divide by zero occurs here
+    if(gTasks[taskId].data[1] == 0)
+        gTasks[taskId].data[1] = 1;
+#endif
     PanFadeAndZoomScreen(0x78, 0x50, 0x10000 / gTasks[taskId].data[1], gTasks[taskId].data[0]);
 
     if (gIntroFrameCounter == 28)

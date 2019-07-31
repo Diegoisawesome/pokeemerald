@@ -1135,7 +1135,7 @@ void VBlankIntrWait(void)
     if (SDL_MUSTLOCK(surface))
         SDL_UnlockSurface(surface);
     SDL_Flip(surface);
-    gIntrTable[3]();
+    gIntrTable[4]();
     /*
     if (!speedUp)
         SDL_Delay(1000 / 60);

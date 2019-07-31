@@ -531,6 +531,11 @@ static bool8 MainState_WaitFadeOutAndExit(void)
             SeedRngAndSetTrainerId();
         SetMainCallback2(gNamingScreenData->returnCallback);
         DestroyTask(FindTaskIdByFunc(sub_80E31B0));
+        #ifdef PORTABLE
+        NamingScreen_TurnOffScreen();
+        //Fix use after free issues with gNamingScreenData caused by sprites calling their callbacks which attempt to read from gNamingScreenData .
+        ResetSpriteData();
+        #endif
         FreeAllWindowBuffers();
         FREE_AND_SET_NULL(gNamingScreenData);
     }

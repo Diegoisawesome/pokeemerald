@@ -59,7 +59,7 @@ const IntrFunc gIntrTableTemplate[] =
 
 static u16 gUnknown_03000000;
 
-u8 gHeap[];
+u8 gHeap[HEAP_SIZE];
 u16 gKeyRepeatStartDelay;
 bool8 gLinkTransferringData;
 struct Main gMain;
