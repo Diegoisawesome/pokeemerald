@@ -49,8 +49,8 @@ se_w207b:
 	.byte	se_w207b_pri	
 	.byte	se_w207b_rev	
 
-	.word	se_w207b_grp
+	.4byte	se_w207b_grp
 
-	.word	se_w207b_1
+	.4byte	se_w207b_1
 
 	.end

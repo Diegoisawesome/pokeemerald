@@ -197,9 +197,9 @@ se_w080:
 	.byte	se_w080_pri	
 	.byte	se_w080_rev	
 
-	.word	se_w080_grp
+	.4byte	se_w080_grp
 
-	.word	se_w080_1
-	.word	se_w080_2
+	.4byte	se_w080_1
+	.4byte	se_w080_2
 
 	.end

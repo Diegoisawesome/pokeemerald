@@ -72,8 +72,8 @@ se_w146:
 	.byte	se_w146_pri	
 	.byte	se_w146_rev	
 
-	.word	se_w146_grp
+	.4byte	se_w146_grp
 
-	.word	se_w146_1
+	.4byte	se_w146_1
 
 	.end

@@ -64,7 +64,7 @@ se_w063_2_000:
 	.byte	W04
 	.byte	PEND
 	.byte	PATT
-	 .word	se_w063_2_000
+	 .4byte	se_w063_2_000
 	.byte	FINE
 
 
@@ -76,9 +76,9 @@ se_w063:
 	.byte	se_w063_pri	
 	.byte	se_w063_rev	
 
-	.word	se_w063_grp
+	.4byte	se_w063_grp
 
-	.word	se_w063_1
-	.word	se_w063_2
+	.4byte	se_w063_1
+	.4byte	se_w063_2
 
 	.end

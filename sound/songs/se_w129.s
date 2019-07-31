@@ -103,9 +103,9 @@ se_w129:
 	.byte	se_w129_pri	
 	.byte	se_w129_rev	
 
-	.word	se_w129_grp
+	.4byte	se_w129_grp
 
-	.word	se_w129_1
-	.word	se_w129_2
+	.4byte	se_w129_1
+	.4byte	se_w129_2
 
 	.end

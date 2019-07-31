@@ -83,11 +83,11 @@ se_w053_1_000:
 	.byte	W03
 	.byte	PEND
 	.byte	PATT
-	 .word	se_w053_1_000
+	 .4byte	se_w053_1_000
 	.byte	PATT
-	 .word	se_w053_1_000
+	 .4byte	se_w053_1_000
 	.byte	PATT
-	 .word	se_w053_1_000
+	 .4byte	se_w053_1_000
 	.byte		PAN   , c_v+4
 	.byte	W03
 	.byte		        c_v-5
@@ -167,9 +167,9 @@ se_w053:
 	.byte	se_w053_pri	
 	.byte	se_w053_rev	
 
-	.word	se_w053_grp
+	.4byte	se_w053_grp
 
-	.word	se_w053_1
-	.word	se_w053_2
+	.4byte	se_w053_1
+	.4byte	se_w053_2
 
 	.end

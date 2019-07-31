@@ -121,9 +121,9 @@ se_w208:
 	.byte	se_w208_pri	
 	.byte	se_w208_rev	
 
-	.word	se_w208_grp
+	.4byte	se_w208_grp
 
-	.word	se_w208_1
-	.word	se_w208_2
+	.4byte	se_w208_1
+	.4byte	se_w208_2
 
 	.end

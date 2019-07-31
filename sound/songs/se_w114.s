@@ -242,9 +242,9 @@ se_w114:
 	.byte	se_w114_pri	
 	.byte	se_w114_rev	
 
-	.word	se_w114_grp
+	.4byte	se_w114_grp
 
-	.word	se_w114_1
-	.word	se_w114_2
+	.4byte	se_w114_1
+	.4byte	se_w114_2
 
 	.end

@@ -92,9 +92,9 @@ se_w044:
 	.byte	se_w044_pri	
 	.byte	se_w044_rev	
 
-	.word	se_w044_grp
+	.4byte	se_w044_grp
 
-	.word	se_w044_1
-	.word	se_w044_2
+	.4byte	se_w044_1
+	.4byte	se_w044_2
 
 	.end

@@ -65,8 +65,8 @@ se_w187:
 	.byte	se_w187_pri	
 	.byte	se_w187_rev	
 
-	.word	se_w187_grp
+	.4byte	se_w187_grp
 
-	.word	se_w187_1
+	.4byte	se_w187_1
 
 	.end

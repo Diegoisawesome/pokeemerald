@@ -118,9 +118,9 @@ se_w213:
 	.byte	se_w213_pri	
 	.byte	se_w213_rev	
 
-	.word	se_w213_grp
+	.4byte	se_w213_grp
 
-	.word	se_w213_1
-	.word	se_w213_2
+	.4byte	se_w213_1
+	.4byte	se_w213_2
 
 	.end

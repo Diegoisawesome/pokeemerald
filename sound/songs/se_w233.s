@@ -67,9 +67,9 @@ se_w233:
 	.byte	se_w233_pri	
 	.byte	se_w233_rev	
 
-	.word	se_w233_grp
+	.4byte	se_w233_grp
 
-	.word	se_w233_1
-	.word	se_w233_2
+	.4byte	se_w233_1
+	.4byte	se_w233_2
 
 	.end

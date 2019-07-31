@@ -154,8 +154,8 @@ se_w048:
 	.byte	se_w048_pri	
 	.byte	se_w048_rev	
 
-	.word	se_w048_grp
+	.4byte	se_w048_grp
 
-	.word	se_w048_1
+	.4byte	se_w048_1
 
 	.end

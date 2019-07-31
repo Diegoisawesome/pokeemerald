@@ -189,9 +189,9 @@ se_w328:
 	.byte	se_w328_pri	
 	.byte	se_w328_rev	
 
-	.word	se_w328_grp
+	.4byte	se_w328_grp
 
-	.word	se_w328_1
-	.word	se_w328_2
+	.4byte	se_w328_1
+	.4byte	se_w328_2
 
 	.end

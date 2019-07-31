@@ -158,8 +158,8 @@ se_w107:
 	.byte	se_w107_pri	
 	.byte	se_w107_rev	
 
-	.word	se_w107_grp
+	.4byte	se_w107_grp
 
-	.word	se_w107_1
+	.4byte	se_w107_1
 
 	.end

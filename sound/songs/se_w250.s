@@ -118,8 +118,8 @@ se_w250:
 	.byte	se_w250_pri	
 	.byte	se_w250_rev	
 
-	.word	se_w250_grp
+	.4byte	se_w250_grp
 
-	.word	se_w250_1
+	.4byte	se_w250_1
 
 	.end

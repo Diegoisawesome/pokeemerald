@@ -127,9 +127,9 @@ se_w234:
 	.byte	se_w234_pri	
 	.byte	se_w234_rev	
 
-	.word	se_w234_grp
+	.4byte	se_w234_grp
 
-	.word	se_w234_1
-	.word	se_w234_2
+	.4byte	se_w234_1
+	.4byte	se_w234_2
 
 	.end

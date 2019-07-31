@@ -125,9 +125,9 @@ se_w062_1_001:
 	.byte		        c_v-7
 	.byte	W02
 	.byte	PATT
-	 .word	se_w062_1_000
+	 .4byte	se_w062_1_000
 	.byte	PATT
-	 .word	se_w062_1_001
+	 .4byte	se_w062_1_001
 	.byte		PAN   , c_v-6
 	.byte	W01
 	.byte		        c_v+0
@@ -166,8 +166,8 @@ se_w062:
 	.byte	se_w062_pri	
 	.byte	se_w062_rev	
 
-	.word	se_w062_grp
+	.4byte	se_w062_grp
 
-	.word	se_w062_1
+	.4byte	se_w062_1
 
 	.end

@@ -64,9 +64,9 @@ se_w196:
 	.byte	se_w196_pri	
 	.byte	se_w196_rev	
 
-	.word	se_w196_grp
+	.4byte	se_w196_grp
 
-	.word	se_w196_1
-	.word	se_w196_2
+	.4byte	se_w196_1
+	.4byte	se_w196_2
 
 	.end

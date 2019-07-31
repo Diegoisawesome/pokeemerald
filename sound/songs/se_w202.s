@@ -74,8 +74,8 @@ se_w202:
 	.byte	se_w202_pri	
 	.byte	se_w202_rev	
 
-	.word	se_w202_grp
+	.4byte	se_w202_grp
 
-	.word	se_w202_1
+	.4byte	se_w202_1
 
 	.end

@@ -110,8 +110,8 @@ se_w109:
 	.byte	se_w109_pri	
 	.byte	se_w109_rev	
 
-	.word	se_w109_grp
+	.4byte	se_w109_grp
 
-	.word	se_w109_1
+	.4byte	se_w109_1
 
 	.end

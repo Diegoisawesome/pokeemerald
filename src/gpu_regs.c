@@ -65,6 +65,7 @@ void CopyBufferedValuesToGpuRegs(void)
 
 void SetGpuReg(u8 regOffset, u16 value)
 {
+
     if (regOffset < GPU_REG_BUF_SIZE)
     {
         u16 vcount;

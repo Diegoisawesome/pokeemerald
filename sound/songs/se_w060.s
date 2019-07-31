@@ -136,9 +136,9 @@ se_w060:
 	.byte	se_w060_pri	
 	.byte	se_w060_rev	
 
-	.word	se_w060_grp
+	.4byte	se_w060_grp
 
-	.word	se_w060_1
-	.word	se_w060_2
+	.4byte	se_w060_1
+	.4byte	se_w060_2
 
 	.end

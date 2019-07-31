@@ -77,9 +77,9 @@ se_w085b:
 	.byte	se_w085b_pri	
 	.byte	se_w085b_rev	
 
-	.word	se_w085b_grp
+	.4byte	se_w085b_grp
 
-	.word	se_w085b_1
-	.word	se_w085b_2
+	.4byte	se_w085b_1
+	.4byte	se_w085b_2
 
 	.end

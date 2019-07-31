@@ -122,9 +122,9 @@ se_w320:
 	.byte	se_w320_pri	
 	.byte	se_w320_rev	
 
-	.word	se_w320_grp
+	.4byte	se_w320_grp
 
-	.word	se_w320_1
-	.word	se_w320_2
+	.4byte	se_w320_1
+	.4byte	se_w320_2
 
 	.end

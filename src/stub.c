@@ -1,4 +1,5 @@
 #include "global.h"
+#include "main.h"
 
 #include <stdio.h>
 
@@ -170,13 +171,9 @@ STUB_FUNC(void sub_802A794())
 STUB_FUNC(void sub_802A7A8())
 STUB_FUNC(void sub_802A8E8())
 STUB_FUNC(u16 ArcTan2(s16 x, s16 y))
-STUB_FUNC(void BgAffineSet(struct BgAffineSrcData *src, struct BgAffineDstData *dest, s32 count))
-STUB_FUNC(void CpuFastSet(const void *src, void *dest, u32 control))
 STUB_FUNC(int MultiBoot(struct MultiBootParam *mp))
-STUB_FUNC(void ObjAffineSet(struct ObjAffineSrcData *src, void *dest, s32 count, s32 offset))
 STUB_FUNC(void RLUnCompVram(const void *src, void *dest))
 STUB_FUNC(void RLUnCompWram(const void *src, void *dest))
-STUB_FUNC(void DmaSet(int dmaNum, const void *src, void *dest, u32 control))
 STUB_FUNC(void RegisterRamReset(u32 resetFlags))
 STUB_FUNC(void IntrMain())
 STUB_FUNC(u16 Sqrt(u32 num))
@@ -669,3 +666,4 @@ STUB_FUNC(int MultiBootMain(struct MultiBootParam *mp))
 STUB_FUNC(void MultiBootStartProbe(struct MultiBootParam *mp))
 STUB_FUNC(void MultiBootStartMaster(struct MultiBootParam *mp, const u8 *srcp, int length, u8 palette_color, s8 palette_speed))
 STUB_FUNC(int MultiBootCheckComplete(struct MultiBootParam *mp))
+STUB_FUNC(IntrFunc IntrSIO32(void))

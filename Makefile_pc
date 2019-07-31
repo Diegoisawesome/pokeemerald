@@ -1,9 +1,10 @@
-PREFIX := i686-w64-mingw32-
+PREFIX := 
 OBJCOPY := $(PREFIX)objcopy
 CC := $(PREFIX)gcc
 AS := $(PREFIX)as
 
-SDL_DIR := /cygdrive/f/modernpkmn/pokeruby_pc/SDL-devel-1.2.15-mingw32/SDL-1.2.15
+SDL_DIR := /k/gba/pokeemerald-pc/SDL-1.2.15
+ASM_PSEUDO_OP_CONV := sed -e 's/\.4byte/\.int/g;s/\.2byte/\.short/g'
 
 export CPP := $(PREFIX)cpp
 export LD := $(PREFIX)ld
@@ -34,16 +35,16 @@ DATA_ASM_BUILDDIR = $(OBJ_DIR)/$(DATA_ASM_SUBDIR)
 SONG_BUILDDIR = $(OBJ_DIR)/$(SONG_SUBDIR)
 MID_BUILDDIR = $(OBJ_DIR)/$(MID_SUBDIR)
 
-ASFLAGS := --32 --defsym MODERN=$(MODERN)
+ASFLAGS := --32 --defsym MODERN=$(MODERN) --defsym PORTABLE=1
 
 GCC_VER   := $(shell $(CC) -dumpversion)
 
 CC1             := $(shell $(PREFIX)gcc --print-prog-name=cc1) -quiet
-override CFLAGS += -Wno-trigraphs -Wimplicit -Wparentheses -Wunused -O0 -g -m32 -std=gnu99 -fno-leading-underscore -fno-dce -Wno-unused-function -I/usr/include/SDL -D_GNU_SOURCE=1 -Dmain=SDL_main
+override CFLAGS += -Wno-trigraphs -Wimplicit -Wparentheses -Wunused -O0 -g -m32 -std=gnu99 -fno-leading-underscore -fno-dce -Wno-unused-function -DPORTABLE
 ROM := pokeemerald_modern.gba
-OBJ_DIR := build/modern
+OBJ_DIR := build/pc
 
-CPPFLAGS := -iquote include -Wno-trigraphs -D NONMATCHING -I$(SDL_DIR)/include
+CPPFLAGS := -iquote include -Wno-trigraphs -D NONMATCHING -D PORTABLE -I$(SDL_DIR)/include -L$(SDL_DIR)/lib
 
 LDFLAGS = -Map ../../$(MAP)
 
@@ -186,10 +187,10 @@ $(DATA_ASM_BUILDDIR)/%.o: data_dep = $(shell $(SCANINC) -I include -I "" $(DATA_
 endif
 
 $(DATA_ASM_BUILDDIR)/%.o: $(DATA_ASM_SUBDIR)/%.s $$(data_dep)
-	$(PREPROC) $< charmap.txt | $(CPP) -I include | $(AS) $(ASFLAGS) -o $@
+	$(PREPROC) $< charmap.txt | $(CPP) -I include | $(ASM_PSEUDO_OP_CONV) | $(AS) $(ASFLAGS) -o $@
 
 $(SONG_BUILDDIR)/%.o: $(SONG_SUBDIR)/%.s
-	$(AS) $(ASFLAGS) -I sound -o $@ $<
+	$(ASM_PSEUDO_OP_CONV) $< | $(AS) $(ASFLAGS) -I sound -o $@
 
 $(OBJ_DIR)/sym_bss.ld: sym_bss.txt
 	$(RAMSCRGEN) .bss $< ENGLISH > $@
@@ -219,7 +220,7 @@ $(ELF): $(OBJ_DIR)/ld_script.ld $(OBJS)
 	#$(FIX) $@ -p --silent
 
 pokeemerald.exe: $(OBJS)
-	$(CC) $(CFLAGS) -Wl,--demangle $^ -L/usr/lib -lmingw32 -lSDLmain -lSDL -mwindows -lwinmm -static-libgcc -lgcc -mwindows -o $@
+	$(CC) $(CFLAGS) -Wl,--demangle $^ -L$(SDL_DIR)/lib  -lmingw32 -lSDLmain -lSDL.dll -lwinmm -static-libgcc -o $@
 
 $(ROM): pokeemerald.exe
 	@:

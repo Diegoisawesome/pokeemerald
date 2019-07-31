@@ -113,9 +113,9 @@ se_w298:
 	.byte	se_w298_pri	
 	.byte	se_w298_rev	
 
-	.word	se_w298_grp
+	.4byte	se_w298_grp
 
-	.word	se_w298_1
-	.word	se_w298_2
+	.4byte	se_w298_1
+	.4byte	se_w298_2
 
 	.end

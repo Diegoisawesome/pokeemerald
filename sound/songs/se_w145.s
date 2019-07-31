@@ -50,8 +50,8 @@ se_w145:
 	.byte	se_w145_pri	
 	.byte	se_w145_rev	
 
-	.word	se_w145_grp
+	.4byte	se_w145_grp
 
-	.word	se_w145_1
+	.4byte	se_w145_1
 
 	.end

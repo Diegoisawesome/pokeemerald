@@ -72,8 +72,8 @@ se_w118:
 	.byte	se_w118_pri	
 	.byte	se_w118_rev	
 
-	.word	se_w118_grp
+	.4byte	se_w118_grp
 
-	.word	se_w118_1
+	.4byte	se_w118_1
 
 	.end

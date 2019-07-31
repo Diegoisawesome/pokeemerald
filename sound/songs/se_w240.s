@@ -109,8 +109,8 @@ se_w240:
 	.byte	se_w240_pri	
 	.byte	se_w240_rev	
 
-	.word	se_w240_grp
+	.4byte	se_w240_grp
 
-	.word	se_w240_1
+	.4byte	se_w240_1
 
 	.end

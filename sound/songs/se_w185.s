@@ -82,8 +82,8 @@ se_w185:
 	.byte	se_w185_pri	
 	.byte	se_w185_rev	
 
-	.word	se_w185_grp
+	.4byte	se_w185_grp
 
-	.word	se_w185_1
+	.4byte	se_w185_1
 
 	.end

@@ -1,3 +1,4 @@
+#include "global.h"
 #include "gba/gba.h"
 #include "gba/flash_internal.h"
 
@@ -36,6 +37,9 @@ do {                             \
 
 u16 ReadFlashId(void)
 {
+#ifdef PORTABLE
+    return 0xCCCC;
+#else
     u16 flashId;
     u16 readFlash1Buffer[0x20];
     u8 (*readFlash1)(u8 *);
@@ -60,6 +64,7 @@ u16 ReadFlashId(void)
     DELAY();
 
     return flashId;
+#endif
 }
 
 void FlashTimerIntr(void)
@@ -137,6 +142,26 @@ void ReadFlash_Core(u8 *src, u8 *dest, u32 size)
 
 void ReadFlash(u16 sectorNum, u32 offset, u8 *dest, u32 size)
 {
+#ifdef PORTABLE
+    printf("ReadFlash(sectorNum=0x%04X,offset=0x%08X,size=0x%02X)\n",sectorNum,offset,size);
+    FILE * savefile = fopen("pokeemerald.sav", "r+b");
+    if (savefile == NULL)
+    {
+        return;
+    }
+    if (fseek(savefile, (sectorNum << gFlash->sector.shift) + offset, SEEK_SET))
+    {
+        fclose(savefile);
+        return;
+    }
+    if (fread(dest, 1, size, savefile) != size)
+    {
+        fclose(savefile);
+        return;
+    }
+    fclose(savefile);
+    return;
+#else
     u8 *src;
     u16 i;
     u16 readFlash_Core_Buffer[0x40];
@@ -169,10 +194,14 @@ void ReadFlash(u16 sectorNum, u32 offset, u8 *dest, u32 size)
     src = FLASH_BASE + (sectorNum << gFlash->sector.shift) + offset;
 
     readFlash_Core(src, dest, size);
+#endif
 }
 
 u32 VerifyFlashSector_Core(u8 *src, u8 *tgt, u32 size)
 {
+#ifdef PORTABLE
+    return 0 ;
+#else
     while (size-- != 0)
     {
         if (*tgt++ != *src++)
@@ -180,10 +209,15 @@ u32 VerifyFlashSector_Core(u8 *src, u8 *tgt, u32 size)
     }
 
     return 0;
+#endif
 }
 
 u32 VerifyFlashSector(u16 sectorNum, u8 *src)
 {
+#ifdef PORTABLE
+    puts("function VerifyFlashSector is a stub");
+    return 0;
+#else
     u16 i;
     u16 verifyFlashSector_Core_Buffer[0x80];
     u16 *funcSrc;
@@ -218,10 +252,15 @@ u32 VerifyFlashSector(u16 sectorNum, u8 *src)
     size = gFlash->sector.size;
 
     return verifyFlashSector_Core(src, tgt, size);
+#endif
 }
 
 u32 VerifyFlashSectorNBytes(u16 sectorNum, u8 *src, u32 n)
 {
+#ifdef PORTABLE
+    puts("function VerifyFlashSectorNBytes is a stub");
+    return 0;
+#else
     u16 i;
     u16 verifyFlashSector_Core_Buffer[0x80];
     u16 *funcSrc;
@@ -254,6 +293,7 @@ u32 VerifyFlashSectorNBytes(u16 sectorNum, u8 *src, u32 n)
     tgt = FLASH_BASE + (sectorNum << gFlash->sector.shift);
 
     return verifyFlashSector_Core(src, tgt, n);
+#endif
 }
 
 u32 ProgramFlashSectorAndVerify(u16 sectorNum, u8 *src)

@@ -172,9 +172,9 @@ se_w221b:
 	.byte	se_w221b_pri	
 	.byte	se_w221b_rev	
 
-	.word	se_w221b_grp
+	.4byte	se_w221b_grp
 
-	.word	se_w221b_1
-	.word	se_w221b_2
+	.4byte	se_w221b_1
+	.4byte	se_w221b_2
 
 	.end

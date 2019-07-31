@@ -51,8 +51,8 @@ se_w077:
 	.byte	se_w077_pri	
 	.byte	se_w077_rev	
 
-	.word	se_w077_grp
+	.4byte	se_w077_grp
 
-	.word	se_w077_1
+	.4byte	se_w077_1
 
 	.end

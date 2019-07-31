@@ -230,7 +230,7 @@ se_w201_2_000:
 	.byte		        Cn3 , v100
 	.byte	W03
 	.byte	PATT
-	 .word	se_w201_2_000
+	 .4byte	se_w201_2_000
 	.byte	W02
 	.byte		N03   , Cn3 , v076
 	.byte	W04
@@ -282,9 +282,9 @@ se_w201:
 	.byte	se_w201_pri	
 	.byte	se_w201_rev	
 
-	.word	se_w201_grp
+	.4byte	se_w201_grp
 
-	.word	se_w201_1
-	.word	se_w201_2
+	.4byte	se_w201_1
+	.4byte	se_w201_2
 
 	.end

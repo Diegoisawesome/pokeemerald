@@ -202,9 +202,9 @@ se_w239:
 	.byte	se_w239_pri	
 	.byte	se_w239_rev	
 
-	.word	se_w239_grp
+	.4byte	se_w239_grp
 
-	.word	se_w239_1
-	.word	se_w239_2
+	.4byte	se_w239_1
+	.4byte	se_w239_2
 
 	.end

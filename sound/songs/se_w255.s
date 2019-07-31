@@ -80,9 +80,9 @@ se_w255:
 	.byte	se_w255_pri	
 	.byte	se_w255_rev	
 
-	.word	se_w255_grp
+	.4byte	se_w255_grp
 
-	.word	se_w255_1
-	.word	se_w255_2
+	.4byte	se_w255_1
+	.4byte	se_w255_2
 
 	.end

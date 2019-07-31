@@ -79,8 +79,8 @@ se_w253:
 	.byte	se_w253_pri	
 	.byte	se_w253_rev	
 
-	.word	se_w253_grp
+	.4byte	se_w253_grp
 
-	.word	se_w253_1
+	.4byte	se_w253_1
 
 	.end

@@ -68,9 +68,9 @@ se_w047_1_001:
 	.byte	W06
 	.byte	W06
 	.byte	PATT
-	 .word	se_w047_1_000
+	 .4byte	se_w047_1_000
 	.byte	PATT
-	 .word	se_w047_1_001
+	 .4byte	se_w047_1_001
 	.byte		VOL   , 95*se_w047_mvl/mxv
 	.byte		N66   , Gn4 , v112
 	.byte	W06
@@ -151,9 +151,9 @@ se_w047_2_001:
 	.byte	W06
 	.byte	W06
 	.byte	PATT
-	 .word	se_w047_2_000
+	 .4byte	se_w047_2_000
 	.byte	PATT
-	 .word	se_w047_2_001
+	 .4byte	se_w047_2_001
 	.byte		VOL   , 95*se_w047_mvl/mxv
 	.byte		PAN   , c_v-12
 	.byte		N66   , Gn4 , v060
@@ -190,9 +190,9 @@ se_w047:
 	.byte	se_w047_pri	
 	.byte	se_w047_rev	
 
-	.word	se_w047_grp
+	.4byte	se_w047_grp
 
-	.word	se_w047_1
-	.word	se_w047_2
+	.4byte	se_w047_1
+	.4byte	se_w047_2
 
 	.end

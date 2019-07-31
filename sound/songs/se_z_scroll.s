@@ -39,8 +39,8 @@ se_z_scroll:
 	.byte	se_z_scroll_pri	
 	.byte	se_z_scroll_rev	
 
-	.word	se_z_scroll_grp
+	.4byte	se_z_scroll_grp
 
-	.word	se_z_scroll_1
+	.4byte	se_z_scroll_1
 
 	.end

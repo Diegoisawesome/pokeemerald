@@ -104,9 +104,9 @@ se_w103:
 	.byte	se_w103_pri	
 	.byte	se_w103_rev	
 
-	.word	se_w103_grp
+	.4byte	se_w103_grp
 
-	.word	se_w103_1
-	.word	se_w103_2
+	.4byte	se_w103_1
+	.4byte	se_w103_2
 
 	.end

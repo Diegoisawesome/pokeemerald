@@ -200,9 +200,9 @@ se_w322:
 	.byte	se_w322_pri	
 	.byte	se_w322_rev	
 
-	.word	se_w322_grp
+	.4byte	se_w322_grp
 
-	.word	se_w322_1
-	.word	se_w322_2
+	.4byte	se_w322_1
+	.4byte	se_w322_2
 
 	.end

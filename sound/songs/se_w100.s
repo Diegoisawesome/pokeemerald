@@ -158,8 +158,8 @@ se_w100:
 	.byte	se_w100_pri	
 	.byte	se_w100_rev	
 
-	.word	se_w100_grp
+	.4byte	se_w100_grp
 
-	.word	se_w100_1
+	.4byte	se_w100_1
 
 	.end

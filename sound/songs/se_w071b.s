@@ -147,9 +147,9 @@ se_w071b:
 	.byte	se_w071b_pri	
 	.byte	se_w071b_rev	
 
-	.word	se_w071b_grp
+	.4byte	se_w071b_grp
 
-	.word	se_w071b_1
-	.word	se_w071b_2
+	.4byte	se_w071b_1
+	.4byte	se_w071b_2
 
 	.end

@@ -98,9 +98,9 @@ se_w086:
 	.byte	se_w086_pri	
 	.byte	se_w086_rev	
 
-	.word	se_w086_grp
+	.4byte	se_w086_grp
 
-	.word	se_w086_1
-	.word	se_w086_2
+	.4byte	se_w086_1
+	.4byte	se_w086_2
 
 	.end

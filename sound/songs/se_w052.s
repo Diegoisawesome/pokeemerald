@@ -54,8 +54,8 @@ se_w052:
 	.byte	se_w052_pri	
 	.byte	se_w052_rev	
 
-	.word	se_w052_grp
+	.4byte	se_w052_grp
 
-	.word	se_w052_1
+	.4byte	se_w052_1
 
 	.end

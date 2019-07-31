@@ -122,8 +122,8 @@ se_w122:
 	.byte	se_w122_pri	
 	.byte	se_w122_rev	
 
-	.word	se_w122_grp
+	.4byte	se_w122_grp
 
-	.word	se_w122_1
+	.4byte	se_w122_1
 
 	.end

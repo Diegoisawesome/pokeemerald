@@ -161,9 +161,9 @@ se_w226:
 	.byte	se_w226_pri	
 	.byte	se_w226_rev	
 
-	.word	se_w226_grp
+	.4byte	se_w226_grp
 
-	.word	se_w226_1
-	.word	se_w226_2
+	.4byte	se_w226_1
+	.4byte	se_w226_2
 
 	.end

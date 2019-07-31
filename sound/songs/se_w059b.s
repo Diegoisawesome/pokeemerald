@@ -65,8 +65,8 @@ se_w059b:
 	.byte	se_w059b_pri	
 	.byte	se_w059b_rev	
 
-	.word	se_w059b_grp
+	.4byte	se_w059b_grp
 
-	.word	se_w059b_1
+	.4byte	se_w059b_1
 
 	.end

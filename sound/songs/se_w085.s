@@ -109,9 +109,9 @@ se_w085:
 	.byte	se_w085_pri	
 	.byte	se_w085_rev	
 
-	.word	se_w085_grp
+	.4byte	se_w085_grp
 
-	.word	se_w085_1
-	.word	se_w085_2
+	.4byte	se_w085_1
+	.4byte	se_w085_2
 
 	.end

@@ -73,8 +73,8 @@ se_w081:
 	.byte	se_w081_pri	
 	.byte	se_w081_rev	
 
-	.word	se_w081_grp
+	.4byte	se_w081_grp
 
-	.word	se_w081_1
+	.4byte	se_w081_1
 
 	.end

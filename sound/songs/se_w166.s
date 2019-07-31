@@ -61,8 +61,8 @@ se_w166:
 	.byte	se_w166_pri	
 	.byte	se_w166_rev	
 
-	.word	se_w166_grp
+	.4byte	se_w166_grp
 
-	.word	se_w166_1
+	.4byte	se_w166_1
 
 	.end

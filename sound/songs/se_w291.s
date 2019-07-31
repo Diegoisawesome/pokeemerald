@@ -115,9 +115,9 @@ se_w291:
 	.byte	se_w291_pri	
 	.byte	se_w291_rev	
 
-	.word	se_w291_grp
+	.4byte	se_w291_grp
 
-	.word	se_w291_1
-	.word	se_w291_2
+	.4byte	se_w291_1
+	.4byte	se_w291_2
 
 	.end

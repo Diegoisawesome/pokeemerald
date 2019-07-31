@@ -89,8 +89,8 @@ se_w204:
 	.byte	se_w204_pri	
 	.byte	se_w204_rev	
 
-	.word	se_w204_grp
+	.4byte	se_w204_grp
 
-	.word	se_w204_1
+	.4byte	se_w204_1
 
 	.end

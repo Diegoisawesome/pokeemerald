@@ -67,8 +67,8 @@ se_w120:
 	.byte	se_w120_pri	
 	.byte	se_w120_rev	
 
-	.word	se_w120_grp
+	.4byte	se_w120_grp
 
-	.word	se_w120_1
+	.4byte	se_w120_1
 
 	.end

@@ -66,9 +66,9 @@ se_w231:
 	.byte	se_w231_pri	
 	.byte	se_w231_rev	
 
-	.word	se_w231_grp
+	.4byte	se_w231_grp
 
-	.word	se_w231_1
-	.word	se_w231_2
+	.4byte	se_w231_1
+	.4byte	se_w231_2
 
 	.end

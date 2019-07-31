@@ -62,8 +62,8 @@ se_w199:
 	.byte	se_w199_pri	
 	.byte	se_w199_rev	
 
-	.word	se_w199_grp
+	.4byte	se_w199_grp
 
-	.word	se_w199_1
+	.4byte	se_w199_1
 
 	.end

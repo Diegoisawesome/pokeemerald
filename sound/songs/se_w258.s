@@ -90,9 +90,9 @@ se_w258:
 	.byte	se_w258_pri	
 	.byte	se_w258_rev	
 
-	.word	se_w258_grp
+	.4byte	se_w258_grp
 
-	.word	se_w258_1
-	.word	se_w258_2
+	.4byte	se_w258_1
+	.4byte	se_w258_2
 
 	.end

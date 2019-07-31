@@ -184,9 +184,9 @@ se_w230:
 	.byte	se_w230_pri	
 	.byte	se_w230_rev	
 
-	.word	se_w230_grp
+	.4byte	se_w230_grp
 
-	.word	se_w230_1
-	.word	se_w230_2
+	.4byte	se_w230_1
+	.4byte	se_w230_2
 
 	.end

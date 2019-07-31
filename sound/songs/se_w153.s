@@ -110,9 +110,9 @@ se_w153:
 	.byte	se_w153_pri	
 	.byte	se_w153_rev	
 
-	.word	se_w153_grp
+	.4byte	se_w153_grp
 
-	.word	se_w153_1
-	.word	se_w153_2
+	.4byte	se_w153_1
+	.4byte	se_w153_2
 
 	.end

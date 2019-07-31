@@ -59,8 +59,8 @@ se_w091:
 	.byte	se_w091_pri	
 	.byte	se_w091_rev	
 
-	.word	se_w091_grp
+	.4byte	se_w091_grp
 
-	.word	se_w091_1
+	.4byte	se_w091_1
 
 	.end

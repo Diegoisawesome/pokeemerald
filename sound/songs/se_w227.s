@@ -51,8 +51,8 @@ se_w227:
 	.byte	se_w227_pri	
 	.byte	se_w227_rev	
 
-	.word	se_w227_grp
+	.4byte	se_w227_grp
 
-	.word	se_w227_1
+	.4byte	se_w227_1
 
 	.end

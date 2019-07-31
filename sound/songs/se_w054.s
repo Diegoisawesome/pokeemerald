@@ -87,8 +87,8 @@ se_w054:
 	.byte	se_w054_pri	
 	.byte	se_w054_rev	
 
-	.word	se_w054_grp
+	.4byte	se_w054_grp
 
-	.word	se_w054_1
+	.4byte	se_w054_1
 
 	.end

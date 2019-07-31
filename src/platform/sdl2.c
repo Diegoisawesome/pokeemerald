@@ -2,7 +2,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-//#include <windows.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include <SDL/SDL.h>
 
@@ -10,17 +12,22 @@
 
 #include "global.h"
 #include "platform.h"
+#include "gba/defines.h"
+#include "gba/m4a_internal.h"
+//#include "gba/flash_internal.h"
 
 extern void (*const gIntrTable[])(void);
 
 // GBA memory
-struct SoundInfo *SOUND_INFO_PTR;
+vu16 GPIOPortDirection;
+
 u16 INTR_CHECK;
 void *INTR_VECTOR;
 unsigned char REG_BASE[0x400] __attribute__ ((aligned (4)));
 unsigned char PLTT[PLTT_SIZE] __attribute__ ((aligned (4)));
 unsigned char VRAM_[VRAM_SIZE] __attribute__ ((aligned (4)));
 unsigned char OAM[OAM_SIZE] __attribute__ ((aligned (4)));
+unsigned char FLASH_BASE[131072] __attribute__ ((aligned (4)));
 
 SDL_Surface *surface;
 bool speedUp = false;
@@ -30,11 +37,19 @@ extern void AgbMain(void);
 
 int main(int argc, char **argv)
 {
+    // Open an output console on Windows
+#ifdef _WIN32
+    AllocConsole() ;
+    AttachConsole( GetCurrentProcessId() ) ;
+    freopen( "CON", "w", stdout ) ;
+#endif
+
     SDL_Init(SDL_INIT_VIDEO);
     surface = SDL_SetVideoMode(DISPLAY_WIDTH, DISPLAY_HEIGHT, 32, SDL_HWSURFACE | SDL_RESIZABLE);
     if (surface == NULL)
     {
-        fputs("SDL_SetVideoMode failed.\n", stderr);
+        //fputs("SDL_SetVideoMode failed.\n", stderr);
+        puts("SDL_SetVideoMode failed.\n");
         return 1;
     }
     SDL_WM_SetCaption("pokeemerald", NULL);
@@ -44,12 +59,12 @@ int main(int argc, char **argv)
 }
 
 // Key mappings
-#define KEY_A_BUTTON      SDLK_c
-#define KEY_B_BUTTON      SDLK_x
+#define KEY_A_BUTTON      SDLK_v
+#define KEY_B_BUTTON      SDLK_b
 #define KEY_START_BUTTON  SDLK_RETURN
-#define KEY_SELECT_BUTTON SDLK_BACKSPACE
-#define KEY_L_BUTTON      SDLK_s
-#define KEY_R_BUTTON      SDLK_f
+#define KEY_SELECT_BUTTON SDLK_SPACE
+#define KEY_L_BUTTON      SDLK_c
+#define KEY_R_BUTTON      SDLK_n
 #define KEY_DPAD_UP       SDLK_UP
 #define KEY_DPAD_DOWN     SDLK_DOWN
 #define KEY_DPAD_LEFT     SDLK_LEFT
@@ -162,8 +177,31 @@ static void CPUWriteByte(void *dest, uint8_t val)
     *(uint8_t *)dest = val;
 }
 
+void DmaSet(int dmaNum, const void *src, void *dest, u32 control)
+{
+    int i;
+    for (i=0; i<(control & 0x1ffff); i++)
+    {
+        if ((control) & DMA_SRC_FIXED){
+            if ((control) & DMA_16BIT)
+                    ((vu32 *)(dest))[i] = ((vu32 *)(src))[0];
+            else    ((vu16 *)(dest))[i] = ((vu16 *)(src))[0];
+        } else {
+            if ((control) & DMA_32BIT)
+                    ((vu32 *)(dest))[i] = ((vu32 *)(src))[i];
+            else    ((vu16 *)(dest))[i] = ((vu16 *)(src))[i];
+        }
+    }
+}
+
 void CpuSet(const void *src, void *dst, u32 cnt)
 {
+    if(dst == NULL)
+    {
+        puts("Attempted to CpuSet to NULL\n");
+        return;
+    }
+    
     int count = cnt & 0x1FFFFF;
 
     const u8 *source = src;
@@ -171,9 +209,13 @@ void CpuSet(const void *src, void *dst, u32 cnt)
 
     // 32-bit ?
     if ((cnt >> 26) & 1) {
+        
+        //assert(((uintptr_t)src & ~3) == (uintptr_t)src);
+        //assert(((uintptr_t)dst & ~3) == (uintptr_t)dst);
+        
         // needed for 32-bit mode!
-        source = (u8 *)((uint32_t )source & ~3);
-        dest = (u8 *)((uint32_t )dest & ~3);
+        //source = (u8 *)((uint32_t )source & ~3);
+        //dest = (u8 *)((uint32_t )dest & ~3);
 
         // fill ?
         if ((cnt >> 24) & 1) {
@@ -194,6 +236,8 @@ void CpuSet(const void *src, void *dst, u32 cnt)
         }
     } else {
         // No align on 16-bit fill?
+        //assert(((uintptr_t)src & ~1) == (uintptr_t)src);
+        //assert(((uintptr_t)dst & ~1) == (uintptr_t)dst);
 
         // 16-bit fill?
         if ((cnt >> 24) & 1) {
@@ -211,6 +255,48 @@ void CpuSet(const void *src, void *dst, u32 cnt)
                 dest += 2;
                 count--;
             }
+        }
+    }
+}
+
+void CpuFastSet(const void *src, void *dst, u32 cnt)
+{
+    if(dst == NULL)
+    {
+        puts("Attempted to CpuFastSet to NULL\n");
+        return;
+    }
+    
+    int count = cnt & 0x1FFFFF;
+
+    const u8 *source = src;
+    u8 *dest = dst;
+    
+    //source = (u8 *)((uint32_t )source & ~3);
+    //dest = (u8 *)((uint32_t )dest & ~3);
+
+    // fill?
+    if((cnt >> 24) & 1) {
+        uint32_t value = CPUReadMemory(source);
+        while(count > 0) {
+            // BIOS always transfers 32 bytes at a time
+            for(int i = 0; i < 8; i++) {
+                CPUWriteMemory(dest, value);
+                dest += 4;
+            }
+            count -= 8;
+        }
+    } else {
+        // copy
+        while(count > 0) {
+            // BIOS always transfers 32 bytes at a time
+            for(int i = 0; i < 8; i++) {
+                uint32_t value = CPUReadMemory(source);
+                CPUWriteMemory(dest, value);
+                source += 4;
+                dest += 4;
+            }
+            count -= 8;
         }
     }
 }
@@ -238,7 +324,8 @@ void LZ77UnCompVram(const u32 *src_, void *dest_)
 				// Some Ruby/Sapphire tilesets overflow.
 				if (destPos + blockSize > destSize) {
 					blockSize = destSize - destPos;
-					fprintf(stderr, "Destination buffer overflow.\n");
+					//fprintf(stderr, "Destination buffer overflow.\n");
+					puts("Destination buffer overflow.\n");
 				}
 
 				if (blockPos < 0)
@@ -391,6 +478,101 @@ void LZ77UnCompWram(const u32 *src, void *dst)
     }
 }
 
+
+const s16 sineTable[256] = {
+  (s16)0x0000, (s16)0x0192, (s16)0x0323, (s16)0x04B5, (s16)0x0645, (s16)0x07D5, (s16)0x0964, (s16)0x0AF1,
+  (s16)0x0C7C, (s16)0x0E05, (s16)0x0F8C, (s16)0x1111, (s16)0x1294, (s16)0x1413, (s16)0x158F, (s16)0x1708,
+  (s16)0x187D, (s16)0x19EF, (s16)0x1B5D, (s16)0x1CC6, (s16)0x1E2B, (s16)0x1F8B, (s16)0x20E7, (s16)0x223D,
+  (s16)0x238E, (s16)0x24DA, (s16)0x261F, (s16)0x275F, (s16)0x2899, (s16)0x29CD, (s16)0x2AFA, (s16)0x2C21,
+  (s16)0x2D41, (s16)0x2E5A, (s16)0x2F6B, (s16)0x3076, (s16)0x3179, (s16)0x3274, (s16)0x3367, (s16)0x3453,
+  (s16)0x3536, (s16)0x3612, (s16)0x36E5, (s16)0x37AF, (s16)0x3871, (s16)0x392A, (s16)0x39DA, (s16)0x3A82,
+  (s16)0x3B20, (s16)0x3BB6, (s16)0x3C42, (s16)0x3CC5, (s16)0x3D3E, (s16)0x3DAE, (s16)0x3E14, (s16)0x3E71,
+  (s16)0x3EC5, (s16)0x3F0E, (s16)0x3F4E, (s16)0x3F84, (s16)0x3FB1, (s16)0x3FD3, (s16)0x3FEC, (s16)0x3FFB,
+  (s16)0x4000, (s16)0x3FFB, (s16)0x3FEC, (s16)0x3FD3, (s16)0x3FB1, (s16)0x3F84, (s16)0x3F4E, (s16)0x3F0E,
+  (s16)0x3EC5, (s16)0x3E71, (s16)0x3E14, (s16)0x3DAE, (s16)0x3D3E, (s16)0x3CC5, (s16)0x3C42, (s16)0x3BB6,
+  (s16)0x3B20, (s16)0x3A82, (s16)0x39DA, (s16)0x392A, (s16)0x3871, (s16)0x37AF, (s16)0x36E5, (s16)0x3612,
+  (s16)0x3536, (s16)0x3453, (s16)0x3367, (s16)0x3274, (s16)0x3179, (s16)0x3076, (s16)0x2F6B, (s16)0x2E5A,
+  (s16)0x2D41, (s16)0x2C21, (s16)0x2AFA, (s16)0x29CD, (s16)0x2899, (s16)0x275F, (s16)0x261F, (s16)0x24DA,
+  (s16)0x238E, (s16)0x223D, (s16)0x20E7, (s16)0x1F8B, (s16)0x1E2B, (s16)0x1CC6, (s16)0x1B5D, (s16)0x19EF,
+  (s16)0x187D, (s16)0x1708, (s16)0x158F, (s16)0x1413, (s16)0x1294, (s16)0x1111, (s16)0x0F8C, (s16)0x0E05,
+  (s16)0x0C7C, (s16)0x0AF1, (s16)0x0964, (s16)0x07D5, (s16)0x0645, (s16)0x04B5, (s16)0x0323, (s16)0x0192,
+  (s16)0x0000, (s16)0xFE6E, (s16)0xFCDD, (s16)0xFB4B, (s16)0xF9BB, (s16)0xF82B, (s16)0xF69C, (s16)0xF50F,
+  (s16)0xF384, (s16)0xF1FB, (s16)0xF074, (s16)0xEEEF, (s16)0xED6C, (s16)0xEBED, (s16)0xEA71, (s16)0xE8F8,
+  (s16)0xE783, (s16)0xE611, (s16)0xE4A3, (s16)0xE33A, (s16)0xE1D5, (s16)0xE075, (s16)0xDF19, (s16)0xDDC3,
+  (s16)0xDC72, (s16)0xDB26, (s16)0xD9E1, (s16)0xD8A1, (s16)0xD767, (s16)0xD633, (s16)0xD506, (s16)0xD3DF,
+  (s16)0xD2BF, (s16)0xD1A6, (s16)0xD095, (s16)0xCF8A, (s16)0xCE87, (s16)0xCD8C, (s16)0xCC99, (s16)0xCBAD,
+  (s16)0xCACA, (s16)0xC9EE, (s16)0xC91B, (s16)0xC851, (s16)0xC78F, (s16)0xC6D6, (s16)0xC626, (s16)0xC57E,
+  (s16)0xC4E0, (s16)0xC44A, (s16)0xC3BE, (s16)0xC33B, (s16)0xC2C2, (s16)0xC252, (s16)0xC1EC, (s16)0xC18F,
+  (s16)0xC13B, (s16)0xC0F2, (s16)0xC0B2, (s16)0xC07C, (s16)0xC04F, (s16)0xC02D, (s16)0xC014, (s16)0xC005,
+  (s16)0xC000, (s16)0xC005, (s16)0xC014, (s16)0xC02D, (s16)0xC04F, (s16)0xC07C, (s16)0xC0B2, (s16)0xC0F2,
+  (s16)0xC13B, (s16)0xC18F, (s16)0xC1EC, (s16)0xC252, (s16)0xC2C2, (s16)0xC33B, (s16)0xC3BE, (s16)0xC44A,
+  (s16)0xC4E0, (s16)0xC57E, (s16)0xC626, (s16)0xC6D6, (s16)0xC78F, (s16)0xC851, (s16)0xC91B, (s16)0xC9EE,
+  (s16)0xCACA, (s16)0xCBAD, (s16)0xCC99, (s16)0xCD8C, (s16)0xCE87, (s16)0xCF8A, (s16)0xD095, (s16)0xD1A6,
+  (s16)0xD2BF, (s16)0xD3DF, (s16)0xD506, (s16)0xD633, (s16)0xD767, (s16)0xD8A1, (s16)0xD9E1, (s16)0xDB26,
+  (s16)0xDC72, (s16)0xDDC3, (s16)0xDF19, (s16)0xE075, (s16)0xE1D5, (s16)0xE33A, (s16)0xE4A3, (s16)0xE611,
+  (s16)0xE783, (s16)0xE8F8, (s16)0xEA71, (s16)0xEBED, (s16)0xED6C, (s16)0xEEEF, (s16)0xF074, (s16)0xF1FB,
+  (s16)0xF384, (s16)0xF50F, (s16)0xF69C, (s16)0xF82B, (s16)0xF9BB, (s16)0xFB4B, (s16)0xFCDD, (s16)0xFE6E
+};
+
+void BgAffineSet(struct BgAffineSrcData *src, struct BgAffineDstData *dest, s32 count)
+{
+    for(s32 i=0; i<count; i++)
+    {
+        s32 cx = src[i].texX;
+        s32 cy = src[i].texY;
+        s16 dispx = src[i].scrX;
+        s16 dispy = src[i].scrY;
+        s16 rx = src[i].sx;
+        s16 ry = src[i].sy;
+        u16 theta = src[i].alpha>>8;
+        s32 a = sineTable[(theta+0x40)&255];
+        s32 b = sineTable[theta];
+
+        s16 dx =  (rx * a)>>14;
+        s16 dmx = (rx * b)>>14;
+        s16 dy =  (ry * b)>>14;
+        s16 dmy = (ry * a)>>14;
+
+        dest[i].pa = dx;
+        dest[i].pb = -dmx;
+        dest[i].pc = dy;
+        dest[i].pd = dmy;
+
+        s32 startx = cx - dx * dispx + dmx * dispy;
+        s32 starty = cy - dy * dispx - dmy * dispy;
+
+        dest[i].dx = startx;
+        dest[i].dy = starty;
+    }
+}
+
+void ObjAffineSet(struct ObjAffineSrcData *src, void *dest, s32 count, s32 offset)
+{
+    for(s32 i=0; i<count; i++)
+    {
+        s16 rx = src[i].xScale;
+        s16 ry = src[i].yScale;
+        u16 theta = src[i].rotation>>8;
+
+        s32 a = (s32)sineTable[(theta+0x40)&255];
+        s32 b = (s32)sineTable[theta];
+
+        s16 dx =  ((s32)rx * a)>>14;
+        s16 dmx = ((s32)rx * b)>>14;
+        s16 dy =  ((s32)ry * b)>>14;
+        s16 dmy = ((s32)ry * a)>>14;
+
+        CPUWriteHalfWord(dest, dx);
+        dest += offset;
+        CPUWriteHalfWord(dest, -dmx);
+        dest += offset;
+        CPUWriteHalfWord(dest, dy);
+        dest += offset;
+        CPUWriteHalfWord(dest, dmy);
+        dest += offset;
+    }
+}
+
 void SoftReset(u32 resetFlags)
 {
     puts("Soft Reset called. Exiting.");
@@ -493,16 +675,18 @@ static void RenderRotScaleBGScanline(uint16_t control, uint16_t hoffs, uint16_t 
     uint8_t *bgmap = (uint8_t *)(VRAM_ + screenBaseBlock * 0x800);
     uint16_t *pal = (uint16_t *)PLTT;
 
+    /*
     hoffs &= 0x1FF;
     voffs &= 0x1FF;
+    */
 
     mapWidth = 1 << (4 + (control >> 14));  // number of tiles
 
     for (unsigned int x = 0; x < DISPLAY_WIDTH; x++)
     {
         // adjust for scroll
-        unsigned int xx = (x + hoffs) % (mapWidth * 8);
-        unsigned int yy = (lineNum + voffs) % (mapWidth * 8);
+        unsigned int xx = (x + hoffs / 256) % (mapWidth * 8);
+        unsigned int yy = (lineNum + voffs / 256) % (mapWidth * 8);
 
         unsigned int mapX = xx / 8;
         unsigned int mapY = yy / 8;
@@ -662,12 +846,12 @@ static void RenderTextBGLayer(uint16_t bgcnt, uint16_t bghoffs, uint16_t bgvoffs
         RenderBGScanline(bgcnt, bghoffs, bgvoffs, vcount, pixels + vcount * DISPLAY_WIDTH);
 }
 
-static void RenderAffineBGLayer(uint16_t bgcnt, uint32_t *pixels)
+static void RenderAffineBGLayer(uint16_t bgcnt, int32_t x, int32_t y, uint32_t *pixels)
 {
     int vcount;
     
     for (vcount = 0; vcount < DISPLAY_HEIGHT; vcount++)
-        RenderRotScaleBGScanline(bgcnt, 0, 0, vcount, pixels + vcount * DISPLAY_WIDTH);
+        RenderRotScaleBGScanline(bgcnt, x, y, vcount, pixels + vcount * DISPLAY_WIDTH);
 }
 
 static uint32_t *target1layer;
@@ -839,7 +1023,7 @@ static void DrawFrame(uint32_t *pixels)
             uint16_t bgcnt = *(uint16_t *)(REG_ADDR_BG0CNT + bg * 2);
             unsigned int priority = bgcnt & 3;
             
-            RenderAffineBGLayer(bgcnt, layers[priority]);
+            RenderAffineBGLayer(bgcnt, REG_BG2X, REG_BG2Y, layers[priority]);
             //ProcessBGBlending(layers[priority], bg);
         }
         // BG0 and BG1 are text mode

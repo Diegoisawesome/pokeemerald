@@ -95,9 +95,9 @@ se_w327:
 	.byte	se_w327_pri	
 	.byte	se_w327_rev	
 
-	.word	se_w327_grp
+	.4byte	se_w327_grp
 
-	.word	se_w327_1
-	.word	se_w327_2
+	.4byte	se_w327_1
+	.4byte	se_w327_2
 
 	.end

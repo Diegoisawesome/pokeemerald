@@ -109,7 +109,7 @@ se_w127_2_000:
 	.byte	W06
 	.byte	PEND
 	.byte	PATT
-	 .word	se_w127_2_000
+	 .4byte	se_w127_2_000
 	.byte		N06   , Cn3 , v032
 	.byte	W06
 	.byte		        Gn2 
@@ -129,9 +129,9 @@ se_w127:
 	.byte	se_w127_pri	
 	.byte	se_w127_rev	
 
-	.word	se_w127_grp
+	.4byte	se_w127_grp
 
-	.word	se_w127_1
-	.word	se_w127_2
+	.4byte	se_w127_1
+	.4byte	se_w127_2
 
 	.end

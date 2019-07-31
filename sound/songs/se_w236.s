@@ -105,15 +105,15 @@ se_w236_1_004:
 	.byte		N20   , Gn6 , v100
 	.byte	W21
 	.byte	PATT
-	 .word	se_w236_1_000
+	 .4byte	se_w236_1_000
 	.byte	PATT
-	 .word	se_w236_1_001
+	 .4byte	se_w236_1_001
 	.byte	PATT
-	 .word	se_w236_1_002
+	 .4byte	se_w236_1_002
 	.byte	PATT
-	 .word	se_w236_1_003
+	 .4byte	se_w236_1_003
 	.byte	PATT
-	 .word	se_w236_1_004
+	 .4byte	se_w236_1_004
 	.byte	FINE
 
 
@@ -192,11 +192,11 @@ se_w236_2_002:
 	.byte		        Gn6 , v096
 	.byte	W05
 	.byte	PATT
-	 .word	se_w236_2_000
+	 .4byte	se_w236_2_000
 	.byte	PATT
-	 .word	se_w236_2_001
+	 .4byte	se_w236_2_001
 	.byte	PATT
-	 .word	se_w236_2_002
+	 .4byte	se_w236_2_002
 	.byte	W24
 	.byte	W24
 	.byte	FINE
@@ -210,9 +210,9 @@ se_w236:
 	.byte	se_w236_pri	
 	.byte	se_w236_rev	
 
-	.word	se_w236_grp
+	.4byte	se_w236_grp
 
-	.word	se_w236_1
-	.word	se_w236_2
+	.4byte	se_w236_1
+	.4byte	se_w236_2
 
 	.end

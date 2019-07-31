@@ -76,9 +76,9 @@ se_w070:
 	.byte	se_w070_pri	
 	.byte	se_w070_rev	
 
-	.word	se_w070_grp
+	.4byte	se_w070_grp
 
-	.word	se_w070_1
-	.word	se_w070_2
+	.4byte	se_w070_1
+	.4byte	se_w070_2
 
 	.end

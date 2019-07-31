@@ -198,9 +198,9 @@ se_w257:
 	.byte	se_w257_pri	
 	.byte	se_w257_rev	
 
-	.word	se_w257_grp
+	.4byte	se_w257_grp
 
-	.word	se_w257_1
-	.word	se_w257_2
+	.4byte	se_w257_1
+	.4byte	se_w257_2
 
 	.end

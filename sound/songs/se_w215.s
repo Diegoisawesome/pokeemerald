@@ -76,8 +76,8 @@ se_w215:
 	.byte	se_w215_pri	
 	.byte	se_w215_rev	
 
-	.word	se_w215_grp
+	.4byte	se_w215_grp
 
-	.word	se_w215_1
+	.4byte	se_w215_1
 
 	.end

@@ -124,8 +124,8 @@ se_w062b:
 	.byte	se_w062b_pri	
 	.byte	se_w062b_rev	
 
-	.word	se_w062b_grp
+	.4byte	se_w062b_grp
 
-	.word	se_w062b_1
+	.4byte	se_w062b_1
 
 	.end

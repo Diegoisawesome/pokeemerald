@@ -97,9 +97,9 @@ se_w173:
 	.byte	se_w173_pri	
 	.byte	se_w173_rev	
 
-	.word	se_w173_grp
+	.4byte	se_w173_grp
 
-	.word	se_w173_1
-	.word	se_w173_2
+	.4byte	se_w173_1
+	.4byte	se_w173_2
 
 	.end

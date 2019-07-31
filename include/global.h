@@ -14,12 +14,22 @@
 #define SOUND_INFO_PTR _SOUND_INFO_PTR
 #define INTR_CHECK     _INTR_CHECK
 #define INTR_VECTOR    _INTR_VECTOR
+#define fopen         _fopen
+#define fseek         _fseek
+#define fclose        _fclose
+#define fread         _fread
+#define fwrite        _fwrite
 #define puts           _puts
 #define memcpy         _memcpy
 #define memset         _memset
 #define strcmp         _strcmp
 #define getc           _getc
+#define printf         _printf
 #define CpuSet         _CpuSet
+#define CpuFastSet     _CpuFastSet
+#define DmaSet         _DmaSet
+#define BgAffineSet    _BgAffineSet
+#define ObjAffineSet   _ObjAffineSet
 #define SoftReset _SoftReset
 #define LZ77UnCompVram _LZ77UnCompVram
 #define LZ77UnCompWram _LZ77UnCompWram
@@ -27,6 +37,7 @@
 #define AgbMain _AgbMain
 #define gIntrTable _gIntrTable
 #define VBlankIntrWait _VBlankIntrWait
+#define GPIOPortDirection _GPIOPortDirection
 #endif
 
 #include "config.h" // we need to define config before gba headers as print stuff needs the functions nulled before defines.

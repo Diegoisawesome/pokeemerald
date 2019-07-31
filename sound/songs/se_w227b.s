@@ -100,17 +100,17 @@ se_w227b_1_000:
 	.byte	W02
 	.byte	PEND
 	.byte	PATT
-	 .word	se_w227b_1_000
+	 .4byte	se_w227b_1_000
 	.byte	PATT
-	 .word	se_w227b_1_000
+	 .4byte	se_w227b_1_000
 	.byte	PATT
-	 .word	se_w227b_1_000
+	 .4byte	se_w227b_1_000
 	.byte	PATT
-	 .word	se_w227b_1_000
+	 .4byte	se_w227b_1_000
 	.byte	PATT
-	 .word	se_w227b_1_000
+	 .4byte	se_w227b_1_000
 	.byte	PATT
-	 .word	se_w227b_1_000
+	 .4byte	se_w227b_1_000
 	.byte		VOL   , 96*se_w227b_mvl/mxv
 	.byte		PAN   , c_v+0
 	.byte	W01
@@ -166,8 +166,8 @@ se_w227b:
 	.byte	se_w227b_pri	
 	.byte	se_w227b_rev	
 
-	.word	se_w227b_grp
+	.4byte	se_w227b_grp
 
-	.word	se_w227b_1
+	.4byte	se_w227b_1
 
 	.end

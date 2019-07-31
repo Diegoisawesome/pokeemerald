@@ -92,9 +92,9 @@ se_w280:
 	.byte	se_w280_pri	
 	.byte	se_w280_rev	
 
-	.word	se_w280_grp
+	.4byte	se_w280_grp
 
-	.word	se_w280_1
-	.word	se_w280_2
+	.4byte	se_w280_1
+	.4byte	se_w280_2
 
 	.end

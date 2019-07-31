@@ -112,9 +112,9 @@ se_w081b_2_000:
 	.byte	W12
 	.byte	PEND
 	.byte	PATT
-	 .word	se_w081b_2_000
+	 .4byte	se_w081b_2_000
 	.byte	PATT
-	 .word	se_w081b_2_000
+	 .4byte	se_w081b_2_000
 	.byte	FINE
 
 
@@ -126,9 +126,9 @@ se_w081b:
 	.byte	se_w081b_pri	
 	.byte	se_w081b_rev	
 
-	.word	se_w081b_grp
+	.4byte	se_w081b_grp
 
-	.word	se_w081b_1
-	.word	se_w081b_2
+	.4byte	se_w081b_1
+	.4byte	se_w081b_2
 
 	.end

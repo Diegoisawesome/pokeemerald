@@ -52,9 +52,9 @@ se_w145b:
 	.byte	se_w145b_pri	
 	.byte	se_w145b_rev	
 
-	.word	se_w145b_grp
+	.4byte	se_w145b_grp
 
-	.word	se_w145b_1
-	.word	se_w145b_2
+	.4byte	se_w145b_1
+	.4byte	se_w145b_2
 
 	.end

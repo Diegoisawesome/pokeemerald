@@ -275,9 +275,9 @@ se_w287:
 	.byte	se_w287_pri	
 	.byte	se_w287_rev	
 
-	.word	se_w287_grp
+	.4byte	se_w287_grp
 
-	.word	se_w287_1
-	.word	se_w287_2
+	.4byte	se_w287_1
+	.4byte	se_w287_2
 
 	.end

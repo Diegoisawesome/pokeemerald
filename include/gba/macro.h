@@ -17,7 +17,7 @@
 #define CpuCopy8(src, dest, size) CPU_COPY(src, dest, size, 8)
 #define CpuCopy16(src, dest, size) CPU_COPY(src, dest, size, 16)
 #define CpuCopy32(src, dest, size) CPU_COPY(src, dest, size, 32)
-/*
+
 #define CpuFastFill(value, dest, size)                               \
 {                                                                    \
     vu32 tmp = (vu32)(value);                                        \
@@ -31,15 +31,10 @@
 #define CpuFastFill8(value, dest, size) CpuFastFill(((value) << 24) | ((value) << 16) | ((value) << 8) | (value), (dest), (size))
 
 #define CpuFastCopy(src, dest, size) CpuFastSet(src, dest, ((size)/(32/8) & 0x1FFFFF))
-*/
 
-#define CpuFastFill8(value, dest, size) CpuFill16(value, dest, size)
-#define CpuFastFill(value, dest, size) CpuFill32(value, dest, size)
-#define CpuFastFill16(value, dest, size) CpuFill16(value, dest, size)
-#define CpuFastCopy(src, dest, size) CpuCopy32(src, dest, size)
-
+#ifdef PORTABLE
 extern void DmaSet(int dmaNum, const void *src, void *dest, u32 control);
-/*
+#else
 #define DmaSet(dmaNum, src, dest, control)        \
 {                                                 \
     vu32 *dmaRegs = (vu32 *)REG_ADDR_DMA##dmaNum; \
@@ -48,9 +43,8 @@ extern void DmaSet(int dmaNum, const void *src, void *dest, u32 control);
     dmaRegs[2] = (vu32)(control);                 \
     dmaRegs[2];                                   \
 }
-*/
+#endif
 
-/*
 #define DMA_FILL(dmaNum, value, dest, size, bit)                                              \
 {                                                                                             \
     vu##bit tmp = (vu##bit)(value);                                                           \
@@ -61,11 +55,13 @@ extern void DmaSet(int dmaNum, const void *src, void *dest, u32 control);
          | ((size)/(bit/8)));                                                                 \
 }
 
-#define DmaFill16(dmaNum, value, dest, size) DMA_FILL(dmaNum, value, dest, size, 16)
-#define DmaFill32(dmaNum, value, dest, size) DMA_FILL(dmaNum, value, dest, size, 32)
-*/
+#ifdef PORTABLE
 #define DmaFill16(dmaNum, value, dest, size) CpuFill16(value, dest, size)
 #define DmaFill32(dmaNum, value, dest, size) CpuFill32(value, dest, size)
+#else
+#define DmaFill16(dmaNum, value, dest, size) DMA_FILL(dmaNum, value, dest, size, 16)
+#define DmaFill32(dmaNum, value, dest, size) DMA_FILL(dmaNum, value, dest, size, 32)
+#endif
 
 // Note that the DMA clear macros cause the DMA control value to be calculated
 // at runtime rather than compile time. The size is divided by the DMA transfer
@@ -82,7 +78,6 @@ extern void DmaSet(int dmaNum, const void *src, void *dest, u32 control);
 #define DmaClear16(dmaNum, dest, size) DMA_CLEAR(dmaNum, dest, size, 16)
 #define DmaClear32(dmaNum, dest, size) DMA_CLEAR(dmaNum, dest, size, 32)
 
-/*
 #define DMA_COPY(dmaNum, src, dest, size, bit)                                              \
     DmaSet(dmaNum,                                                                          \
            src,                                                                             \
@@ -90,12 +85,13 @@ extern void DmaSet(int dmaNum, const void *src, void *dest, u32 control);
            (DMA_ENABLE | DMA_START_NOW | DMA_##bit##BIT | DMA_SRC_INC | DMA_DEST_INC) << 16 \
          | ((size)/(bit/8)))
 
-#define DmaCopy16(dmaNum, src, dest, size) DMA_COPY(dmaNum, src, dest, size, 16)
-#define DmaCopy32(dmaNum, src, dest, size) DMA_COPY(dmaNum, src, dest, size, 32)
-*/
-
+#ifdef PORTABLE
 #define DmaCopy16(dmaNum, src, dest, size) CpuCopy16(src, dest, size)
 #define DmaCopy32(dmaNum, src, dest, size) CpuCopy32(src, dest, size)
+#else
+#define DmaCopy16(dmaNum, src, dest, size) DMA_COPY(dmaNum, src, dest, size, 16)
+#define DmaCopy32(dmaNum, src, dest, size) DMA_COPY(dmaNum, src, dest, size, 32)
+#endif
 
 #define DmaCopyLarge(dmaNum, src, dest, size, block, bit) \
 {                                                         \
@@ -192,7 +188,7 @@ extern void DmaSet(int dmaNum, const void *src, void *dest, u32 control);
 
 #define DmaClear16Defvars(dmaNum, dest, size) DmaClearDefvars(dmaNum, dest, size, 16)
 #define DmaClear32Defvars(dmaNum, dest, size) DmaClearDefvars(dmaNum, dest, size, 32)
-/*
+
 #define DmaStop(dmaNum)                                         \
 {                                                               \
     vu16 *dmaRegs = (vu16 *)REG_ADDR_DMA##dmaNum;               \
@@ -200,9 +196,6 @@ extern void DmaSet(int dmaNum, const void *src, void *dest, u32 control);
     dmaRegs[5] &= ~DMA_ENABLE;                                  \
     dmaRegs[5];                                                 \
 }
-*/
-
-#define DmaStop(dmaNum)
 
 #define IntrEnable(flags)                                       \
 {                                                               \

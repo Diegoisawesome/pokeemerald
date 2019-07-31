@@ -47,8 +47,8 @@ se_z_page:
 	.byte	se_z_page_pri	
 	.byte	se_z_page_rev	
 
-	.word	se_z_page_grp
+	.4byte	se_z_page_grp
 
-	.word	se_z_page_1
+	.4byte	se_z_page_1
 
 	.end

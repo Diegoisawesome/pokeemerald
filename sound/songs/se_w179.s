@@ -328,9 +328,9 @@ se_w179:
 	.byte	se_w179_pri	
 	.byte	se_w179_rev	
 
-	.word	se_w179_grp
+	.4byte	se_w179_grp
 
-	.word	se_w179_1
-	.word	se_w179_2
+	.4byte	se_w179_1
+	.4byte	se_w179_2
 
 	.end

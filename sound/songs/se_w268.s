@@ -179,8 +179,8 @@ se_w268:
 	.byte	se_w268_pri	
 	.byte	se_w268_rev	
 
-	.word	se_w268_grp
+	.4byte	se_w268_grp
 
-	.word	se_w268_1
+	.4byte	se_w268_1
 
 	.end

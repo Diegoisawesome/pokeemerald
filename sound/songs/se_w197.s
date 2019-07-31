@@ -88,8 +88,8 @@ se_w197:
 	.byte	se_w197_pri	
 	.byte	se_w197_rev	
 
-	.word	se_w197_grp
+	.4byte	se_w197_grp
 
-	.word	se_w197_1
+	.4byte	se_w197_1
 
 	.end

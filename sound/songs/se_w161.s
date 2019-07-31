@@ -91,9 +91,9 @@ se_w161:
 	.byte	se_w161_pri	
 	.byte	se_w161_rev	
 
-	.word	se_w161_grp
+	.4byte	se_w161_grp
 
-	.word	se_w161_1
-	.word	se_w161_2
+	.4byte	se_w161_1
+	.4byte	se_w161_2
 
 	.end

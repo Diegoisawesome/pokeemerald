@@ -195,8 +195,8 @@ se_w151:
 	.byte	se_w151_pri	
 	.byte	se_w151_rev	
 
-	.word	se_w151_grp
+	.4byte	se_w151_grp
 
-	.word	se_w151_1
+	.4byte	se_w151_1
 
 	.end

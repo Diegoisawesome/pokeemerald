@@ -102,8 +102,8 @@ se_w057:
 	.byte	se_w057_pri	
 	.byte	se_w057_rev	
 
-	.word	se_w057_grp
+	.4byte	se_w057_grp
 
-	.word	se_w057_1
+	.4byte	se_w057_1
 
 	.end

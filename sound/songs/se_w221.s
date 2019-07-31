@@ -97,9 +97,9 @@ se_w221:
 	.byte	se_w221_pri	
 	.byte	se_w221_rev	
 
-	.word	se_w221_grp
+	.4byte	se_w221_grp
 
-	.word	se_w221_1
-	.word	se_w221_2
+	.4byte	se_w221_1
+	.4byte	se_w221_2
 
 	.end

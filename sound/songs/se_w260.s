@@ -60,8 +60,8 @@ se_w260:
 	.byte	se_w260_pri	
 	.byte	se_w260_rev	
 
-	.word	se_w260_grp
+	.4byte	se_w260_grp
 
-	.word	se_w260_1
+	.4byte	se_w260_1
 
 	.end

@@ -64,8 +64,8 @@ se_w104:
 	.byte	se_w104_pri	
 	.byte	se_w104_rev	
 
-	.word	se_w104_grp
+	.4byte	se_w104_grp
 
-	.word	se_w104_1
+	.4byte	se_w104_1
 
 	.end

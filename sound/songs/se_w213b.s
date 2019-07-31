@@ -119,9 +119,9 @@ se_w213b:
 	.byte	se_w213b_pri	
 	.byte	se_w213b_rev	
 
-	.word	se_w213b_grp
+	.4byte	se_w213b_grp
 
-	.word	se_w213b_1
-	.word	se_w213b_2
+	.4byte	se_w213b_1
+	.4byte	se_w213b_2
 
 	.end

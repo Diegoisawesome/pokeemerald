@@ -51,8 +51,8 @@ se_w152:
 	.byte	se_w152_pri	
 	.byte	se_w152_rev	
 
-	.word	se_w152_grp
+	.4byte	se_w152_grp
 
-	.word	se_w152_1
+	.4byte	se_w152_1
 
 	.end

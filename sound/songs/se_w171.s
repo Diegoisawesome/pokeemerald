@@ -138,9 +138,9 @@ se_w171:
 	.byte	se_w171_pri	
 	.byte	se_w171_rev	
 
-	.word	se_w171_grp
+	.4byte	se_w171_grp
 
-	.word	se_w171_1
-	.word	se_w171_2
+	.4byte	se_w171_1
+	.4byte	se_w171_2
 
 	.end
