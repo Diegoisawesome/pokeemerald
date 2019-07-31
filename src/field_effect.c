@@ -978,8 +978,8 @@ void MultiplyInvertedPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b)
     "\tpop {r0}\n"
     "\tbx r0\n"
     "\t.align 2, 0\n"
-    "_08085D00: .4byte gPlttBufferUnfaded\n"
-    "_08085D04: .4byte gPlttBufferFaded\n"
+    "_08085D00: .int gPlttBufferUnfaded\n"
+    "_08085D04: .int gPlttBufferFaded\n"
     ".syntax divided");
 }
 
@@ -1043,8 +1043,8 @@ void MultiplyPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b)
     "\tpop {r0}\n"
     "\tbx r0\n"
     "\t.align 2, 0\n"
-    "_08085D78: .4byte gPlttBufferUnfaded\n"
-    "_08085D7C: .4byte gPlttBufferFaded\n"
+    "_08085D78: .int gPlttBufferUnfaded\n"
+    "_08085D7C: .int gPlttBufferFaded\n"
     ".syntax divided");
 }
 #endif

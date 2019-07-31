@@ -50,7 +50,7 @@ s16 sub_81515D4(u8 s, s16 x, s16 y)
 
 s32 sub_81515FC(s32 x, s32 y)
 {
-    s64 _x;
+    u32 _x;
 
     if (y == 0)
     {
@@ -79,8 +79,5 @@ s16 sub_815163C(u8 s, s16 y)
 
 s32 sub_815165C(s32 y)
 {
-    s64 x;
-
-    x = 0x10000;
-    return x / y;
+    return 0x10000 / y;
 }

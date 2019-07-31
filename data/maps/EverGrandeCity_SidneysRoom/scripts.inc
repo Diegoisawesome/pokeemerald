@@ -27,7 +27,7 @@ EverGrandeCity_SidneysRoom_EventScript_227F38:: @ 8227F38
 EverGrandeCity_DrakesRoom_MapScript2_227F3E: @ 8227F3E
 EverGrandeCity_SidneysRoom_MapScript2_227F3E: @ 8227F3E
 	map_script_2 VAR_TEMP_1, 0, EverGrandeCity_SidneysRoom_EventScript_227F48
-	.2byte 0
+	.short 0
 
 EverGrandeCity_SidneysRoom_EventScript_227F48:: @ 8227F48
 	turnobject EVENT_OBJ_ID_PLAYER, 2
@@ -35,7 +35,7 @@ EverGrandeCity_SidneysRoom_EventScript_227F48:: @ 8227F48
 
 EverGrandeCity_SidneysRoom_MapScript2_227F4D: @ 8227F4D
 	map_script_2 VAR_ELITE_4_STATE, 0, EverGrandeCity_SidneysRoom_EventScript_227F57
-	.2byte 0
+	.short 0
 
 EverGrandeCity_SidneysRoom_EventScript_227F57:: @ 8227F57
 	lockall

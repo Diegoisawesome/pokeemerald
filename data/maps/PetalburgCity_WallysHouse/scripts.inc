@@ -5,7 +5,7 @@ PetalburgCity_WallysHouse_MapScripts:: @ 8204229
 
 PetalburgCity_WallysHouse_MapScript2_204234: @ 8204234
 	map_script_2 VAR_PETALBURG_STATE, 4, PetalburgCity_WallysHouse_EventScript_20423E
-	.2byte 0
+	.short 0
 
 PetalburgCity_WallysHouse_EventScript_20423E:: @ 820423E
 	turnobject EVENT_OBJ_ID_PLAYER, 4
@@ -14,7 +14,7 @@ PetalburgCity_WallysHouse_EventScript_20423E:: @ 820423E
 
 PetalburgCity_WallysHouse_MapScript2_204247: @ 8204247
 	map_script_2 VAR_PETALBURG_STATE, 4, PetalburgCity_WallysHouse_EventScript_204251
-	.2byte 0
+	.short 0
 
 PetalburgCity_WallysHouse_EventScript_204251:: @ 8204251
 	lockall

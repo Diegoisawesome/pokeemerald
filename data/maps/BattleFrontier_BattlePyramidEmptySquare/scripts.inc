@@ -8,7 +8,7 @@ BattleFrontier_BattlePyramidEmptySquare_MapScript2_252A43: @ 8252A43
 	map_script_2 VAR_TEMP_D, 1, BattleFrontier_BattlePyramidEmptySquare_EventScript_252A5D
 	map_script_2 VAR_TEMP_E, 0, BattleFrontier_BattlePyramidEmptySquare_EventScript_252A98
 	map_script_2 VAR_TEMP_F, 1, BattleFrontier_BattlePyramidEmptySquare_EventScript_252A8F
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePyramidEmptySquare_EventScript_252A5D:: @ 8252A5D
 	lockall

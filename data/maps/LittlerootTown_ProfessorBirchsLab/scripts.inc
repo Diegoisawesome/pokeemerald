@@ -45,7 +45,7 @@ LittlerootTown_ProfessorBirchsLab_MapScript2_1F9D06: @ 81F9D06
 	map_script_2 VAR_0x40D3, 6, LittlerootTown_ProfessorBirchsLab_EventScript_1F9D71
 	map_script_2 VAR_0x40D3, 4, LittlerootTown_ProfessorBirchsLab_EventScript_1F9D75
 	map_script_2 VAR_0x40D3, 5, LittlerootTown_ProfessorBirchsLab_EventScript_1F9D75
-	.2byte 0
+	.short 0
 
 LittlerootTown_ProfessorBirchsLab_EventScript_1F9D40:: @ 81F9D40
 	turnobject EVENT_OBJ_ID_PLAYER, 2
@@ -89,7 +89,7 @@ LittlerootTown_ProfessorBirchsLab_MapScript2_1F9DB9: @ 81F9DB9
 	map_script_2 VAR_BIRCH_LAB_STATE, 4, LittlerootTown_ProfessorBirchsLab_EventScript_1F9E67
 	map_script_2 VAR_0x40D3, 1, LittlerootTown_ProfessorBirchsLab_EventScript_1F9E80
 	map_script_2 VAR_0x40D3, 4, LittlerootTown_ProfessorBirchsLab_EventScript_1F9F62
-	.2byte 0
+	.short 0
 
 LittlerootTown_ProfessorBirchsLab_EventScript_1F9DDB:: @ 81F9DDB
 	lockall

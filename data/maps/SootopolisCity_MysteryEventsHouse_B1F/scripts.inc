@@ -9,7 +9,7 @@ SootopolisCity_MysteryEventsHouse_B1F_OnTransition: @ 8227E5A
 
 SootopolisCity_MysteryEventsHouse_B1F_MapScript2_227E5E: @ 8227E5E
 	map_script_2 VAR_TEMP_1, 0, SootopolisCity_MysteryEventsHouse_B1F_EventScript_227E68
-	.2byte 0
+	.short 0
 
 SootopolisCity_MysteryEventsHouse_B1F_EventScript_227E68:: @ 8227E68
 	lockall

@@ -13,7 +13,7 @@
 	.global	se_w280
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w280_1:
 	.byte	KEYSH , se_w280_key+0
@@ -54,7 +54,7 @@ se_w280_1:
 	.byte	W06
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w280_2:
 	.byte	KEYSH , se_w280_key+0
@@ -83,14 +83,14 @@ se_w280_2:
 	.byte	W05
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w280:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w280_pri	@ Priority
-	.byte	se_w280_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w280_pri	
+	.byte	se_w280_rev	
 
 	.word	se_w280_grp
 

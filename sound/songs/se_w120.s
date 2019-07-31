@@ -13,7 +13,7 @@
 	.global	se_w120
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w120_1:
 	.byte	KEYSH , se_w120_key+0
@@ -58,14 +58,14 @@ se_w120_1:
 	.byte	W22
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w120:
-	.byte	1	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w120_pri	@ Priority
-	.byte	se_w120_rev	@ Reverb.
+	.byte	1	
+	.byte	0	
+	.byte	se_w120_pri	
+	.byte	se_w120_rev	
 
 	.word	se_w120_grp
 

@@ -22,7 +22,7 @@ Route115_OnTransition: @ 81F2947
 
 Route115_MapScript2_1F2969: @ 81F2969
 	map_script_2 VAR_SHOULD_END_UNUSUAL_WEATHER, 1, UnusualWeather_EventScript_EndEventAndCleanup_1
-	.2byte 0
+	.short 0
 
 Route115_EventScript_1F2973:: @ 81F2973
 	msgbox Route115_Text_1F2B55, MSGBOX_NPC

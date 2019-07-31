@@ -13,7 +13,7 @@
 	.global	se_w057
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w057_1:
 	.byte	KEYSH , se_w057_key+0
@@ -93,14 +93,14 @@ se_w057_1:
 	.byte	W06
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w057:
-	.byte	1	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w057_pri	@ Priority
-	.byte	se_w057_rev	@ Reverb.
+	.byte	1	
+	.byte	0	
+	.byte	se_w057_pri	
+	.byte	se_w057_rev	
 
 	.word	se_w057_grp
 

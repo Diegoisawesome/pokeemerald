@@ -86,7 +86,7 @@ LittlerootTown_MapScript2_1E7EC1: @ 81E7EC1
 	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 1, LittlerootTown_EventScript_1E7EDB
 	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 2, LittlerootTown_EventScript_1E7EF9
 	map_script_2 VAR_0x40D3, 1, LittlerootTown_EventScript_1E7FB1
-	.2byte 0
+	.short 0
 
 LittlerootTown_EventScript_1E7EDB:: @ 81E7EDB
 	lockall
@@ -202,7 +202,7 @@ LittlerootTown_EventScript_1E7FB1:: @ 81E7FB1
 
 LittlerootTown_MapScript2_1E7FE2: @ 81E7FE2
 	map_script_2 VAR_0x40D3, 1, LittlerootTown_EventScript_1E7FEC
-	.2byte 0
+	.short 0
 
 LittlerootTown_EventScript_1E7FEC:: @ 81E7FEC
 	addobject 8

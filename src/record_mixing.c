@@ -873,7 +873,7 @@ static void ReceiveDaycareMailData(struct RecordMixingDayCareMail *src, size_t r
             var2 = sub_80E7A9C(&_src->mail[1]);
             if (!var1 && var2)
             {
-                register u8 one asm("r0") = 1; // boo, a fakematch
+                u8 one = 1; // boo, a fakematch
                 sp24[j][1] = one;
             }
             else if ((var1 && var2) || (!var1 && !var2))

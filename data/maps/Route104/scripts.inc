@@ -5,7 +5,7 @@ Route104_MapScripts:: @ 81ECC32
 
 Route104_MapScript2_1ECC3D: @ 81ECC3D
 	map_script_2 VAR_BOARD_BRINEY_BOAT_ROUTE104_STATE, 1, Route104_EventScript_1ECC47
-	.2byte 0
+	.short 0
 
 Route104_EventScript_1ECC47:: @ 81ECC47
 	lockall

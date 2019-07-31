@@ -23,7 +23,7 @@ Route125_MapScript1_1F6783: @ 81F6783
 
 Route125_MapScript2_1F679A: @ 81F679A
 	map_script_2 VAR_SHOULD_END_UNUSUAL_WEATHER, 1, UnusualWeather_EventScript_EndEventAndCleanup_1
-	.2byte 0
+	.short 0
 
 Route125_EventScript_1F67A4:: @ 81F67A4
 	trainerbattle_single TRAINER_NOLEN, Route125_Text_2A1527, Route125_Text_2A155A

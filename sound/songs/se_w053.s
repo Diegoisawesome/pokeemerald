@@ -13,7 +13,7 @@
 	.global	se_w053
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w053_1:
 	.byte	KEYSH , se_w053_key+0
@@ -132,7 +132,7 @@ se_w053_1_000:
 	.byte		EOT   , Cn3 
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w053_2:
 	.byte	KEYSH , se_w053_key+0
@@ -158,14 +158,14 @@ se_w053_2:
 	.byte	W24
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w053:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w053_pri	@ Priority
-	.byte	se_w053_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w053_pri	
+	.byte	se_w053_rev	
 
 	.word	se_w053_grp
 

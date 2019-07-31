@@ -5,7 +5,7 @@ VerdanturfTown_BattleTentLobby_MapScripts:: @ 82016D0
 
 VerdanturfTown_BattleTentLobby_MapScript2_2016DB: @ 82016DB
 	map_script_2 VAR_TEMP_1, 0, VerdanturfTown_BattleTentLobby_EventScript_2016E5
-	.2byte 0
+	.short 0
 
 VerdanturfTown_BattleTentLobby_EventScript_2016E5:: @ 82016E5
 	setvar VAR_TEMP_1, 1
@@ -18,7 +18,7 @@ VerdanturfTown_BattleTentLobby_MapScript2_2016EF: @ 82016EF
 	map_script_2 VAR_TEMP_0, 2, VerdanturfTown_BattleTentLobby_EventScript_201837
 	map_script_2 VAR_TEMP_0, 3, VerdanturfTown_BattleTentLobby_EventScript_201757
 	map_script_2 VAR_TEMP_0, 4, VerdanturfTown_BattleTentLobby_EventScript_2017FD
-	.2byte 0
+	.short 0
 
 VerdanturfTown_BattleTentLobby_EventScript_201719:: @ 8201719
 	setvar VAR_0x8004, 0

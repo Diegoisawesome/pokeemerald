@@ -33,7 +33,7 @@ _082E35A8:
 	ldmdb r11, {r11,sp,lr}
 	bx lr
 	.align 2, 0
-_082E35B4: .4byte gRfuState
+_082E35B4: .int gRfuState
 	arm_func_end IntrSIO32
 
 	arm_func_start sio32intr_clock_master
@@ -207,7 +207,7 @@ _082E3800:
 	bl sub_82E3EA8
 	b _082E3840
 	.align 2, 0
-_082E382C: .4byte gRfuState
+_082E382C: .int gRfuState
 _082E3830:
 	add r3, r5, 0x3
 	strh r3, [r4]
@@ -472,8 +472,8 @@ _082E3BE4:
 	bhi _082E3BE4
 	b _082E3C20
 	.align 2, 0
-_082E3BF4: .4byte gRfuState
-_082E3BF8: .4byte 0x996601ee
+_082E3BF4: .int gRfuState
+_082E3BF8: .int 0x996601ee
 _082E3BFC:
 	mov r2, 0xFF00
 	add r1, r1, 0x4000000
@@ -532,7 +532,7 @@ _082E3CA4:
 	ldmdb r11, {r11,sp,lr}
 	bx lr
 	.align 2, 0
-_082E3CB8: .4byte gRfuState
+_082E3CB8: .int gRfuState
 	arm_func_end handshake_wait
 
 	arm_func_start STWI_set_timer_in_RAM
@@ -588,7 +588,7 @@ _082E3D5C:
 	mov r3, 0x3
 	b _082E3D8C
 	.align 2, 0
-_082E3D74: .4byte gRfuState
+_082E3D74: .int gRfuState
 _082E3D78:
 	mvn r3, 0x850
 	sub r3, r3, 0x2
@@ -637,7 +637,7 @@ STWI_stop_timer_in_RAM: @ 82E3DCC
 	ldmdb r11, {r11,sp,lr}
 	bx lr
 	.align 2, 0
-_082E3E18: .4byte gRfuState
+_082E3E18: .int gRfuState
 	arm_func_end STWI_stop_timer_in_RAM
 
 	arm_func_start STWI_init_slave
@@ -677,7 +677,7 @@ STWI_init_slave: @ 82E3E1C
 	ldmdb r11, {r11,sp,lr}
 	bx lr
 	.align 2, 0
-_082E3EA4: .4byte gRfuState
+_082E3EA4: .int gRfuState
 	arm_func_end STWI_init_slave
 
 	arm_func_start sub_82E3EA8

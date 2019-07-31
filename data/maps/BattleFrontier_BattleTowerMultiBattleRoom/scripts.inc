@@ -40,7 +40,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_243DDA:: @ 8243DDA
 
 BattleFrontier_BattleTowerMultiBattleRoom_MapScript2_243E14: @ 8243E14
 	map_script_2 VAR_TEMP_3, 1, BattleFrontier_BattleTowerMultiBattleRoom_EventScript_243E1E
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_243E1E:: @ 8243E1E
 	turnobject EVENT_OBJ_ID_PLAYER, 2
@@ -49,7 +49,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_243E1E:: @ 8243E1E
 BattleFrontier_BattleTowerMultiBattleRoom_MapScript2_243E23: @ 8243E23
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleTowerMultiBattleRoom_EventScript_243E41
 	map_script_2 VAR_TEMP_3, 1, BattleFrontier_BattleTowerMultiBattleRoom_EventScript_243E35
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_243E35:: @ 8243E35
 	lockall

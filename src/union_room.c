@@ -4513,7 +4513,7 @@ s32 sub_8017178(u8 *arg0, u8 *arg1, u8 *arg2, const struct WindowTemplate *winTe
         }
         if (winTemplateCopy.tilemapLeft + winTemplateCopy.width > 29)
         {
-            winTemplateCopy.tilemapLeft = max(29 - winTemplateCopy.width, 0);
+            winTemplateCopy.tilemapLeft = mymax(29 - winTemplateCopy.width, 0);
         }
         *arg1 = AddWindow(&winTemplateCopy);
         DrawStdWindowFrame(*arg1, FALSE);

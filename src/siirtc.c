@@ -63,7 +63,7 @@
 #define GPIO_PORT_DIRECTION   (*(vu16 *)0x80000C6)
 #define GPIO_PORT_READ_ENABLE (*(vu16 *)0x80000C8)
 
-extern vu16 GPIOPortDirection;
+vu16 GPIOPortDirection;
 
 static u16 sDummy; // unused variable
 static bool8 sLocked;

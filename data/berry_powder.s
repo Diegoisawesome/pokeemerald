@@ -6,12 +6,12 @@
 
 	.align 2
 gUnknown_082F7BA4_UnrefDupe:: @ 82F444C struct BgTemplate(???)
-	.4byte 0x000001e0
-	.4byte 0x000012c9
-	.4byte 0x000012ea
-	.4byte 0x000021ff
-	.4byte 0x000000ff
-	.4byte 0x00000000
+	.int 0x000001e0
+	.int 0x000012c9
+	.int 0x000012ea
+	.int 0x000021ff
+	.int 0x000000ff
+	.int 0x00000000
 
 	.align 2
 gUnknown_082F7BBC_UnrefDupe:: @ 82F4464

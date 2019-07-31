@@ -225,7 +225,7 @@ void TrendyPhraseIsOld(void)
 
     if (gSaveBlock1Ptr->easyChatPairs[0].unk0_0 - gSaveBlock1Ptr->easyChatPairs[1].unk0_0 < 2)
     {
-        asm("":::"r2"); //Force the compiler to store address of gSaveBlock1 in r3 instead of r2
+        //asm("":::"r2"); //Force the compiler to store address of gSaveBlock1 in r3 instead of r2
         if (!gSaveBlock1Ptr->easyChatPairs[0].unk1_6 && gSaveBlock1Ptr->easyChatPairs[1].unk1_6)
             result = 1;
     }

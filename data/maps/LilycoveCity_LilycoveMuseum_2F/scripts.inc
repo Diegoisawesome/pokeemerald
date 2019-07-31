@@ -58,7 +58,7 @@ LilycoveCity_LilycoveMuseum_2F_EventScript_2197EB:: @ 82197EB
 
 LilycoveCity_LilycoveMuseum_2F_MapScript2_2197FE: @ 82197FE
 	map_script_2 VAR_LILYCOVE_MUSEUM_2F_STATE, 0, LilycoveCity_LilycoveMuseum_2F_EventScript_219808
-	.2byte 0
+	.short 0
 
 LilycoveCity_LilycoveMuseum_2F_EventScript_219808:: @ 8219808
 	lockall

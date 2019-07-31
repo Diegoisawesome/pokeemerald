@@ -23,7 +23,7 @@ Route127_MapScript1_1F6A14: @ 81F6A14
 
 Route127_MapScript2_1F6A2B: @ 81F6A2B
 	map_script_2 VAR_SHOULD_END_UNUSUAL_WEATHER, 1, UnusualWeather_EventScript_EndEventAndCleanup_1
-	.2byte 0
+	.short 0
 
 Route127_EventScript_1F6A35:: @ 81F6A35
 	trainerbattle_single TRAINER_CAMDEN, Route127_Text_2A225F, Route127_Text_2A2294

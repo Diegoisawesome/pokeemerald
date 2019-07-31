@@ -15,7 +15,7 @@ MtChimney_CableCarStation_EventScript_22AC11:: @ 822AC11
 
 MtChimney_CableCarStation_MapScript2_22AC1D: @ 822AC1D
 	map_script_2 VAR_CABLE_CAR_STATION_STATE, 1, MtChimney_CableCarStation_EventScript_22AC27
-	.2byte 0
+	.short 0
 
 MtChimney_CableCarStation_EventScript_22AC27:: @ 822AC27
 	lockall

@@ -12,7 +12,7 @@ BattleFrontier_BattleDomeLobby_MapScript1_2497F2: @ 82497F2
 BattleFrontier_BattleDomeLobby_MapScript2_2497FB: @ 82497FB
 BattleFrontier_BattlePyramidLobby_MapScript2_2497FB: @ 82497FB
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleDomeLobby_EventScript_249805
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleDomeLobby_EventScript_249805:: @ 8249805
 	setvar VAR_TEMP_1, 1
@@ -25,7 +25,7 @@ BattleFrontier_BattleDomeLobby_MapScript2_24980F: @ 824980F
 	map_script_2 VAR_TEMP_0, 2, BattleFrontier_BattleDomeLobby_EventScript_2499F9
 	map_script_2 VAR_TEMP_0, 3, BattleFrontier_BattleDomeLobby_EventScript_24989B
 	map_script_2 VAR_TEMP_0, 4, BattleFrontier_BattleDomeLobby_EventScript_249940
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleDomeLobby_EventScript_249839:: @ 8249839
 	setvar VAR_0x8004, 0

@@ -1,8 +1,34 @@
 #ifndef GUARD_GLOBAL_H
 #define GUARD_GLOBAL_H
 
+#include <stdio.h>
 #include <string.h>
 #include <limits.h>
+
+#ifndef NO_UNDERSCORE_HACK
+#define REG_BASE       _REG_BASE
+#define VRAM_          _VRAM_
+#define OAM            _OAM
+#define REG_BASE       _REG_BASE
+#define PLTT           _PLTT
+#define SOUND_INFO_PTR _SOUND_INFO_PTR
+#define INTR_CHECK     _INTR_CHECK
+#define INTR_VECTOR    _INTR_VECTOR
+#define puts           _puts
+#define memcpy         _memcpy
+#define memset         _memset
+#define strcmp         _strcmp
+#define getc           _getc
+#define CpuSet         _CpuSet
+#define SoftReset _SoftReset
+#define LZ77UnCompVram _LZ77UnCompVram
+#define LZ77UnCompWram _LZ77UnCompWram
+#define Platform_GetKeyInput _Platform_GetKeyInput
+#define AgbMain _AgbMain
+#define gIntrTable _gIntrTable
+#define VBlankIntrWait _VBlankIntrWait
+#endif
+
 #include "config.h" // we need to define config before gba headers as print stuff needs the functions nulled before defines.
 #include "gba/gba.h"
 #include "constants/global.h"
@@ -25,7 +51,10 @@
 #define INCBIN_S8 {0}
 #define INCBIN_S16 {0}
 #define INCBIN_S32 {0}
-#endif // IDE support
+void *     memcpy (void *, const void *, size_t);
+void *     memset (void *, int, size_t);
+int     strcmp (const char *, const char *);
+#endif
 
 #define ARRAY_COUNT(array) (size_t)(sizeof(array) / sizeof((array)[0]))
 
@@ -60,8 +89,8 @@
 
 #define POKEMON_SLOTS_NUMBER 412
 
-#define min(a, b) ((a) < (b) ? (a) : (b))
-#define max(a, b) ((a) >= (b) ? (a) : (b))
+#define mymin(a, b) ((a) < (b) ? (a) : (b))
+#define mymax(a, b) ((a) >= (b) ? (a) : (b))
 
 #if MODERN
 #define abs(x) (((x) < 0) ? -(x) : (x))

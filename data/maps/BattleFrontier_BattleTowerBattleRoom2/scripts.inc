@@ -30,7 +30,7 @@ BattleFrontier_BattleTowerBattleRoom2_EventScript_248F2F:: @ 8248F2F
 
 BattleFrontier_BattleTowerBattleRoom2_MapScript2_248F33: @ 8248F33
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleTowerBattleRoom2_EventScript_248F3D
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleTowerBattleRoom2_EventScript_248F3D:: @ 8248F3D
 	hideobjectat EVENT_OBJ_ID_PLAYER, MAP_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM2
@@ -38,7 +38,7 @@ BattleFrontier_BattleTowerBattleRoom2_EventScript_248F3D:: @ 8248F3D
 
 BattleFrontier_BattleTowerBattleRoom2_MapScript2_248F43: @ 8248F43
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleTowerBattleRoom2_EventScript_248F4D
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleTowerBattleRoom2_EventScript_248F4D:: @ 8248F4D
 	setvar VAR_TEMP_0, 1

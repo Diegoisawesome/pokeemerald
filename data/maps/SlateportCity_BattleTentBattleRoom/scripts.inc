@@ -26,7 +26,7 @@ SlateportCity_BattleTentBattleRoom_EventScript_209994:: @ 8209994
 
 SlateportCity_BattleTentBattleRoom_MapScript2_20999A: @ 820999A
 	map_script_2 VAR_TEMP_1, 0, SlateportCity_BattleTentBattleRoom_EventScript_2099A4
-	.2byte 0
+	.short 0
 
 SlateportCity_BattleTentBattleRoom_EventScript_2099A4:: @ 82099A4
 	setvar VAR_TEMP_1, 1
@@ -36,7 +36,7 @@ SlateportCity_BattleTentBattleRoom_EventScript_2099A4:: @ 82099A4
 
 SlateportCity_BattleTentBattleRoom_MapScript2_2099B4: @ 82099B4
 	map_script_2 VAR_TEMP_0, 0, SlateportCity_BattleTentBattleRoom_EventScript_2099BE
-	.2byte 0
+	.short 0
 
 SlateportCity_BattleTentBattleRoom_EventScript_2099BE:: @ 82099BE
 	applymovement 3, SlateportCity_BattleTentBattleRoom_Movement_209A99

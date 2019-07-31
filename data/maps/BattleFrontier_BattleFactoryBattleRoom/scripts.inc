@@ -26,7 +26,7 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_25ADF3:: @ 825ADF3
 
 BattleFrontier_BattleFactoryBattleRoom_MapScript2_25AE00: @ 825AE00
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleFactoryBattleRoom_EventScript_25AE0A
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleFactoryBattleRoom_EventScript_25AE0A:: @ 825AE0A
 	setvar VAR_TEMP_1, 1
@@ -48,7 +48,7 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_25AE2B:: @ 825AE2B
 
 BattleFrontier_BattleFactoryBattleRoom_MapScript2_25AE31: @ 825AE31
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleFactoryBattleRoom_EventScript_25AE67
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleFactoryBattleRoom_EventScript_25AE3B:: @ 825AE3B
 	msgbox BattleFrontier_BattleFactoryBattleRoom_Text_25B1E2, MSGBOX_DEFAULT

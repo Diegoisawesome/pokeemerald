@@ -28,7 +28,7 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_202333:: @ 8202333
 
 VerdanturfTown_BattleTentBattleRoom_MapScript2_20233E: @ 820233E
 	map_script_2 VAR_TEMP_0, 0, VerdanturfTown_BattleTentBattleRoom_EventScript_202348
-	.2byte 0
+	.short 0
 
 VerdanturfTown_BattleTentBattleRoom_EventScript_202348:: @ 8202348
 	showobjectat 1, MAP_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM
@@ -151,7 +151,7 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_20251F:: @ 820251F
 
 VerdanturfTown_BattleTentBattleRoom_MapScript2_202541: @ 8202541
 	map_script_2 VAR_TEMP_1, 0, VerdanturfTown_BattleTentBattleRoom_EventScript_20254B
-	.2byte 0
+	.short 0
 
 VerdanturfTown_BattleTentBattleRoom_EventScript_20254B:: @ 820254B
 	hideobjectat 1, MAP_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM

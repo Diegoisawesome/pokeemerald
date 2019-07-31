@@ -7243,21 +7243,21 @@ _080CF254:\n\
     .pool\n\
     .align 2, 0\n\
 _080CF278:\n\
-    .4byte _080CF2B4\n\
-    .4byte _080CF2B8\n\
-    .4byte _080CF2BC\n\
-    .4byte _080CF2C0\n\
-    .4byte _080CF2C4\n\
-    .4byte _080CF2E4\n\
-    .4byte _080CF2E4\n\
-    .4byte _080CF2E4\n\
-    .4byte _080CF2E4\n\
-    .4byte _080CF2E4\n\
-    .4byte _080CF2E4\n\
-    .4byte _080CF2C8\n\
-    .4byte _080CF2CC\n\
-    .4byte _080CF2E4\n\
-    .4byte _080CF2D0\n\
+    .int _080CF2B4\n\
+    .int _080CF2B8\n\
+    .int _080CF2BC\n\
+    .int _080CF2C0\n\
+    .int _080CF2C4\n\
+    .int _080CF2E4\n\
+    .int _080CF2E4\n\
+    .int _080CF2E4\n\
+    .int _080CF2E4\n\
+    .int _080CF2E4\n\
+    .int _080CF2E4\n\
+    .int _080CF2C8\n\
+    .int _080CF2CC\n\
+    .int _080CF2E4\n\
+    .int _080CF2D0\n\
 _080CF2B4:\n\
     movs r0, 0xB\n\
     b _080CF366\n\
@@ -7804,21 +7804,21 @@ _080CF6E0:\n\
     .pool\n\
     .align 2, 0\n\
 _080CF700:\n\
-    .4byte _080CF73C\n\
-    .4byte _080CF740\n\
-    .4byte _080CF744\n\
-    .4byte _080CF748\n\
-    .4byte _080CF74C\n\
-    .4byte _080CF75C\n\
-    .4byte _080CF75C\n\
-    .4byte _080CF75C\n\
-    .4byte _080CF75C\n\
-    .4byte _080CF75C\n\
-    .4byte _080CF75C\n\
-    .4byte _080CF750\n\
-    .4byte _080CF754\n\
-    .4byte _080CF75C\n\
-    .4byte _080CF758\n\
+    .int _080CF73C\n\
+    .int _080CF740\n\
+    .int _080CF744\n\
+    .int _080CF748\n\
+    .int _080CF74C\n\
+    .int _080CF75C\n\
+    .int _080CF75C\n\
+    .int _080CF75C\n\
+    .int _080CF75C\n\
+    .int _080CF75C\n\
+    .int _080CF75C\n\
+    .int _080CF750\n\
+    .int _080CF754\n\
+    .int _080CF75C\n\
+    .int _080CF758\n\
 _080CF73C:\n\
     movs r0, 0xB\n\
     b _080CF7D8\n\
@@ -9234,8 +9234,8 @@ static void sub_80D08CC(void)
     u8 boxId;
     u8 monArrayId;
 
-    sMoveMonsPtr->minRow = min(sMoveMonsPtr->fromRow, sMoveMonsPtr->toRow);
-    sMoveMonsPtr->minColumn = min(sMoveMonsPtr->fromColumn, sMoveMonsPtr->toColumn);
+    sMoveMonsPtr->minRow = mymin(sMoveMonsPtr->fromRow, sMoveMonsPtr->toRow);
+    sMoveMonsPtr->minColumn = mymin(sMoveMonsPtr->fromColumn, sMoveMonsPtr->toColumn);
     sMoveMonsPtr->rowsTotal = abs(sMoveMonsPtr->fromRow - sMoveMonsPtr->toRow) + 1;
     sMoveMonsPtr->columsTotal = abs(sMoveMonsPtr->fromColumn - sMoveMonsPtr->toColumn) + 1;
     boxId = StorageGetCurrentBox();

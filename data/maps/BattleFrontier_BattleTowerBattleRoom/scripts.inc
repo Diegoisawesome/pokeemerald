@@ -5,7 +5,7 @@ BattleFrontier_BattleTowerBattleRoom_MapScripts:: @ 8241B40
 
 BattleFrontier_BattleTowerBattleRoom_MapScript2_241B4B: @ 8241B4B
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleTowerBattleRoom_EventScript_241B55
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_241B55:: @ 8241B55
 	setvar VAR_TEMP_1, 1
@@ -14,7 +14,7 @@ BattleFrontier_BattleTowerBattleRoom_EventScript_241B55:: @ 8241B55
 
 BattleFrontier_BattleTowerBattleRoom_MapScript2_241B62: @ 8241B62
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleTowerBattleRoom_EventScript_241B6C
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_241B6C:: @ 8241B6C
 	setvar VAR_TEMP_0, 1

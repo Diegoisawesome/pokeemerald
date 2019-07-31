@@ -31,7 +31,7 @@ PetalburgCity_EventScript_1DC316:: @ 81DC316
 PetalburgCity_MapScript2_1DC31C: @ 81DC31C
 	map_script_2 VAR_PETALBURG_STATE, 2, PetalburgCity_EventScript_1DC32E
 	map_script_2 VAR_PETALBURG_STATE, 4, PetalburgCity_EventScript_1DC390
-	.2byte 0
+	.short 0
 
 PetalburgCity_EventScript_1DC32E:: @ 81DC32E
 	lockall

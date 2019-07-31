@@ -5,7 +5,7 @@ BattleFrontier_BattlePikeCorridor_MapScripts:: @ 825C771
 
 BattleFrontier_BattlePikeCorridor_MapScript2_25C77C: @ 825C77C
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattlePikeCorridor_EventScript_25C786
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePikeCorridor_EventScript_25C786:: @ 825C786
 	delay 16
@@ -38,7 +38,7 @@ BattleFrontier_BattlePikeCorridor_EventScript_25C786:: @ 825C786
 
 BattleFrontier_BattlePikeCorridor_MapScript2_25C7F7: @ 825C7F7
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattlePikeCorridor_EventScript_25C801
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePikeCorridor_EventScript_25C801:: @ 825C801
 	setvar VAR_TEMP_1, 1

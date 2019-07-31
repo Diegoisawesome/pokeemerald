@@ -13,7 +13,7 @@
 	.global	se_z_page
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_z_page_1:
 	.byte	KEYSH , se_z_page_key+0
@@ -38,14 +38,14 @@ se_z_page_1:
 	.byte	W03
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_z_page:
-	.byte	1	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_z_page_pri	@ Priority
-	.byte	se_z_page_rev	@ Reverb.
+	.byte	1	
+	.byte	0	
+	.byte	se_z_page_pri	
+	.byte	se_z_page_rev	
 
 	.word	se_z_page_grp
 

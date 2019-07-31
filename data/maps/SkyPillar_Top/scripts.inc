@@ -37,7 +37,7 @@ SkyPillar_Top_EventScript_23970F:: @ 823970F
 
 SkyPillar_Top_MapScript2_239713: @ 8239713
 	map_script_2 VAR_SKY_PILLAR_STATE, 0, SkyPillar_Top_EventScript_23971D
-	.2byte 0
+	.short 0
 
 SkyPillar_Top_EventScript_23971D:: @ 823971D
 	turnobject 1, 1

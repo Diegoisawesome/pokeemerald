@@ -4,7 +4,7 @@ BattleFrontier_BattleDomeCorridor_MapScripts:: @ 824B0FE
 
 BattleFrontier_BattleDomeCorridor_MapScript2_24B104: @ 824B104
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleDomeCorridor_EventScript_24B10E
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleDomeCorridor_EventScript_24B10E:: @ 824B10E
 	delay 16

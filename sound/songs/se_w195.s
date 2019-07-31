@@ -13,7 +13,7 @@
 	.global	se_w195
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w195_1:
 	.byte	KEYSH , se_w195_key+0
@@ -121,7 +121,7 @@ se_w195_1_003:
 	.byte	W05
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w195_2:
 	.byte	KEYSH , se_w195_key+0
@@ -204,14 +204,14 @@ se_w195_2_000:
 	.byte	W06
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w195:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w195_pri	@ Priority
-	.byte	se_w195_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w195_pri	
+	.byte	se_w195_rev	
 
 	.word	se_w195_grp
 

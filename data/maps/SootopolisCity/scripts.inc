@@ -169,7 +169,7 @@ SootopolisCity_EventScript_1E58D3:: @ 81E58D3
 
 SootopolisCity_MapScript2_1E58DB: @ 81E58DB
 	map_script_2 VAR_RAYQUAZA_STATE, 5, SootopolisCity_EventScript_1E58E5
-	.2byte 0
+	.short 0
 
 SootopolisCity_EventScript_1E58E5:: @ 81E58E5
 	compare VAR_SKY_PILLAR_STATE, 1
@@ -194,7 +194,7 @@ SootopolisCity_MapScript1_1E590B: @ 81E590B
 SootopolisCity_MapScript2_1E5914: @ 81E5914
 	map_script_2 VAR_RAYQUAZA_STATE, 1, SootopolisCity_EventScript_1E5926
 	map_script_2 VAR_SKY_PILLAR_STATE, 1, SootopolisCity_EventScript_1E5BFE
-	.2byte 0
+	.short 0
 
 SootopolisCity_EventScript_1E5926:: @ 81E5926
 	lockall

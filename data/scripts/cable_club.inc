@@ -93,7 +93,7 @@ VerdanturfTown_PokemonCenter_2F_MapScript2_276B6C: @ 8276B6C
 	map_script_2 VAR_CABLE_CLUB_STATE, 6, OldaleTown_PokemonCenter_2F_EventScript_276BAE
 	map_script_2 VAR_CABLE_CLUB_STATE, 7, OldaleTown_PokemonCenter_2F_EventScript_276BAE
 	map_script_2 VAR_CABLE_CLUB_STATE, 8, OldaleTown_PokemonCenter_2F_EventScript_276BAE
-	.2byte 0
+	.short 0
 
 MossdeepCity_GameCorner_1F_EventScript_276BAE:: @ 8276BAE
 OldaleTown_PokemonCenter_2F_EventScript_276BAE:: @ 8276BAE
@@ -190,7 +190,7 @@ VerdanturfTown_PokemonCenter_2F_MapScript2_276C3B: @ 8276C3B
 	map_script_2 VAR_CABLE_CLUB_STATE, 6, OldaleTown_PokemonCenter_2F_EventScript_276D6C
 	map_script_2 VAR_CABLE_CLUB_STATE, 7, OldaleTown_PokemonCenter_2F_EventScript_276C85
 	map_script_2 VAR_CABLE_CLUB_STATE, 8, OldaleTown_PokemonCenter_2F_EventScript_276C9D
-	.2byte 0
+	.short 0
 
 OldaleTown_PokemonCenter_2F_EventScript_276C85:: @ 8276C85
 	lockall

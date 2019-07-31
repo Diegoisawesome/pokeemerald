@@ -55,7 +55,7 @@ LittlerootTown_BrendansHouse_1F_MapScript2_1F77EA: @ 81F77EA
 	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_BrendansHouse_1F_EventScript_1F784D
 	map_script_2 VAR_LITTLEROOT_HOUSES_STATE, 1, LittlerootTown_BrendansHouse_1F_EventScript_1F785E
 	map_script_2 VAR_LITTLEROOT_HOUSES_STATE, 3, LittlerootTown_BrendansHouse_1F_EventScript_292AF2
-	.2byte 0
+	.short 0
 
 LittlerootTown_BrendansHouse_1F_EventScript_1F7814:: @ 81F7814
 	lockall

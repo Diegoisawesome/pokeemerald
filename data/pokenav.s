@@ -32,127 +32,127 @@ gUnknown_08620194:: @ 8620194
 	.byte 0xF5, 0x10, 0, 0, 0x7A, 0x21, 0, 0, 0xFF, 0x31, 0, 0
 
 gUnknown_086201A0:: @ 86201A0
-	.4byte NULL
-	.4byte sub_81C9C6C
-	.4byte sub_81C9CA8
-	.4byte sub_81C9D44
-	.4byte sub_81C9DD8
-	.4byte sub_81C9E58
-	.4byte sub_81C9EC8
-	.4byte sub_81C9EF8
-	.4byte sub_81C9F28
+	.int NULL
+	.int sub_81C9C6C
+	.int sub_81C9CA8
+	.int sub_81C9D44
+	.int sub_81C9DD8
+	.int sub_81C9E58
+	.int sub_81C9EC8
+	.int sub_81C9EF8
+	.int sub_81C9F28
 
 gUnknown_086201C4:: @ 86201C4
-	.4byte gPokenavOptions_Gfx
+	.int gPokenavOptions_Gfx
 	.byte 0, 0x34, 3, 0
-	.4byte gUnknown_08620124
+	.int gUnknown_08620124
 	.byte 0, 1, 1, 0
 
 gUnknown_086201D4:: @ 86201D4
-	.4byte gPokenavOptions_Pal + 0x0, 4
-	.4byte gPokenavOptions_Pal + 0x20, 5
-	.4byte gPokenavOptions_Pal + 0x40, 6
-	.4byte gPokenavOptions_Pal + 0x60, 7
-	.4byte gPokenavOptions_Pal + 0x80, 8
-	.4byte gUnknown_08620104, 3
-	.4byte 0, 0
+	.int gPokenavOptions_Pal + 0x0, 4
+	.int gPokenavOptions_Pal + 0x20, 5
+	.int gPokenavOptions_Pal + 0x40, 6
+	.int gPokenavOptions_Pal + 0x60, 7
+	.int gPokenavOptions_Pal + 0x80, 8
+	.int gUnknown_08620104, 3
+	.int 0, 0
 	
 gUnknown_0862020C:: @ 862020C
-	.2byte 0, 0
+	.short 0, 0
 
 gUnknown_08620210:: @ 8620210
-	.2byte 0x20, 1
+	.short 0x20, 1
 	
 gUnknown_08620214:: @ 8620214
-	.2byte 0x40, 4
+	.short 0x40, 4
 	
 gUnknown_08620218:: @ 8620218
-	.2byte 0x60, 2
+	.short 0x60, 2
 
 gUnknown_0862021C:: @ 862021C
-	.2byte 0x80, 3
+	.short 0x80, 3
 	
 gUnknown_08620220:: @ 8620220
-	.2byte 0xA0, 1
+	.short 0xA0, 1
 
 gUnknown_08620224:: @ 8620224
-	.2byte 0xC0, 1
+	.short 0xC0, 1
 
 gUnknown_08620228:: @ 8620228
-	.2byte 0xE0, 4
+	.short 0xE0, 4
 
 gUnknown_0862022C:: @ 862022C
-	.2byte 0x100, 1
+	.short 0x100, 1
 
 gUnknown_08620230:: @ 8620230
-	.2byte 0x120, 2
+	.short 0x120, 2
 
 gUnknown_08620234:: @ 8620234
-	.2byte 0x140, 0
+	.short 0x140, 0
 
 gUnknown_08620238:: @ 8620238
-	.2byte 0x160, 0
+	.short 0x160, 0
 
 gUnknown_0862023C:: @ 862023C
-	.2byte 0x180, 3
+	.short 0x180, 3
 
 gUnknown_08620240:: @ 8620240
-	.2byte 0x2A, 0x14
+	.short 0x2A, 0x14
 
 gUnknown_08620244:: @ 8620244
-	.4byte gUnknown_0862020C
-	.4byte gUnknown_08620210
-	.4byte gUnknown_0862021C
-	.4byte NULL
-	.4byte NULL
-	.4byte NULL
-	.2byte 0x2A, 0x14
-	.4byte gUnknown_0862020C
-	.4byte gUnknown_08620210
-	.4byte gUnknown_08620214
-	.4byte gUnknown_0862021C
-	.4byte NULL
-	.4byte NULL
-	.2byte 0x2A, 0x14
-	.4byte gUnknown_0862020C
-	.4byte gUnknown_08620210
-	.4byte gUnknown_08620214
-	.4byte gUnknown_08620218
-	.4byte gUnknown_0862021C
-	.4byte NULL
-	.2byte 0x38, 0x14
-	.4byte gUnknown_08620220
-	.4byte gUnknown_08620224
-	.4byte gUnknown_0862023C
-	.4byte NULL
-	.4byte NULL
-	.4byte NULL
-	.2byte 0x28, 0x10
-	.4byte gUnknown_08620228
-	.4byte gUnknown_0862022C
-	.4byte gUnknown_08620230
-	.4byte gUnknown_08620234
-	.4byte gUnknown_08620238
-	.4byte gUnknown_0862023C
+	.int gUnknown_0862020C
+	.int gUnknown_08620210
+	.int gUnknown_0862021C
+	.int NULL
+	.int NULL
+	.int NULL
+	.short 0x2A, 0x14
+	.int gUnknown_0862020C
+	.int gUnknown_08620210
+	.int gUnknown_08620214
+	.int gUnknown_0862021C
+	.int NULL
+	.int NULL
+	.short 0x2A, 0x14
+	.int gUnknown_0862020C
+	.int gUnknown_08620210
+	.int gUnknown_08620214
+	.int gUnknown_08620218
+	.int gUnknown_0862021C
+	.int NULL
+	.short 0x38, 0x14
+	.int gUnknown_08620220
+	.int gUnknown_08620224
+	.int gUnknown_0862023C
+	.int NULL
+	.int NULL
+	.int NULL
+	.short 0x28, 0x10
+	.int gUnknown_08620228
+	.int gUnknown_0862022C
+	.int gUnknown_08620230
+	.int gUnknown_08620234
+	.int gUnknown_08620238
+	.int gUnknown_0862023C
 
 gUnknown_086202CC:: @ 86202CC
 	window_template 1, 3, 17, 0x18, 2, 1, 8
 
 gUnknown_086202D4:: @ 86202D4
-	.4byte gUnknown_085EBCC5
-	.4byte gUnknown_085EBCE8
-	.4byte gUnknown_085EBD01
-	.4byte gUnknown_085EBD1C
-	.4byte gUnknown_085EBD34
-	.4byte gUnknown_085EBD83
-	.4byte gUnknown_085EBDA2
-	.4byte gUnknown_085EBDBF
-	.4byte gUnknown_085EBDDB
-	.4byte gUnknown_085EBDEE
-	.4byte gUnknown_085EBE06
-	.4byte gUnknown_085EBE19
-	.4byte gUnknown_085EBE2D
-	.4byte gUnknown_085EBE41
+	.int gUnknown_085EBCC5
+	.int gUnknown_085EBCE8
+	.int gUnknown_085EBD01
+	.int gUnknown_085EBD1C
+	.int gUnknown_085EBD34
+	.int gUnknown_085EBD83
+	.int gUnknown_085EBDA2
+	.int gUnknown_085EBDBF
+	.int gUnknown_085EBDDB
+	.int gUnknown_085EBDEE
+	.int gUnknown_085EBE06
+	.int gUnknown_085EBE19
+	.int gUnknown_085EBE2D
+	.int gUnknown_085EBE41
 
 gUnknown_0862030C:: @ 862030C
 	.byte 6, 8, 7
@@ -173,24 +173,24 @@ gUnknown_0862032C:: @ 862032C
 	obj_rot_scal_anim_end
 
 gUnknown_08620344:: @ 8620344
-	.4byte gUnknown_0862031C
-	.4byte gUnknown_0862032C
+	.int gUnknown_0862031C
+	.int gUnknown_0862032C
 
 gUnknown_0862034C:: @ 862034C
 	spr_template 3, 4, gUnknown_08620314, gDummySpriteAnimTable, NULL, gUnknown_08620344, SpriteCallbackDummy
 	
 gUnknown_08620364:: @ 8620364
-	.2byte 0x4000
-	.2byte 0x8000
-	.2byte 0x800
-	.2byte 0
+	.short 0x4000
+	.short 0x8000
+	.short 0x800
+	.short 0
 
 gUnknown_0862036C:: @ 862036C
 	spr_template 1, 3, gUnknown_08620364, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 gUnknown_08620384:: @ 8620384
-	 .4byte 0x4000040
-	 .4byte 0xa2600001
+	 .int 0x4000040
+	 .int 0xa2600001
 	 .byte 1, 0, 0, 0
 
 // pokenav_unk_3.s	 
@@ -1134,84 +1134,84 @@ gUnknown_0862200F:: @ 862200F
 
 @ strategy, mon text, introduction1, introduction2 
 gUnknown_08622028:: @ 8622028
-	.4byte gUnknown_08620390, gUnknown_086203AA, gUnknown_086203C2, gUnknown_086203DB
-	.4byte gUnknown_086203F2, gUnknown_0862040D, gUnknown_08620428, gUnknown_08620444
-	.4byte gUnknown_08620456, gUnknown_0862046C, gUnknown_08620481, gUnknown_0862049C
-	.4byte gUnknown_086204B0, gUnknown_086204C7, gUnknown_086204DD, gUnknown_086204F9
-	.4byte gUnknown_0862050E, gUnknown_0862052B, gUnknown_08620546, gUnknown_08620562
-	.4byte gUnknown_0862057D, gUnknown_08620592, gUnknown_086205AC, gUnknown_086205C6
-	.4byte gUnknown_086205DD, gUnknown_086205F8, gUnknown_08620612, gUnknown_0862062F
-	.4byte gUnknown_08620638, gUnknown_08620654, gUnknown_08620668, gUnknown_08620681
-	.4byte gUnknown_08620693, gUnknown_086206A7, gUnknown_086206BC, gUnknown_086206D5
-	.4byte gUnknown_086206E7, gUnknown_086206FF, gUnknown_08620717, gUnknown_08620730
-	.4byte gUnknown_0862073D, gUnknown_0862074E, gUnknown_0862075D, gUnknown_08620779
-	.4byte gUnknown_0862078D, gUnknown_086207A9, gUnknown_086207BC, gUnknown_086207D7
-	.4byte gUnknown_086207F4, gUnknown_0862080A, gUnknown_0862081B, gUnknown_08620833
-	.4byte gUnknown_0862084B, gUnknown_08620863, gUnknown_0862087C, gUnknown_08620896
-	.4byte gUnknown_086208AA, gUnknown_086208C3, gUnknown_086208DC, gUnknown_086208F1
-	.4byte gUnknown_08620909, gUnknown_0862091C, gUnknown_0862092E, gUnknown_0862094A
-	.4byte gUnknown_08620963, gUnknown_08620979, gUnknown_08620988, gUnknown_086209A4
-	.4byte gUnknown_086209B4, gUnknown_086209CA, gUnknown_086209E3, gUnknown_086209FD
-	.4byte gUnknown_08620A18, gUnknown_08620A31, gUnknown_08620A4B, gUnknown_08620A66
-	.4byte gUnknown_08620A78, gUnknown_08620A8C, gUnknown_08620A9E, gUnknown_08620AB8
-	.4byte gUnknown_08620AD2, gUnknown_08620AE4, gUnknown_08620AFB, gUnknown_08620B16
-	.4byte gUnknown_08620B32, gUnknown_08620B4C, gUnknown_08620B64, gUnknown_08620B7F
-	.4byte gUnknown_08620B8C, gUnknown_08620BA6, gUnknown_08620BC0, gUnknown_08620BD8
-	.4byte gUnknown_08620BF2, gUnknown_08620C03, gUnknown_08620C19, gUnknown_08620C34
-	.4byte gUnknown_08620C4E, gUnknown_08620C60, gUnknown_08620C78, gUnknown_08620C92
-	.4byte gUnknown_08620CA8, gUnknown_08620CBE, gUnknown_08620CD9, gUnknown_08620CF5
-	.4byte gUnknown_08620D06, gUnknown_08620D1A, gUnknown_08620D32, gUnknown_08620D49
-	.4byte gUnknown_08620D63, gUnknown_08620D7C, gUnknown_08620D98, gUnknown_08620DB3
-	.4byte gUnknown_08620DCA, gUnknown_08620DDE, gUnknown_08620DF1, gUnknown_08620E08
-	.4byte gUnknown_08620E22, gUnknown_08620E39, gUnknown_08620E54, gUnknown_08620E6C
-	.4byte gUnknown_08620E83, gUnknown_08620E98, gUnknown_08620EB5, gUnknown_08620ECC
-	.4byte gUnknown_08620EE2, gUnknown_08620EF6, gUnknown_08620F12, gUnknown_08620F2A
-	.4byte gUnknown_08620F43, gUnknown_08620F5D, gUnknown_08620F76, gUnknown_08620F90
-	.4byte gUnknown_08620FA2, gUnknown_08620FBA, gUnknown_08620FCD, gUnknown_08620FE6
-	.4byte gUnknown_08620FF9, gUnknown_0862100A, gUnknown_08621021, gUnknown_0862103B
-	.4byte gUnknown_08621056, gUnknown_0862106A, gUnknown_08621083, gUnknown_0862109F
-	.4byte gUnknown_086210B5, gUnknown_086210CE, gUnknown_086210E7, gUnknown_08621101
-	.4byte gUnknown_08621114, gUnknown_08621125, gUnknown_0862113D, gUnknown_08621157
-	.4byte gUnknown_0862116E, gUnknown_08621182, gUnknown_08621197, gUnknown_086211B3
-	.4byte gUnknown_086211CC, gUnknown_086211E4, gUnknown_086211FC, gUnknown_08621216
-	.4byte gUnknown_08621230, gUnknown_08621243, gUnknown_08621257, gUnknown_08621270
-	.4byte gUnknown_0862127B, gUnknown_08621290, gUnknown_086212A7, gUnknown_086212BF
-	.4byte gUnknown_086212DA, gUnknown_086212F3, gUnknown_0862130C, gUnknown_08621326
-	.4byte gUnknown_08621342, gUnknown_0862135C, gUnknown_08621376, gUnknown_08621393
-	.4byte gUnknown_086213A6, gUnknown_086213C2, gUnknown_086213DC, gUnknown_086213F8
-	.4byte gUnknown_0862140B, gUnknown_08621426, gUnknown_08621439, gUnknown_08621451
-	.4byte gUnknown_0862146C, gUnknown_08621483, gUnknown_08621499, gUnknown_086214AD
-	.4byte gUnknown_086214C6, gUnknown_086214DA, gUnknown_086214EF, gUnknown_08621507
-	.4byte gUnknown_0862151D, gUnknown_08621527, gUnknown_0862153B, gUnknown_08621551
-	.4byte gUnknown_0862156A, gUnknown_08621585, gUnknown_08621599, gUnknown_086215AF
-	.4byte gUnknown_086215BC, gUnknown_086215D0, gUnknown_086215E3, gUnknown_086215FD
-	.4byte gUnknown_08621615, gUnknown_08621630, gUnknown_0862164A, gUnknown_08621664
-	.4byte gUnknown_08621674, gUnknown_0862168C, gUnknown_086216A8, gUnknown_086216C3
-	.4byte gUnknown_086216E0, gUnknown_086216FB, gUnknown_08621710, gUnknown_0862172A
-	.4byte gUnknown_08621740, gUnknown_08621752, gUnknown_0862176B, gUnknown_08621782
-	.4byte gUnknown_08621799, gUnknown_086217A9, gUnknown_086217C2, gUnknown_086217D9
-	.4byte gUnknown_086217F5, gUnknown_08621810, gUnknown_08621826, gUnknown_0862183E
-	.4byte gUnknown_08621851, gUnknown_0862186A, gUnknown_08621881, gUnknown_08621899
-	.4byte gUnknown_086218AF, gUnknown_086218C0, gUnknown_086218D7, gUnknown_086218F0
-	.4byte gUnknown_08621908, gUnknown_08621921, gUnknown_0862193C, gUnknown_08621955
-	.4byte gUnknown_0862196C, gUnknown_08621983, gUnknown_0862199D, gUnknown_086219B6
-	.4byte gUnknown_086219CE, gUnknown_086219E3, gUnknown_086219F8, gUnknown_08621A13
-	.4byte gUnknown_08621A25, gUnknown_08621A34, gUnknown_08621A41, gUnknown_08621A5C
-	.4byte gUnknown_08621A72, gUnknown_08621A88, gUnknown_08621A9D, gUnknown_08621AB0
-	.4byte gUnknown_08621AC5, gUnknown_08621ADD, gUnknown_08621AF7, gUnknown_08621B10
-	.4byte gUnknown_08621B23, gUnknown_08621B3B, gUnknown_08621B57, gUnknown_08621B73
-	.4byte gUnknown_08621B8C, gUnknown_08621BA4, gUnknown_08621BBB, gUnknown_08621BD6
-	.4byte gUnknown_08621BE5, gUnknown_08621BFC, gUnknown_08621C18, gUnknown_08621C2F
-	.4byte gUnknown_08621C47, gUnknown_08621C5C, gUnknown_08621C6F, gUnknown_08621C8A
-	.4byte gUnknown_08621CA2, gUnknown_08621CBD, gUnknown_08621CD9, gUnknown_08621CF4
-	.4byte gUnknown_08621D0C, gUnknown_08621D27, gUnknown_08621D3D, gUnknown_08621D56
-	.4byte gUnknown_08621D6F, gUnknown_08621D89, gUnknown_08621DA2, gUnknown_08621DBB
-	.4byte gUnknown_08621DD0, gUnknown_08621DEB, gUnknown_08621E00, gUnknown_08621E1B
-	.4byte gUnknown_08621E38, gUnknown_08621E4E, gUnknown_08621E68, gUnknown_08621E84
-	.4byte gUnknown_08621E9F, gUnknown_08621EB5, gUnknown_08621ECF, gUnknown_08621EEA
-	.4byte gUnknown_08621EFD, gUnknown_08621F13, gUnknown_08621F30, gUnknown_08621F4B
-	.4byte gUnknown_08621F65, gUnknown_08621F7F, gUnknown_08621F99, gUnknown_08621FB2
-	.4byte gUnknown_08621FC9, gUnknown_08621FDE, gUnknown_08621FF9, gUnknown_0862200F
+	.int gUnknown_08620390, gUnknown_086203AA, gUnknown_086203C2, gUnknown_086203DB
+	.int gUnknown_086203F2, gUnknown_0862040D, gUnknown_08620428, gUnknown_08620444
+	.int gUnknown_08620456, gUnknown_0862046C, gUnknown_08620481, gUnknown_0862049C
+	.int gUnknown_086204B0, gUnknown_086204C7, gUnknown_086204DD, gUnknown_086204F9
+	.int gUnknown_0862050E, gUnknown_0862052B, gUnknown_08620546, gUnknown_08620562
+	.int gUnknown_0862057D, gUnknown_08620592, gUnknown_086205AC, gUnknown_086205C6
+	.int gUnknown_086205DD, gUnknown_086205F8, gUnknown_08620612, gUnknown_0862062F
+	.int gUnknown_08620638, gUnknown_08620654, gUnknown_08620668, gUnknown_08620681
+	.int gUnknown_08620693, gUnknown_086206A7, gUnknown_086206BC, gUnknown_086206D5
+	.int gUnknown_086206E7, gUnknown_086206FF, gUnknown_08620717, gUnknown_08620730
+	.int gUnknown_0862073D, gUnknown_0862074E, gUnknown_0862075D, gUnknown_08620779
+	.int gUnknown_0862078D, gUnknown_086207A9, gUnknown_086207BC, gUnknown_086207D7
+	.int gUnknown_086207F4, gUnknown_0862080A, gUnknown_0862081B, gUnknown_08620833
+	.int gUnknown_0862084B, gUnknown_08620863, gUnknown_0862087C, gUnknown_08620896
+	.int gUnknown_086208AA, gUnknown_086208C3, gUnknown_086208DC, gUnknown_086208F1
+	.int gUnknown_08620909, gUnknown_0862091C, gUnknown_0862092E, gUnknown_0862094A
+	.int gUnknown_08620963, gUnknown_08620979, gUnknown_08620988, gUnknown_086209A4
+	.int gUnknown_086209B4, gUnknown_086209CA, gUnknown_086209E3, gUnknown_086209FD
+	.int gUnknown_08620A18, gUnknown_08620A31, gUnknown_08620A4B, gUnknown_08620A66
+	.int gUnknown_08620A78, gUnknown_08620A8C, gUnknown_08620A9E, gUnknown_08620AB8
+	.int gUnknown_08620AD2, gUnknown_08620AE4, gUnknown_08620AFB, gUnknown_08620B16
+	.int gUnknown_08620B32, gUnknown_08620B4C, gUnknown_08620B64, gUnknown_08620B7F
+	.int gUnknown_08620B8C, gUnknown_08620BA6, gUnknown_08620BC0, gUnknown_08620BD8
+	.int gUnknown_08620BF2, gUnknown_08620C03, gUnknown_08620C19, gUnknown_08620C34
+	.int gUnknown_08620C4E, gUnknown_08620C60, gUnknown_08620C78, gUnknown_08620C92
+	.int gUnknown_08620CA8, gUnknown_08620CBE, gUnknown_08620CD9, gUnknown_08620CF5
+	.int gUnknown_08620D06, gUnknown_08620D1A, gUnknown_08620D32, gUnknown_08620D49
+	.int gUnknown_08620D63, gUnknown_08620D7C, gUnknown_08620D98, gUnknown_08620DB3
+	.int gUnknown_08620DCA, gUnknown_08620DDE, gUnknown_08620DF1, gUnknown_08620E08
+	.int gUnknown_08620E22, gUnknown_08620E39, gUnknown_08620E54, gUnknown_08620E6C
+	.int gUnknown_08620E83, gUnknown_08620E98, gUnknown_08620EB5, gUnknown_08620ECC
+	.int gUnknown_08620EE2, gUnknown_08620EF6, gUnknown_08620F12, gUnknown_08620F2A
+	.int gUnknown_08620F43, gUnknown_08620F5D, gUnknown_08620F76, gUnknown_08620F90
+	.int gUnknown_08620FA2, gUnknown_08620FBA, gUnknown_08620FCD, gUnknown_08620FE6
+	.int gUnknown_08620FF9, gUnknown_0862100A, gUnknown_08621021, gUnknown_0862103B
+	.int gUnknown_08621056, gUnknown_0862106A, gUnknown_08621083, gUnknown_0862109F
+	.int gUnknown_086210B5, gUnknown_086210CE, gUnknown_086210E7, gUnknown_08621101
+	.int gUnknown_08621114, gUnknown_08621125, gUnknown_0862113D, gUnknown_08621157
+	.int gUnknown_0862116E, gUnknown_08621182, gUnknown_08621197, gUnknown_086211B3
+	.int gUnknown_086211CC, gUnknown_086211E4, gUnknown_086211FC, gUnknown_08621216
+	.int gUnknown_08621230, gUnknown_08621243, gUnknown_08621257, gUnknown_08621270
+	.int gUnknown_0862127B, gUnknown_08621290, gUnknown_086212A7, gUnknown_086212BF
+	.int gUnknown_086212DA, gUnknown_086212F3, gUnknown_0862130C, gUnknown_08621326
+	.int gUnknown_08621342, gUnknown_0862135C, gUnknown_08621376, gUnknown_08621393
+	.int gUnknown_086213A6, gUnknown_086213C2, gUnknown_086213DC, gUnknown_086213F8
+	.int gUnknown_0862140B, gUnknown_08621426, gUnknown_08621439, gUnknown_08621451
+	.int gUnknown_0862146C, gUnknown_08621483, gUnknown_08621499, gUnknown_086214AD
+	.int gUnknown_086214C6, gUnknown_086214DA, gUnknown_086214EF, gUnknown_08621507
+	.int gUnknown_0862151D, gUnknown_08621527, gUnknown_0862153B, gUnknown_08621551
+	.int gUnknown_0862156A, gUnknown_08621585, gUnknown_08621599, gUnknown_086215AF
+	.int gUnknown_086215BC, gUnknown_086215D0, gUnknown_086215E3, gUnknown_086215FD
+	.int gUnknown_08621615, gUnknown_08621630, gUnknown_0862164A, gUnknown_08621664
+	.int gUnknown_08621674, gUnknown_0862168C, gUnknown_086216A8, gUnknown_086216C3
+	.int gUnknown_086216E0, gUnknown_086216FB, gUnknown_08621710, gUnknown_0862172A
+	.int gUnknown_08621740, gUnknown_08621752, gUnknown_0862176B, gUnknown_08621782
+	.int gUnknown_08621799, gUnknown_086217A9, gUnknown_086217C2, gUnknown_086217D9
+	.int gUnknown_086217F5, gUnknown_08621810, gUnknown_08621826, gUnknown_0862183E
+	.int gUnknown_08621851, gUnknown_0862186A, gUnknown_08621881, gUnknown_08621899
+	.int gUnknown_086218AF, gUnknown_086218C0, gUnknown_086218D7, gUnknown_086218F0
+	.int gUnknown_08621908, gUnknown_08621921, gUnknown_0862193C, gUnknown_08621955
+	.int gUnknown_0862196C, gUnknown_08621983, gUnknown_0862199D, gUnknown_086219B6
+	.int gUnknown_086219CE, gUnknown_086219E3, gUnknown_086219F8, gUnknown_08621A13
+	.int gUnknown_08621A25, gUnknown_08621A34, gUnknown_08621A41, gUnknown_08621A5C
+	.int gUnknown_08621A72, gUnknown_08621A88, gUnknown_08621A9D, gUnknown_08621AB0
+	.int gUnknown_08621AC5, gUnknown_08621ADD, gUnknown_08621AF7, gUnknown_08621B10
+	.int gUnknown_08621B23, gUnknown_08621B3B, gUnknown_08621B57, gUnknown_08621B73
+	.int gUnknown_08621B8C, gUnknown_08621BA4, gUnknown_08621BBB, gUnknown_08621BD6
+	.int gUnknown_08621BE5, gUnknown_08621BFC, gUnknown_08621C18, gUnknown_08621C2F
+	.int gUnknown_08621C47, gUnknown_08621C5C, gUnknown_08621C6F, gUnknown_08621C8A
+	.int gUnknown_08621CA2, gUnknown_08621CBD, gUnknown_08621CD9, gUnknown_08621CF4
+	.int gUnknown_08621D0C, gUnknown_08621D27, gUnknown_08621D3D, gUnknown_08621D56
+	.int gUnknown_08621D6F, gUnknown_08621D89, gUnknown_08621DA2, gUnknown_08621DBB
+	.int gUnknown_08621DD0, gUnknown_08621DEB, gUnknown_08621E00, gUnknown_08621E1B
+	.int gUnknown_08621E38, gUnknown_08621E4E, gUnknown_08621E68, gUnknown_08621E84
+	.int gUnknown_08621E9F, gUnknown_08621EB5, gUnknown_08621ECF, gUnknown_08621EEA
+	.int gUnknown_08621EFD, gUnknown_08621F13, gUnknown_08621F30, gUnknown_08621F4B
+	.int gUnknown_08621F65, gUnknown_08621F7F, gUnknown_08621F99, gUnknown_08621FB2
+	.int gUnknown_08621FC9, gUnknown_08621FDE, gUnknown_08621FF9, gUnknown_0862200F
 
 gUnknown_08622508:: @ 8622508
 	.byte 0, 2
@@ -1248,29 +1248,29 @@ gUnknown_08622760:: @ 8622760
 	.incbin "graphics/pokenav/pokeball_matchcall.4bpp.lz"
 
 gUnknown_0862278C:: @ 862278C
-	.4byte 0x11FD
-	.4byte 0x20206A
+	.int 0x11FD
+	.int 0x20206A
 
 gUnknown_08622794:: @ 8622794
-	.4byte 0x00003077
+	.int 0x00003077
 
 gUnknown_08622798:: @ 8622798
-	.4byte NULL
-	.4byte sub_81CB510
-	.4byte sub_81CB588
-	.4byte sub_81CB600
-	.4byte sub_81CB678
-	.4byte sub_81CB6F0
-	.4byte sub_81CB734
-	.4byte sub_81CB75C
-	.4byte sub_81CB7A0
-	.4byte sub_81CB824
-	.4byte sub_81CB888
-	.4byte sub_81CB93C
-	.4byte sub_81CBAD4
-	.4byte sub_81CB9C8
-	.4byte sub_81CBA68
-	.4byte sub_81CBB74
+	.int NULL
+	.int sub_81CB510
+	.int sub_81CB588
+	.int sub_81CB600
+	.int sub_81CB678
+	.int sub_81CB6F0
+	.int sub_81CB734
+	.int sub_81CB75C
+	.int sub_81CB7A0
+	.int sub_81CB824
+	.int sub_81CB888
+	.int sub_81CB93C
+	.int sub_81CBAD4
+	.int sub_81CB9C8
+	.int sub_81CBA68
+	.int sub_81CBB74
 
 gUnknown_086227D8:: @ 86227D8
 	window_template 2, 0, 5, 11, 2, 2, 16
@@ -1279,9 +1279,9 @@ gUnknown_086227E0:: @ 86227E0
 	window_template 2, 0, 9, 11, 8, 2, 0x26
 
 gUnknown_086227E8:: @ 86227E8
-	.4byte gUnknown_085EC017
-	.4byte gUnknown_085EC01C
-	.4byte gUnknown_085EC022
+	.int gUnknown_085EC017
+	.int gUnknown_085EC01C
+	.int gUnknown_085EC022
 
 gUnknown_086227F4:: @ 86227F4
 	.string "·{PAUSE 0x04}·{PAUSE 0x04}·{PAUSE 0x04}·{PAUSE 0x04}·\p"
@@ -1299,19 +1299,19 @@ gUnknown_08622818:: @ 8622818
 	null_obj_pal
 
 gUnknown_08622828:: @ 8622828
-	.2byte 0x8000
-	.2byte 0x0
-	.2byte 0x400
-	.2byte 0x0
+	.short 0x8000
+	.short 0x0
+	.short 0x400
+	.short 0x0
 
 gUnknown_08622830:: @ 8622830
 	spr_template 7, 12, gUnknown_08622828, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, sub_81CC34C
 
 gUnknown_08622848:: @ 8622848
-	.2byte 0x0
-	.2byte 0xC000
-	.2byte 0x400
-	.2byte 0x0
+	.short 0x0
+	.short 0xC000
+	.short 0x400
+	.short 0x0
 
 gUnknown_08622850:: @ 8622850
 	spr_template 8, 13, gUnknown_08622848, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
@@ -1390,16 +1390,16 @@ gUnknown_0862307C:: @ 862307C
 	 .incbin "graphics/pokenav/city_maps/petalburg_0.bin.lz"
 
 gUnknown_086230D8:: @ 86230D8
-	.4byte 0x11F5
-	.4byte 0x206A
-	.4byte 0x3402
+	.int 0x11F5
+	.int 0x206A
+	.int 0x3402
 
 gUnknown_086230E4:: @ 86230E4
-	.4byte NULL
-	.4byte sub_81CC848
-	.4byte sub_81CC878
-	.4byte sub_81CC8D8
-	.4byte sub_81CC95C
+	.int NULL
+	.int sub_81CC848
+	.int sub_81CC878
+	.int sub_81CC8D8
+	.int sub_81CC95C
 
 gUnknown_086230F8:: @ 86230F8
 	obj_tiles gHoennMapZoomIcons_Gfx, 0x800, 6
@@ -1415,37 +1415,37 @@ gUnknown_08623110:: @ 8623110
 	.byte 12
 	.byte 13
 	.byte 1
-	.2byte 0x4C
+	.short 0x4C
 
 gUnknown_08623118:: @ 8623118
-	.4byte 0, gUnknown_08622E6C 
-	.4byte 1, gUnknown_08622D98
-	.4byte 2, gUnknown_08622E9C
-	.4byte 3, gUnknown_08622A7C
-	.4byte 4, gUnknown_08622AC0
-	.4byte 5, gUnknown_08622FA0
-	.4byte 6, gUnknown_08622CAC
-	.4byte 7, gUnknown_0862307C
-	.4byte 8, gUnknown_08622B58
-	.4byte 0x10008, gUnknown_08622BB8
-	.4byte 9, gUnknown_08622D44
-	.4byte 0x10009, gUnknown_08622CEC
-	.4byte 0xA, gUnknown_08622C04
-	.4byte 0x1000A, gUnknown_08622C58
-	.4byte 0xB, gUnknown_08622B08
-	.4byte 0xC, gUnknown_08622E14
-	.4byte 0x1000C, gUnknown_08622DC8
-	.4byte 0xD, gUnknown_08623020
-	.4byte 0x1000D, gUnknown_08622FD8
-	.4byte 0xE, gUnknown_08622ED4
-	.4byte 0xF, gUnknown_08622F14
-	.4byte 0x1000F, gUnknown_08622F5C
+	.int 0, gUnknown_08622E6C 
+	.int 1, gUnknown_08622D98
+	.int 2, gUnknown_08622E9C
+	.int 3, gUnknown_08622A7C
+	.int 4, gUnknown_08622AC0
+	.int 5, gUnknown_08622FA0
+	.int 6, gUnknown_08622CAC
+	.int 7, gUnknown_0862307C
+	.int 8, gUnknown_08622B58
+	.int 0x10008, gUnknown_08622BB8
+	.int 9, gUnknown_08622D44
+	.int 0x10009, gUnknown_08622CEC
+	.int 0xA, gUnknown_08622C04
+	.int 0x1000A, gUnknown_08622C58
+	.int 0xB, gUnknown_08622B08
+	.int 0xC, gUnknown_08622E14
+	.int 0x1000C, gUnknown_08622DC8
+	.int 0xD, gUnknown_08623020
+	.int 0x1000D, gUnknown_08622FD8
+	.int 0xE, gUnknown_08622ED4
+	.int 0xF, gUnknown_08622F14
+	.int 0x1000F, gUnknown_08622F5C
 
 gUnknown_086231C8:: @ 86231C8
-	.2byte 0x4000
-	.2byte 0x4000
-	.2byte 0x400
-	.2byte 0x0
+	.short 0x4000
+	.short 0x4000
+	.short 0x400
+	.short 0x0
 
 gUnknown_086231D0:: @ 86231D0
 	spr_template 6, 11, gUnknown_086231C8, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, sub_81CCEF4
@@ -1470,9 +1470,9 @@ gUnknown_08623338:: @ 8623338
 	.incbin "graphics/pokenav/8623338.gbapal"
 
 gUnknown_08623358:: @ 8623358
-	.4byte 0x11F5
-	.4byte 0x21DE
-	.4byte 0x31EB
+	.int 0x11F5
+	.int 0x21DE
+	.int 0x31EB
 
 gUnknown_08623364:: @ 8623364
 	window_template 1, 13, 1, 13, 4, 15, 2
@@ -1488,22 +1488,22 @@ gUnknown_0862337C:: @ 862337C
 
 // pokenav_unk_8.s
 gUnknown_08623384:: @ 8623384
-	.4byte NULL
-	.4byte sub_81CE37C
-	.4byte sub_81CE2D0
-	.4byte sub_81CE4D8
-	.4byte sub_81CE5E4
-	.4byte sub_81CE6BC
-	.4byte sub_81CE700
+	.int NULL
+	.int sub_81CE37C
+	.int sub_81CE2D0
+	.int sub_81CE4D8
+	.int sub_81CE5E4
+	.int sub_81CE6BC
+	.int sub_81CE700
 
 gUnknown_086233A0:: @ 86233A0
-	.4byte 0x16, 0x17, 0x18, 0x21, 0x2F
+	.int 0x16, 0x17, 0x18, 0x21, 0x2F
 
 gUnknown_086233B4:: @ 86233B4
-	.4byte sub_81CF134
-	.4byte sub_81CF1C4
-	.4byte sub_81CF1D8
-	.4byte sub_81CF278
+	.int sub_81CF134
+	.int sub_81CF1C4
+	.int sub_81CF1D8
+	.int sub_81CF278
 
 gUnknown_086233C4:: @ 86233C4
 	.incbin "graphics/pokenav/condition_search2.gbapal"
@@ -1518,19 +1518,19 @@ gUnknown_08623570:: @ 8623570
 	.incbin "graphics/pokenav/8623570.gbapal"
 
 gUnknown_08623590:: @ 8623590
-	.4byte 0x2065
+	.int 0x2065
 
 gUnknown_08623594:: @ 8623594
-	.4byte 0x307A
+	.int 0x307A
 
 gUnknown_08623598:: @ 8623598
-	.4byte NULL
-	.4byte sub_81CF578
-	.4byte sub_81CF5F0
-	.4byte sub_81CF668
-	.4byte sub_81CF6E0
-	.4byte sub_81CF758
-	.4byte sub_81CF798
+	.int NULL
+	.int sub_81CF578
+	.int sub_81CF5F0
+	.int sub_81CF668
+	.int sub_81CF6E0
+	.int sub_81CF758
+	.int sub_81CF798
 
 gUnknown_086235B4:: @ 86235B4
 	window_template 1, 1, 6, 7, 2, 1, 20
@@ -1549,9 +1549,9 @@ gUnknown_086235D4:: @ 86235D4
 
 // pokenav_unk_9.s
 gUnknown_086235D8:: @ 86235D8
-	.4byte sub_81CFB8C
-	.4byte sub_81CFC2C
-	.4byte sub_81CFC40
+	.int sub_81CFB8C
+	.int sub_81CFC2C
+	.int sub_81CFC40
 
 gUnknown_086235E4:: @ 86235E4
 	.incbin "graphics/pokenav/ui_ribbons.gbapal"
@@ -1566,19 +1566,19 @@ gUnknown_08623790:: @ 8623790
 	.incbin "graphics/pokenav/8623790.gbapal"
 
 gUnknown_086237B0:: @ 86237B0
-	.4byte 0x2065
+	.int 0x2065
 
 gUnknown_086237B4:: @ 86237B4
-	.4byte 0x307A
+	.int 0x307A
 
 gUnknown_086237B8:: @ 86237B8
-	.4byte NULL
-	.4byte sub_81CFFFC
-	.4byte sub_81D0074
-	.4byte sub_81D00EC
-	.4byte sub_81D0164
-	.4byte sub_81D01DC
-	.4byte sub_81D021C
+	.int NULL
+	.int sub_81CFFFC
+	.int sub_81D0074
+	.int sub_81D00EC
+	.int sub_81D0164
+	.int sub_81D01DC
+	.int sub_81D021C
 
 gUnknown_086237D4:: @ 86237D4
 	window_template 1, 1, 6, 7, 2, 1, 20
@@ -1646,13 +1646,13 @@ gUnknown_08624280:: @ 8624280
 	 .incbin "graphics/pokenav/ribbons_icon_big.4bpp.lz"
 
 gUnknown_08624B98:: @ 8624B98
-	.4byte 0x107D
-	.4byte 0x2066
+	.int 0x107D
+	.int 0x2066
 
 gUnknown_08624BA0:: @ 8624BA0
-	.4byte NULL
-	.4byte sub_81D0C84
-	.4byte sub_81D0D2C
-	.4byte sub_81D0D8C
-	.4byte sub_81D0E00
-	.4byte sub_81D0C54
+	.int NULL
+	.int sub_81D0C84
+	.int sub_81D0D2C
+	.int sub_81D0D8C
+	.int sub_81D0E00
+	.int sub_81D0C54

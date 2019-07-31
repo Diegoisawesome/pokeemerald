@@ -9,7 +9,7 @@ Route128_OnTransition: @ 81F6B43
 
 Route128_MapScript2_1F6B4D: @ 81F6B4D
 	map_script_2 VAR_ROUTE128_STATE, 1, Route128_EventScript_1F6B57
-	.2byte 0
+	.short 0
 
 Route128_EventScript_1F6B57:: @ 81F6B57
 	lockall

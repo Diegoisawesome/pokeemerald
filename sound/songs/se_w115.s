@@ -13,7 +13,7 @@
 	.global	se_w115
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w115_1:
 	.byte	KEYSH , se_w115_key+0
@@ -174,7 +174,7 @@ se_w115_1:
 	.byte	W06
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w115_2:
 	.byte	KEYSH , se_w115_key+0
@@ -250,14 +250,14 @@ se_w115_2_000:
 	.byte	W05
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w115:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w115_pri	@ Priority
-	.byte	se_w115_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w115_pri	
+	.byte	se_w115_rev	
 
 	.word	se_w115_grp
 

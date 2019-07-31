@@ -5861,8 +5861,9 @@ static void VblankCb0_BattleDome(void)
 
 static void HblankCb_BattleDome(void)
 {
-    register u32 vCount asm("r0") = REG_VCOUNT;
-    register u32 vCount_ asm("r1") = vCount;
+    u32 vCount = REG_VCOUNT;
+    u32 vCount_ = vCount;
+	
     if (vCount > 41)
     {
         if (vCount < 50)

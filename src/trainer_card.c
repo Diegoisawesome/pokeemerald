@@ -611,7 +611,7 @@ static u32 GetCappedGameStat(u8 statId, u32 maxValue)
 {
     u32 statValue = GetGameStat(statId);
 
-    return min(maxValue, statValue);
+    return mymin(maxValue, statValue);
 }
 
 static bool8 HasAllFrontierSymbols(void)

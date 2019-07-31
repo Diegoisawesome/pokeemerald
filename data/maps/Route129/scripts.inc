@@ -28,7 +28,7 @@ Route129_EventScript_1F72D8:: @ 81F72D8
 
 Route129_MapScript2_1F72E2: @ 81F72E2
 	map_script_2 VAR_SHOULD_END_UNUSUAL_WEATHER, 1, UnusualWeather_EventScript_EndEventAndCleanup_1
-	.2byte 0
+	.short 0
 
 Route129_EventScript_1F72EC:: @ 81F72EC
 	trainerbattle_single TRAINER_CHASE, Route129_Text_2A2F66, Route129_Text_2A2F9D

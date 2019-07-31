@@ -13,7 +13,7 @@
 	.global	se_w255
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w255_1:
 	.byte	KEYSH , se_w255_key+0
@@ -54,7 +54,7 @@ se_w255_1:
 	.byte	W03
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w255_2:
 	.byte	KEYSH , se_w255_key+0
@@ -71,14 +71,14 @@ se_w255_2:
 	.byte	W03
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w255:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w255_pri	@ Priority
-	.byte	se_w255_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w255_pri	
+	.byte	se_w255_rev	
 
 	.word	se_w255_grp
 

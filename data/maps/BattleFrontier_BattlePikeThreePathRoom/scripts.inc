@@ -10,11 +10,11 @@ BattleFrontier_BattlePikeThreePathRoom_MapScript2_25C853: @ 825C853
 	map_script_2 VAR_TEMP_0, 2, BattleFrontier_BattlePikeThreePathRoom_EventScript_25C8A4
 	map_script_2 VAR_TEMP_5, 0, BattleFrontier_BattlePikeThreePathRoom_EventScript_25CA78
 	map_script_2 VAR_TEMP_5, 1, BattleFrontier_BattlePikeThreePathRoom_EventScript_25CA97
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePikeThreePathRoom_MapScript2_25C87D: @ 825C87D
 	map_script_2 VAR_TEMP_4, 0, BattleFrontier_BattlePikeThreePathRoom_EventScript_25C887
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePikeThreePathRoom_EventScript_25C887:: @ 825C887
 	setvar VAR_TEMP_4, 1

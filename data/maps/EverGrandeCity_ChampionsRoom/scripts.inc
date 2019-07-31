@@ -10,7 +10,7 @@ EverGrandeCity_ChampionsRoom_OnTransition: @ 82289FF
 
 EverGrandeCity_ChampionsRoom_MapScript2_228A05: @ 8228A05
 	map_script_2 VAR_TEMP_1, 0, EverGrandeCity_ChampionsRoom_EventScript_228A0F
-	.2byte 0
+	.short 0
 
 EverGrandeCity_ChampionsRoom_EventScript_228A0F:: @ 8228A0F
 	turnobject EVENT_OBJ_ID_PLAYER, 2
@@ -18,7 +18,7 @@ EverGrandeCity_ChampionsRoom_EventScript_228A0F:: @ 8228A0F
 
 EverGrandeCity_ChampionsRoom_MapScript2_228A14: @ 8228A14
 	map_script_2 VAR_TEMP_1, 0, EverGrandeCity_ChampionsRoom_EventScript_228A1E
-	.2byte 0
+	.short 0
 
 EverGrandeCity_ChampionsRoom_EventScript_228A1E:: @ 8228A1E
 	lockall

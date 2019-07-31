@@ -25,49 +25,49 @@
 	.include "asm/macros/event.inc"
 	.include "constants/constants.inc"
 
-	.section script_data, "aw", %progbits
+	.section script_data, "aw"
 
 @ 81DB67C
 	.include "data/script_cmd_table.inc"
 
 gSpecialVars:: @ 81DBA0C
-	.4byte gSpecialVar_0x8000
-	.4byte gSpecialVar_0x8001
-	.4byte gSpecialVar_0x8002
-	.4byte gSpecialVar_0x8003
-	.4byte gSpecialVar_0x8004
-	.4byte gSpecialVar_0x8005
-	.4byte gSpecialVar_0x8006
-	.4byte gSpecialVar_0x8007
-	.4byte gSpecialVar_0x8008
-	.4byte gSpecialVar_0x8009
-	.4byte gSpecialVar_0x800A
-	.4byte gSpecialVar_0x800B
-	.4byte gSpecialVar_Facing
-	.4byte gSpecialVar_Result
-	.4byte gSpecialVar_ItemId
-	.4byte gSpecialVar_LastTalked
-	.4byte gSpecialVar_ContestRank
-	.4byte gSpecialVar_ContestCategory
-	.4byte gSpecialVar_MonBoxId
-	.4byte gSpecialVar_MonBoxPos
-	.4byte gSpecialVar_Unused_0x8014
-	.4byte gTrainerBattleOpponent_A
+	.int gSpecialVar_0x8000
+	.int gSpecialVar_0x8001
+	.int gSpecialVar_0x8002
+	.int gSpecialVar_0x8003
+	.int gSpecialVar_0x8004
+	.int gSpecialVar_0x8005
+	.int gSpecialVar_0x8006
+	.int gSpecialVar_0x8007
+	.int gSpecialVar_0x8008
+	.int gSpecialVar_0x8009
+	.int gSpecialVar_0x800A
+	.int gSpecialVar_0x800B
+	.int gSpecialVar_Facing
+	.int gSpecialVar_Result
+	.int gSpecialVar_ItemId
+	.int gSpecialVar_LastTalked
+	.int gSpecialVar_ContestRank
+	.int gSpecialVar_ContestCategory
+	.int gSpecialVar_MonBoxId
+	.int gSpecialVar_MonBoxPos
+	.int gSpecialVar_Unused_0x8014
+	.int gTrainerBattleOpponent_A
 
 	.include "data/specials.inc"
 
 gStdScripts:: @ 81DC2A0
-	.4byte Std_ObtainItem
-	.4byte Std_FindItem
-	.4byte Std_MsgboxNPC
-	.4byte Std_MsgboxSign
-	.4byte Std_MsgboxDefault
-	.4byte Std_MsgboxYesNo
-	.4byte Std_MsgboxAutoclose
-	.4byte Std_ObtainDecoration
-	.4byte Std_RegisteredInMatchCall
-	.4byte Std_9
-	.4byte Std_10
+	.int Std_ObtainItem
+	.int Std_FindItem
+	.int Std_MsgboxNPC
+	.int Std_MsgboxSign
+	.int Std_MsgboxDefault
+	.int Std_MsgboxYesNo
+	.int Std_MsgboxAutoclose
+	.int Std_ObtainDecoration
+	.int Std_RegisteredInMatchCall
+	.int Std_9
+	.int Std_10
 gStdScripts_End:: @ 81DC2CC
 
 	.include "data/maps/PetalburgCity/scripts.inc"
@@ -4245,7 +4245,7 @@ MtPyre_2F_MapScript2_2A8327: @ 82A8327
 SkyPillar_2F_MapScript2_2A8327: @ 82A8327
 SkyPillar_4F_MapScript2_2A8327: @ 82A8327
 	map_script_2 VAR_ICE_STEP_COUNT, 0, EventScript_FallDownHole
-	.2byte 0
+	.short 0
 
 GraniteCave_B1F_MapScript1_2A8331: @ 82A8331
 MirageTower_2F_MapScript1_2A8331: @ 82A8331
@@ -5525,7 +5525,7 @@ BattleFrontier_BattlePikeRandomRoom1_EventScript_2C3ECF:: @ 82C3ECF
 
 BattleFrontier_BattlePikeRandomRoom1_MapScript2_2C3EDE: @ 82C3EDE
 	map_script_2 VAR_TEMP_4, 0, BattleFrontier_BattlePikeRandomRoom1_EventScript_2C3EE8
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePikeRandomRoom1_EventScript_2C3EE8:: @ 82C3EE8
 	setvar VAR_OBJ_GFX_ID_1, EVENT_OBJ_GFX_LINK_RECEPTIONIST
@@ -6938,7 +6938,7 @@ TrainerHill_Roof_MapScript1_2C8336: @ 82C8336
 TrainerHill_1F_MapScript2_2C8372: @ 82C8372
 TrainerHill_2F_MapScript2_2C8372: @ 82C8372
 	map_script_2 VAR_TEMP_3, 0, TrainerHill_1F_EventScript_2C837C
-	.2byte 0
+	.short 0
 
 TrainerHill_1F_EventScript_2C837C:: @ 82C837C
 	setvar VAR_TEMP_3, 1
@@ -6951,7 +6951,7 @@ TrainerHill_4F_MapScript2_2C8381: @ 82C8381
 TrainerHill_Roof_MapScript2_2C8381: @ 82C8381
 	map_script_2 VAR_TEMP_2, 0, TrainerHill_1F_EventScript_2C83A6
 	map_script_2 VAR_TEMP_1, 1, TrainerHill_1F_EventScript_2C83DF
-	.2byte 0
+	.short 0
 
 EventScript_TrainerHillTimer:: @ 82C8393
 	lockall

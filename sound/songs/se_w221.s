@@ -13,7 +13,7 @@
 	.global	se_w221
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w221_1:
 	.byte	KEYSH , se_w221_key+0
@@ -61,7 +61,7 @@ se_w221_1:
 	.byte	W02
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w221_2:
 	.byte	KEYSH , se_w221_key+0
@@ -88,14 +88,14 @@ se_w221_2:
 	.byte	W02
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w221:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w221_pri	@ Priority
-	.byte	se_w221_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w221_pri	
+	.byte	se_w221_rev	
 
 	.word	se_w221_grp
 

@@ -5,7 +5,7 @@ EverGrandeCity_HallOfFame_MapScripts:: @ 822982C
 
 EverGrandeCity_HallOfFame_MapScript2_229837: @ 8229837
 	map_script_2 VAR_TEMP_1, 0, EverGrandeCity_HallOfFame_EventScript_229841
-	.2byte 0
+	.short 0
 
 EverGrandeCity_HallOfFame_EventScript_229841:: @ 8229841
 	turnobject EVENT_OBJ_ID_PLAYER, 2
@@ -13,7 +13,7 @@ EverGrandeCity_HallOfFame_EventScript_229841:: @ 8229841
 
 EverGrandeCity_HallOfFame_MapScript2_229846: @ 8229846
 	map_script_2 VAR_TEMP_1, 0, EverGrandeCity_HallOfFame_EventScript_229850
-	.2byte 0
+	.short 0
 
 EverGrandeCity_HallOfFame_EventScript_229850:: @ 8229850
 	lockall

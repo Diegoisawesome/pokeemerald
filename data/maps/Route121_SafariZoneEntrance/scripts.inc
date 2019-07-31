@@ -4,7 +4,7 @@ Route121_SafariZoneEntrance_MapScripts:: @ 822BBBB
 
 Route121_SafariZoneEntrance_MapScript2_22BBC1: @ 822BBC1
 	map_script_2 VAR_SAFARI_ZONE_STATE, 1, Route121_SafariZoneEntrance_EventScript_22BBCB
-	.2byte 0
+	.short 0
 
 Route121_SafariZoneEntrance_EventScript_22BBCB:: @ 822BBCB
 	lockall

@@ -261,11 +261,11 @@ sub_8026B5C: @ 8026B5C
 	.pool
 	.align 2, 0
 _08026B78:
-	.4byte _08026B8C
-	.4byte _08026B94
-	.4byte _08026B9C
-	.4byte _08026BA4
-	.4byte _08026BAC
+	.int _08026B8C
+	.int _08026B94
+	.int _08026B9C
+	.int _08026BA4
+	.int _08026BAC
 _08026B8C:
 	movs r0, 0x4
 	strb r0, [r3]
@@ -692,13 +692,13 @@ sub_8026E70: @ 8026E70
 	.pool
 	.align 2, 0
 _08026EA4:
-	.4byte _08026EDE
-	.4byte _08026ED6
-	.4byte _08026EE2
-	.4byte _08026EC0
-	.4byte _08026EC6
-	.4byte _08026ECC
-	.4byte _08026ED2
+	.int _08026EDE
+	.int _08026ED6
+	.int _08026EE2
+	.int _08026EC0
+	.int _08026EC6
+	.int _08026ECC
+	.int _08026ED2
 _08026EC0:
 	cmp r4, 0
 	beq _08026ED6
@@ -846,16 +846,16 @@ _08026FAA:
 	.pool
 	.align 2, 0
 _08026FB8:
-	.4byte _08026FE0
-	.4byte _08026FF8
-	.4byte _08027004
-	.4byte _0802701C
-	.4byte _08027028
-	.4byte _08027040
-	.4byte _0802704C
-	.4byte _08027060
-	.4byte _0802706C
-	.4byte _08027084
+	.int _08026FE0
+	.int _08026FF8
+	.int _08027004
+	.int _0802701C
+	.int _08027028
+	.int _08027040
+	.int _0802704C
+	.int _08027060
+	.int _0802706C
+	.int _08027084
 _08026FE0:
 	ldr r0, =gUnknown_02022C98
 	ldr r1, [r0]
@@ -953,14 +953,14 @@ _08027098:
 	.pool
 	.align 2, 0
 _080270A8:
-	.4byte _080270C8
-	.4byte _080270E0
-	.4byte _080270EC
-	.4byte _08027104
-	.4byte _08027110
-	.4byte _08027124
-	.4byte _08027130
-	.4byte _08027148
+	.int _080270C8
+	.int _080270E0
+	.int _080270EC
+	.int _08027104
+	.int _08027110
+	.int _08027124
+	.int _08027130
+	.int _08027148
 _080270C8:
 	ldr r0, =gUnknown_02022C98
 	ldr r1, [r0]
@@ -1039,12 +1039,12 @@ _08027154:
 	.pool
 	.align 2, 0
 _08027168:
-	.4byte _08027180
-	.4byte _08027198
-	.4byte _080271A4
-	.4byte _080271BC
-	.4byte _080271C8
-	.4byte _080271DC
+	.int _08027180
+	.int _08027198
+	.int _080271A4
+	.int _080271BC
+	.int _080271C8
+	.int _080271DC
 _08027180:
 	ldr r0, =gUnknown_02022C98
 	ldr r1, [r0]
@@ -4880,11 +4880,11 @@ sub_8028F14: @ 8028F14
 	.pool
 	.align 2, 0
 _08028F34:
-	.4byte _08028FB4
-	.4byte _08028F48
-	.4byte _08028F52
-	.4byte _08028F66
-	.4byte _08028F8E
+	.int _08028FB4
+	.int _08028F48
+	.int _08028F52
+	.int _08028F66
+	.int _08028F8E
 _08028F48:
 	cmp r2, 0
 	beq _08028F7E
@@ -4940,11 +4940,11 @@ _08028F8E:
 	.pool
 	.align 2, 0
 _08028FA0:
-	.4byte _08028FB4
-	.4byte _08028FB8
-	.4byte _08028FBC
-	.4byte _08028FC0
-	.4byte _08028FC4
+	.int _08028FB4
+	.int _08028FB8
+	.int _08028FBC
+	.int _08028FC0
+	.int _08028FC4
 _08028FB4:
 	movs r3, 0xF
 	b _08028FC6
@@ -5411,11 +5411,11 @@ sub_8029338: @ 8029338
 	.pool
 	.align 2, 0
 _08029360:
-	.4byte _08029374
-	.4byte _0802937A
-	.4byte _08029394
-	.4byte _080293D8
-	.4byte _08029404
+	.int _08029374
+	.int _0802937A
+	.int _08029394
+	.int _080293D8
+	.int _08029404
 _08029374:
 	bl sub_802A7A8
 	b _08029414
@@ -6032,18 +6032,18 @@ _080298B2:
 	.pool
 	.align 2, 0
 _080298C8:
-	.4byte _080298F8
-	.4byte _08029914
-	.4byte _0802996C
-	.4byte _08029B6C
-	.4byte _08029BB8
-	.4byte _08029BFC
-	.4byte _08029C60
-	.4byte _08029C9C
-	.4byte _08029CE0
-	.4byte _08029DA0
-	.4byte _08029F08
-	.4byte _08029F5C
+	.int _080298F8
+	.int _08029914
+	.int _0802996C
+	.int _08029B6C
+	.int _08029BB8
+	.int _08029BFC
+	.int _08029C60
+	.int _08029C9C
+	.int _08029CE0
+	.int _08029DA0
+	.int _08029F08
+	.int _08029F5C
 _080298F8:
 	bl sub_802784C
 	ldr r0, =gUnknown_02022CF8
@@ -7786,12 +7786,12 @@ sub_802A8E8: @ 802A8E8
 	.pool
 	.align 2, 0
 _0802A910:
-	.4byte _0802A928
-	.4byte _0802A938
-	.4byte _0802A93E
-	.4byte _0802A94C
-	.4byte _0802A964
-	.4byte _0802A972
+	.int _0802A928
+	.int _0802A938
+	.int _0802A93E
+	.int _0802A94C
+	.int _0802A964
+	.int _0802A972
 _0802A928:
 	ldr r0, =gDodrioBerryBgPal1
 	movs r1, 0

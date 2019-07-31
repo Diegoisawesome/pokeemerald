@@ -13,7 +13,7 @@
 	.global	se_w179
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w179_1:
 	.byte	KEYSH , se_w179_key+0
@@ -216,7 +216,7 @@ se_w179_1:
 	.byte	W06
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w179_2:
 	.byte	KEYSH , se_w179_key+0
@@ -319,14 +319,14 @@ se_w179_2:
 	.byte	W04
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w179:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w179_pri	@ Priority
-	.byte	se_w179_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w179_pri	
+	.byte	se_w179_rev	
 
 	.word	se_w179_grp
 

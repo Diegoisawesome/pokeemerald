@@ -5,7 +5,7 @@ BattleFrontier_BattleArenaLobby_MapScripts:: @ 8255C36
 
 BattleFrontier_BattleArenaLobby_MapScript2_255C41: @ 8255C41
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleArenaLobby_EventScript_255C4B
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleArenaLobby_EventScript_255C4B:: @ 8255C4B
 	setvar VAR_TEMP_1, 1
@@ -18,7 +18,7 @@ BattleFrontier_BattleArenaLobby_MapScript2_255C55: @ 8255C55
 	map_script_2 VAR_TEMP_0, 2, BattleFrontier_BattleArenaLobby_EventScript_255DC0
 	map_script_2 VAR_TEMP_0, 3, BattleFrontier_BattleArenaLobby_EventScript_255CCF
 	map_script_2 VAR_TEMP_0, 4, BattleFrontier_BattleArenaLobby_EventScript_255D2B
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleArenaLobby_EventScript_255C7F:: @ 8255C7F
 	setvar VAR_0x8004, 0

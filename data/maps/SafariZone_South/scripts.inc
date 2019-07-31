@@ -5,7 +5,7 @@ SafariZone_South_MapScripts:: @ 823D279
 
 SafariZone_South_MapScript2_23D284: @ 823D284
 	map_script_2 VAR_SAFARI_ZONE_STATE, 2, SafariZone_South_EventScript_23D28E
-	.2byte 0
+	.short 0
 
 SafariZone_South_EventScript_23D28E:: @ 823D28E
 	lockall

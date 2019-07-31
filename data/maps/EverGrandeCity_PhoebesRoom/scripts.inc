@@ -6,7 +6,7 @@ EverGrandeCity_PhoebesRoom_MapScripts:: @ 8228174
 
 EverGrandeCity_PhoebesRoom_MapScript2_228184: @ 8228184
 	map_script_2 VAR_TEMP_1, 0, EverGrandeCity_PhoebesRoom_EventScript_22818E
-	.2byte 0
+	.short 0
 
 EverGrandeCity_PhoebesRoom_EventScript_22818E:: @ 822818E
 	turnobject EVENT_OBJ_ID_PLAYER, 2
@@ -14,7 +14,7 @@ EverGrandeCity_PhoebesRoom_EventScript_22818E:: @ 822818E
 
 EverGrandeCity_PhoebesRoom_MapScript2_228193: @ 8228193
 	map_script_2 VAR_ELITE_4_STATE, 1, EverGrandeCity_PhoebesRoom_EventScript_22819D
-	.2byte 0
+	.short 0
 
 EverGrandeCity_PhoebesRoom_EventScript_22819D:: @ 822819D
 	lockall

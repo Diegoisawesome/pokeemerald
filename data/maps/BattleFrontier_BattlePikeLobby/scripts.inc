@@ -8,11 +8,11 @@ BattleFrontier_BattlePikeLobby_MapScript2_25B6D1: @ 825B6D1
 	map_script_2 VAR_TEMP_0, 1, BattleFrontier_BattlePikeLobby_EventScript_25B710
 	map_script_2 VAR_TEMP_0, 3, BattleFrontier_BattlePikeLobby_EventScript_25B762
 	map_script_2 VAR_TEMP_0, 4, BattleFrontier_BattlePikeLobby_EventScript_25B806
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePikeLobby_MapScript2_25B6F3: @ 825B6F3
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattlePikeLobby_EventScript_25B6FD
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePikeLobby_EventScript_25B6FD:: @ 825B6FD
 	setvar VAR_TEMP_1, 1

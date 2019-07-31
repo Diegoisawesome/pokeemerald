@@ -13,7 +13,7 @@
 	.global	se_z_scroll
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_z_scroll_1:
 	.byte	KEYSH , se_z_scroll_key+0
@@ -30,14 +30,14 @@ se_z_scroll_1:
 	.byte	W02
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_z_scroll:
-	.byte	1	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_z_scroll_pri	@ Priority
-	.byte	se_z_scroll_rev	@ Reverb.
+	.byte	1	
+	.byte	0	
+	.byte	se_z_scroll_pri	
+	.byte	se_z_scroll_rev	
 
 	.word	se_z_scroll_grp
 

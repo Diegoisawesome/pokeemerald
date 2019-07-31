@@ -28,7 +28,7 @@ SootopolisCity_MysteryEventsHouse_1F_MapScript2_22799D: @ 822799D
 	map_script_2 VAR_SOOTOPOLIS_MYSTERY_EVENTS_STATE, 1, SootopolisCity_MysteryEventsHouse_1F_EventScript_2279B7
 	map_script_2 VAR_SOOTOPOLIS_MYSTERY_EVENTS_STATE, 2, SootopolisCity_MysteryEventsHouse_1F_EventScript_2279B7
 	map_script_2 VAR_SOOTOPOLIS_MYSTERY_EVENTS_STATE, 3, SootopolisCity_MysteryEventsHouse_1F_EventScript_2279B7
-	.2byte 0
+	.short 0
 
 SootopolisCity_MysteryEventsHouse_1F_EventScript_2279B7:: @ 82279B7
 	lockall

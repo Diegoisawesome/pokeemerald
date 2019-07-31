@@ -105,10 +105,13 @@ void MoveSaveBlocks_ResetHeap(void)
     pokemonStorageCopy = (struct PokemonStorage *)(gHeap + sizeof(struct SaveBlock2) + sizeof(struct SaveBlock1));
 
     // backup the saves.
-    *saveBlock2Copy = *gSaveBlock2Ptr;
-    *saveBlock1Copy = *gSaveBlock1Ptr;
-    *pokemonStorageCopy = *gPokemonStoragePtr;
-
+    //*saveBlock2Copy = *gSaveBlock2Ptr;
+    CpuCopy32(saveBlock2Copy, gSaveBlock2Ptr, sizeof(*gSaveBlock2Ptr));
+	//*saveBlock1Copy = *gSaveBlock1Ptr;
+    CpuCopy32(saveBlock1Copy, gSaveBlock1Ptr, sizeof(*gSaveBlock1Ptr));
+	//*pokemonStorageCopy = *gPokemonStoragePtr;
+	CpuCopy32(pokemonStorageCopy, gPokemonStoragePtr, sizeof(*gPokemonStoragePtr));
+	
     // change saveblocks' pointers
     // argument is a sum of the individual trainerId bytes
     SetSaveBlocksPointers(
@@ -118,10 +121,12 @@ void MoveSaveBlocks_ResetHeap(void)
       saveBlock2Copy->playerTrainerId[3]);
 
     // restore saveblock data since the pointers changed
-    *gSaveBlock2Ptr = *saveBlock2Copy;
-    *gSaveBlock1Ptr = *saveBlock1Copy;
-    *gPokemonStoragePtr = *pokemonStorageCopy;
-
+    //*gSaveBlock2Ptr = *saveBlock2Copy;
+    //*gSaveBlock1Ptr = *saveBlock1Copy;
+    //*gPokemonStoragePtr = *pokemonStorageCopy;
+    CpuCopy32(gSaveBlock2Ptr, saveBlock2Copy, sizeof(*saveBlock2Copy));
+    CpuCopy32(gSaveBlock1Ptr, saveBlock1Copy, sizeof(*saveBlock1Copy));
+	CpuCopy32(gPokemonStoragePtr, pokemonStorageCopy, sizeof(*pokemonStorageCopy));
     // heap was destroyed in the copying process, so reset it
     InitHeap(gHeap, HEAP_SIZE);
 

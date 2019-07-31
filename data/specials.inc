@@ -2,7 +2,7 @@
 .global SPECIAL_\ptr
 .set SPECIAL_\ptr, __special__
 .set __special__, __special__ + 1
-	.4byte \ptr
+	.int \ptr
 	.endm
 
 .set __special__, 0

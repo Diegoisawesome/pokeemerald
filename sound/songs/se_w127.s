@@ -13,7 +13,7 @@
 	.global	se_w127
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w127_1:
 	.byte	KEYSH , se_w127_key+0
@@ -92,7 +92,7 @@ se_w127_1:
 	.byte	W02
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w127_2:
 	.byte	KEYSH , se_w127_key+0
@@ -120,14 +120,14 @@ se_w127_2_000:
 	.byte	W06
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w127:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w127_pri	@ Priority
-	.byte	se_w127_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w127_pri	
+	.byte	se_w127_rev	
 
 	.word	se_w127_grp
 

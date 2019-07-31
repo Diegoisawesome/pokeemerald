@@ -2544,7 +2544,7 @@ static void sub_815BFF4(struct Sprite *sprite)
 static void sub_815C050(struct Sprite *sprite)
 {
     u16 d2;
-    register u16 d3 asm("r1");
+    u16 d3;
     int var0;
     s8 var1;
 

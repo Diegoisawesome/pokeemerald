@@ -13,7 +13,7 @@
 	.global	se_w281
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w281_1:
 	.byte		VOL   , 110*se_w281_mvl/mxv
@@ -85,7 +85,7 @@ se_w281_1:
 	.byte	W02
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w281_2:
 	.byte	KEYSH , se_w281_key+0
@@ -110,14 +110,14 @@ se_w281_2:
 	.byte	W03
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w281:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w281_pri	@ Priority
-	.byte	se_w281_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w281_pri	
+	.byte	se_w281_rev	
 
 	.word	se_w281_grp
 

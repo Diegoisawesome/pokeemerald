@@ -30,7 +30,7 @@ BattleFrontier_BattlePalaceBattleRoom_EventScript_24F856:: @ 824F856
 
 BattleFrontier_BattlePalaceBattleRoom_MapScript2_24F861: @ 824F861
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattlePalaceBattleRoom_EventScript_24F86B
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePalaceBattleRoom_EventScript_24F86B:: @ 824F86B
 	showobjectat 1, MAP_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM
@@ -351,7 +351,7 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_24FDF7:: @ 824FDF7
 
 BattleFrontier_BattlePalaceBattleRoom_MapScript2_24FE34: @ 824FE34
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattlePalaceBattleRoom_EventScript_24FE3E
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePalaceBattleRoom_EventScript_24FE3E:: @ 824FE3E
 	hideobjectat 1, MAP_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM

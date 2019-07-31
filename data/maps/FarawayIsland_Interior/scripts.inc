@@ -51,7 +51,7 @@ FarawayIsland_Interior_EventScript_267D86:: @ 8267D86
 
 FarawayIsland_Interior_MapScript2_267D98: @ 8267D98
 	map_script_2 VAR_TEMP_1, 0, FarawayIsland_Interior_EventScript_267DA2
-	.2byte 0
+	.short 0
 
 FarawayIsland_Interior_EventScript_267DA2:: @ 8267DA2
 	lockall

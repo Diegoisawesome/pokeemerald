@@ -51,7 +51,7 @@ SlateportCity_EventScript_1DCD06:: @ 81DCD06
 
 SlateportCity_MapScript2_1DCD12: @ 81DCD12
 	map_script_2 VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1, SlateportCity_EventScript_1DCD1C
-	.2byte 0
+	.short 0
 
 SlateportCity_EventScript_1DCD1C:: @ 81DCD1C
 	lockall
@@ -127,13 +127,13 @@ SlateportCity_EventScript_1DCDBD:: @ 81DCDBD
 	end
 
 SlateportCity_Pokemart_1DCDD4: @ 81DCDD4
-	.2byte ITEM_PROTEIN
-	.2byte ITEM_IRON
-	.2byte ITEM_CARBOS
-	.2byte ITEM_ZINC
-	.2byte ITEM_CALCIUM
-	.2byte ITEM_HP_UP
-	.2byte ITEM_NONE
+	.short ITEM_PROTEIN
+	.short ITEM_IRON
+	.short ITEM_CARBOS
+	.short ITEM_ZINC
+	.short ITEM_CALCIUM
+	.short ITEM_HP_UP
+	.short ITEM_NONE
 	release
 	end
 
@@ -498,10 +498,10 @@ SlateportCity_EventScript_1DD16A:: @ 81DD16A
 
 	.align 2
 SlateportCity_PokemartDecor_Dolls: @ 81DD184
-	.2byte DECOR_AZURILL_DOLL
-	.2byte DECOR_MARILL_DOLL
-	.2byte DECOR_SKITTY_DOLL
-	.2byte DECOR_NONE
+	.short DECOR_AZURILL_DOLL
+	.short DECOR_MARILL_DOLL
+	.short DECOR_SKITTY_DOLL
+	.short DECOR_NONE
 	release
 	end
 
@@ -522,21 +522,21 @@ SlateportCity_EventScript_1DD198:: @ 81DD198
 	end
 
 SlateportCity_PokemartDecor_1DD1B8: @ 81DD1B8
-	.2byte DECOR_RED_BRICK
-	.2byte DECOR_BLUE_BRICK
-	.2byte DECOR_YELLOW_BRICK
-	.2byte DECOR_RED_BALLOON
-	.2byte DECOR_BLUE_BALLOON
-	.2byte DECOR_YELLOW_BALLOON
-	.2byte DECOR_C_LOW_NOTE_MAT
-	.2byte DECOR_D_NOTE_MAT
-	.2byte DECOR_E_NOTE_MAT
-	.2byte DECOR_F_NOTE_MAT
-	.2byte DECOR_G_NOTE_MAT
-	.2byte DECOR_A_NOTE_MAT
-	.2byte DECOR_B_NOTE_MAT
-	.2byte DECOR_C_HIGH_NOTE_MAT
-	.2byte DECOR_NONE
+	.short DECOR_RED_BRICK
+	.short DECOR_BLUE_BRICK
+	.short DECOR_YELLOW_BRICK
+	.short DECOR_RED_BALLOON
+	.short DECOR_BLUE_BALLOON
+	.short DECOR_YELLOW_BALLOON
+	.short DECOR_C_LOW_NOTE_MAT
+	.short DECOR_D_NOTE_MAT
+	.short DECOR_E_NOTE_MAT
+	.short DECOR_F_NOTE_MAT
+	.short DECOR_G_NOTE_MAT
+	.short DECOR_A_NOTE_MAT
+	.short DECOR_B_NOTE_MAT
+	.short DECOR_C_HIGH_NOTE_MAT
+	.short DECOR_NONE
 	release
 	end
 
@@ -552,9 +552,9 @@ SlateportCity_EventScript_1DD1D8:: @ 81DD1D8
 
 	.align 2
 SlateportCity_Pokemart_1DD1F0: @ 81DD1F0
-	.2byte ITEM_TM10
-	.2byte ITEM_TM43
-	.2byte ITEM_NONE
+	.short ITEM_TM10
+	.short ITEM_TM43
+	.short ITEM_NONE
 	release
 	end
 

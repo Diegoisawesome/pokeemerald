@@ -46,7 +46,7 @@ LittlerootTown_MaysHouse_2F_EventScript_1F9317:: @ 81F9317
 
 LittlerootTown_MaysHouse_2F_MapScript2_1F931D: @ 81F931D
 	map_script_2 VAR_SECRET_BASE_INITIALIZED, 0, LittlerootTown_MaysHouse_2F_EventScript_1F9327
-	.2byte 0
+	.short 0
 
 LittlerootTown_MaysHouse_2F_EventScript_1F9327:: @ 81F9327
 	checkplayergender

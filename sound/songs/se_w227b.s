@@ -13,7 +13,7 @@
 	.global	se_w227b
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w227b_1:
 	.byte	KEYSH , se_w227b_key+0
@@ -157,14 +157,14 @@ se_w227b_1_000:
 	.byte		EOT   , Cn3 
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w227b:
-	.byte	1	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w227b_pri	@ Priority
-	.byte	se_w227b_rev	@ Reverb.
+	.byte	1	
+	.byte	0	
+	.byte	se_w227b_pri	
+	.byte	se_w227b_rev	
 
 	.word	se_w227b_grp
 

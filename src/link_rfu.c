@@ -910,7 +910,7 @@ static void sub_800C744(u32 a0)
 static void sub_800C7B4(u16 r8, u16 r6)
 {
     u8 sp0;
-    register u8 *stwiRecvBuffer asm("r0");
+    u8 *stwiRecvBuffer;
     u8 *tmp;
     u8 i;
 

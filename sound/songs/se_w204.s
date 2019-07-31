@@ -13,7 +13,7 @@
 	.global	se_w204
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w204_1:
 	.byte	KEYSH , se_w204_key+0
@@ -80,14 +80,14 @@ se_w204_1:
 	.byte	W02
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w204:
-	.byte	1	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w204_pri	@ Priority
-	.byte	se_w204_rev	@ Reverb.
+	.byte	1	
+	.byte	0	
+	.byte	se_w204_pri	
+	.byte	se_w204_rev	
 
 	.word	se_w204_grp
 

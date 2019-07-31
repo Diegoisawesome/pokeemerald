@@ -5,7 +5,7 @@ BattleFrontier_BattleFactoryPreBattleRoom_MapScripts:: @ 8259ABA
 
 BattleFrontier_BattleFactoryPreBattleRoom_MapScript2_259AC5: @ 8259AC5
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_259ACF
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleFactoryPreBattleRoom_EventScript_259ACF:: @ 8259ACF
 	setvar VAR_TEMP_1, 1
@@ -20,7 +20,7 @@ BattleFrontier_BattleFactoryPreBattleRoom_EventScript_259AEA:: @ 8259AEA
 
 BattleFrontier_BattleFactoryPreBattleRoom_MapScript2_259AEF: @ 8259AEF
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_259AF9
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleFactoryPreBattleRoom_EventScript_259AF9:: @ 8259AF9
 	compare VAR_0x8006, 1

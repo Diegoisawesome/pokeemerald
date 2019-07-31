@@ -13,7 +13,7 @@
 	.global	se_w287
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w287_1:
 	.byte	KEYSH , se_w287_key+0
@@ -204,7 +204,7 @@ se_w287_1:
 	.byte	W02
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w287_2:
 	.byte	KEYSH , se_w287_key+0
@@ -266,14 +266,14 @@ se_w287_2:
 	.byte	W03
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w287:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w287_pri	@ Priority
-	.byte	se_w287_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w287_pri	
+	.byte	se_w287_rev	
 
 	.word	se_w287_grp
 

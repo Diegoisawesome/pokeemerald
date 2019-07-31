@@ -9,43 +9,43 @@
 	.include "asm/macros/battle_script.inc"
 	.include "constants/constants.inc"
 
-	.section script_data, "aw", %progbits
+	.section script_data, "aw"
 
 	.align 2
 gBattlescriptsForBallThrow:: @ 82DBD08
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_SafariBallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_SafariBallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
+	.int BattleScript_BallThrow
 
 	.align 2
 gBattlescriptsForUsingItem:: @ 82DBD3C
-	.4byte BattleScript_PlayerUsesItem
-	.4byte BattleScript_OpponentUsesHealItem
-	.4byte BattleScript_OpponentUsesHealItem
-	.4byte BattleScript_OpponentUsesStatusCureItem
-	.4byte BattleScript_OpponentUsesXItem
-	.4byte BattleScript_OpponentUsesGuardSpecs
+	.int BattleScript_PlayerUsesItem
+	.int BattleScript_OpponentUsesHealItem
+	.int BattleScript_OpponentUsesHealItem
+	.int BattleScript_OpponentUsesStatusCureItem
+	.int BattleScript_OpponentUsesXItem
+	.int BattleScript_OpponentUsesGuardSpecs
 
 	.align 2
 gBattlescriptsForRunningByItem:: @ 82DBD54
-	.4byte BattleScript_RunByUsingItem
+	.int BattleScript_RunByUsingItem
 
 	.align 2
 gBattlescriptsForSafariActions:: @ 82DBD58
-	.4byte BattleScript_ActionWatchesCarefully
-	.4byte BattleScript_ActionGetNear
-	.4byte BattleScript_ActionThrowPokeblock
-	.4byte BattleScript_ActionWallyThrow
+	.int BattleScript_ActionWatchesCarefully
+	.int BattleScript_ActionGetNear
+	.int BattleScript_ActionThrowPokeblock
+	.int BattleScript_ActionWallyThrow
 
 BattleScript_BallThrow::
 	jumpifword CMP_COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_WALLY_TUTORIAL, BattleScript_BallThrowByWally

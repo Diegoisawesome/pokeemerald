@@ -58,7 +58,7 @@ TrainerHill_Entrance_MapScript2_26813E: @ 826813E
 	map_script_2 VAR_TEMP_D, 17, TrainerHill_Entrance_EventScript_268160
 	map_script_2 VAR_TEMP_5, 1, TrainerHill_Entrance_EventScript_268229
 	map_script_2 VAR_TEMP_1, 1, TrainerHill_Entrance_EventScript_2C83DF
-	.2byte 0
+	.short 0
 
 TrainerHill_Entrance_EventScript_268160:: @ 8268160
 	lockall
@@ -271,18 +271,18 @@ TrainerHill_Entrance_EventScript_2683C7:: @ 82683C7
 
 	.align 2
 TrainerHill_Entrance_Pokemart_2683E8: @ 82683E8
-	.2byte ITEM_SUPER_POTION
-	.2byte ITEM_ANTIDOTE
-	.2byte ITEM_PARALYZE_HEAL
-	.2byte ITEM_AWAKENING
-	.2byte ITEM_X_SPEED
-	.2byte ITEM_X_SPECIAL
-	.2byte ITEM_X_ATTACK
-	.2byte ITEM_X_DEFEND
-	.2byte ITEM_DIRE_HIT
-	.2byte ITEM_GUARD_SPEC
-	.2byte ITEM_X_ACCURACY
-	.2byte ITEM_NONE
+	.short ITEM_SUPER_POTION
+	.short ITEM_ANTIDOTE
+	.short ITEM_PARALYZE_HEAL
+	.short ITEM_AWAKENING
+	.short ITEM_X_SPEED
+	.short ITEM_X_SPECIAL
+	.short ITEM_X_ATTACK
+	.short ITEM_X_DEFEND
+	.short ITEM_DIRE_HIT
+	.short ITEM_GUARD_SPEC
+	.short ITEM_X_ACCURACY
+	.short ITEM_NONE
 	release
 	end
 
@@ -294,19 +294,19 @@ TrainerHill_Entrance_EventScript_268402:: @ 8268402
 
 	.align 2
 TrainerHill_Entrance_Pokemart_268414: @ 8268414
-	.2byte ITEM_HYPER_POTION
-	.2byte ITEM_MAX_POTION
-	.2byte ITEM_FULL_RESTORE
-	.2byte ITEM_FULL_HEAL
-	.2byte ITEM_REVIVE
-	.2byte ITEM_X_SPEED
-	.2byte ITEM_X_SPECIAL
-	.2byte ITEM_X_ATTACK
-	.2byte ITEM_X_DEFEND
-	.2byte ITEM_DIRE_HIT
-	.2byte ITEM_GUARD_SPEC
-	.2byte ITEM_X_ACCURACY
-	.2byte ITEM_NONE
+	.short ITEM_HYPER_POTION
+	.short ITEM_MAX_POTION
+	.short ITEM_FULL_RESTORE
+	.short ITEM_FULL_HEAL
+	.short ITEM_REVIVE
+	.short ITEM_X_SPEED
+	.short ITEM_X_SPECIAL
+	.short ITEM_X_ATTACK
+	.short ITEM_X_DEFEND
+	.short ITEM_DIRE_HIT
+	.short ITEM_GUARD_SPEC
+	.short ITEM_X_ACCURACY
+	.short ITEM_NONE
 	release
 	end
 

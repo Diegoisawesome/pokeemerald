@@ -742,12 +742,12 @@ _08022084:
 	.pool
 	.align 2, 0
 _08022094:
-	.4byte _080220AC
-	.4byte _080220F8
-	.4byte _0802210C
-	.4byte _08022130
-	.4byte _080221F8
-	.4byte _08022200
+	.int _080220AC
+	.int _080220F8
+	.int _0802210C
+	.int _08022130
+	.int _080221F8
+	.int _08022200
 _080220AC:
 	ldrb r0, [r4, 0x9]
 	subs r0, 0x2
@@ -2554,12 +2554,12 @@ _08022F2C:
 	.pool
 	.align 2, 0
 _08022F3C:
-	.4byte _08022F54
-	.4byte _08022F74
-	.4byte _08022F7A
-	.4byte _08022FAA
-	.4byte _08022FBA
-	.4byte _08023044
+	.int _08022F54
+	.int _08022F74
+	.int _08022F7A
+	.int _08022FAA
+	.int _08022FBA
+	.int _08023044
 _08022F54:
 	movs r0, 0x1
 	str r0, [sp]
@@ -2715,13 +2715,13 @@ _0802307C:
 	.pool
 	.align 2, 0
 _0802308C:
-	.4byte _080230A8
-	.4byte _080230BA
-	.4byte _080230E8
-	.4byte _08023120
-	.4byte _08023150
-	.4byte _08023172
-	.4byte _08023184
+	.int _080230A8
+	.int _080230BA
+	.int _080230E8
+	.int _08023120
+	.int _08023150
+	.int _08023172
+	.int _08023184
 _080230A8:
 	movs r0, 0x9C
 	lsls r0, 1
@@ -3970,12 +3970,12 @@ _08023A3C:
 	.pool
 	.align 2, 0
 _08023A4C:
-	.4byte _08023A64
-	.4byte _08023A8C
-	.4byte _08023ADC
-	.4byte _08023B5C
-	.4byte _08023B7A
-	.4byte _08023B94
+	.int _08023A64
+	.int _08023A8C
+	.int _08023ADC
+	.int _08023B5C
+	.int _08023B7A
+	.int _08023B94
 _08023A64:
 	movs r0, 0x8
 	strh r0, [r4, 0x12]
@@ -4277,14 +4277,14 @@ _08023CC2:
 	.pool
 	.align 2, 0
 _08023CD0:
-	.4byte _08023CF0
-	.4byte _08023D2A
-	.4byte _08023D38
-	.4byte _08023DA0
-	.4byte _08023F20
-	.4byte _08023FD0
-	.4byte _08023FDC
-	.4byte _08024010
+	.int _08023CF0
+	.int _08023D2A
+	.int _08023D38
+	.int _08023DA0
+	.int _08023F20
+	.int _08023FD0
+	.int _08023FDC
+	.int _08024010
 _08023CF0:
 	adds r4, r7, 0
 	adds r4, 0x42
@@ -4733,11 +4733,11 @@ sub_8024048: @ 8024048
 	.pool
 	.align 2, 0
 _08024064:
-	.4byte _08024078
-	.4byte _0802408A
-	.4byte _0802409C
-	.4byte _080240CC
-	.4byte _080240DC
+	.int _08024078
+	.int _0802408A
+	.int _0802409C
+	.int _080240CC
+	.int _080240DC
 _08024078:
 	movs r0, 0x9C
 	lsls r0, 1
@@ -4846,11 +4846,11 @@ sub_8024134: @ 8024134
 	.pool
 	.align 2, 0
 _08024150:
-	.4byte _08024164
-	.4byte _080241A0
-	.4byte _080241A6
-	.4byte _080241F0
-	.4byte _08024204
+	.int _08024164
+	.int _080241A0
+	.int _080241A6
+	.int _080241F0
+	.int _08024204
 _08024164:
 	ldrh r1, [r5, 0x28]
 	ldr r0, =0x00008c9f

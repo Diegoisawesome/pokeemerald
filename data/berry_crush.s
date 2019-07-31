@@ -27,19 +27,19 @@ gUnknown_082F3290:: @ 82F3290
 
 	.align 2
 gUnknown_082F32A4:: @ 82F32A4
-	.4byte gText_ReadyToBerryCrush
-	.4byte gText_WaitForAllChooseBerry
-	.4byte gText_EndedWithXUnitsPowder
-	.4byte gText_RecordingGameResults
-	.4byte gText_PlayBerryCrushAgain
-	.4byte gText_YouHaveNoBerries
-	.4byte gText_MemberDroppedOut
-	.4byte gText_TimesUpNoGoodPowder
-	.4byte gText_CommunicationStandby2
+	.int gText_ReadyToBerryCrush
+	.int gText_WaitForAllChooseBerry
+	.int gText_EndedWithXUnitsPowder
+	.int gText_RecordingGameResults
+	.int gText_PlayBerryCrushAgain
+	.int gText_YouHaveNoBerries
+	.int gText_MemberDroppedOut
+	.int gText_TimesUpNoGoodPowder
+	.int gText_CommunicationStandby2
 
 	.align 2
 gUnknown_082F32C8:: @ 82F32C8 struct BgTemplate
-	.4byte 0x000000F8
+	.int 0x000000F8
 
 	.align 2
 gUnknown_082F32CC:: @ 82F32CC struct BgTemplate? not sure
@@ -170,114 +170,114 @@ gUnknown_082F41D2::
 
 	.align 2
 gUnknown_082F41E8:: @ 82F41E8
-	.2byte 0x0005, 0x0006, 0x0007, 0x0008, 0x0009, 0x0000
+	.short 0x0005, 0x0006, 0x0007, 0x0008, 0x0009, 0x0000
 
 	.align 2
 gUnknown_082F41F4:: @ 82F41F4
-	.4byte gBerryCrushGrinderBaseGfx
-	.2byte 0x0800, 0x0001
+	.int gBerryCrushGrinderBaseGfx
+	.short 0x0800, 0x0001
 
-	.4byte gBerryCrushBtnPressGfx
-	.2byte 0x0e00, 0x0002
+	.int gBerryCrushBtnPressGfx
+	.short 0x0e00, 0x0002
 
-	.4byte gBerryCrushSparkleGfx
-	.2byte 0x0700, 0x0003
+	.int gBerryCrushSparkleGfx
+	.short 0x0700, 0x0003
 
 	.align 2
 gUnknown_082F420C:: @ 82F420C
-	.4byte gBerryCrushTimerDigitsGfx
-	.2byte 0x02c0, 0x0004
+	.int gBerryCrushTimerDigitsGfx
+	.short 0x02c0, 0x0004
 
-	.4byte NULL
-	.2byte 0x0000, 0x0000
+	.int NULL
+	.short 0x0000, 0x0000
 
 	.align 2
 gUnknown_082F421C:: @ 82F421C
-	.4byte gBerryCrushGrinderBasePal
-	.2byte 0x0001
+	.int gBerryCrushGrinderBasePal
+	.short 0x0001
 
 	.align 2
-	.4byte gBerryCrushMiscSpritesPal
-	.2byte 0x0002
+	.int gBerryCrushMiscSpritesPal
+	.short 0x0002
 
 	.align 2
 gUnknown_082F422C:: @ 82F422C
 	.align 2
-	.4byte gBerryCrushTimerDigitsPal
-	.2byte 0x0004
+	.int gBerryCrushTimerDigitsPal
+	.short 0x0004
 
 	.align 2
-	.4byte NULL
-	.2byte 0x0000
+	.int NULL
+	.short 0x0000
 
 	.align 2
 gUnknown_082F423C:: @ 82F423C
-	.2byte 0x0000, 0x0000, 0xffff, 0x0000
+	.short 0x0000, 0x0000, 0xffff, 0x0000
 
 	.align 2
 gUnknown_082F4244:: @ 82F4244
-	.2byte 0x0000, 0x0004, 0x0010, 0x0004, 0x0020, 0x0004, 0xffff, 0x0000
+	.short 0x0000, 0x0004, 0x0010, 0x0004, 0x0020, 0x0004, 0xffff, 0x0000
 
 	.align 2
 gUnknown_082F4254:: @ 82F4254
-	.2byte 0x0030, 0x0002, 0x0040, 0x0002, 0x0050, 0x0002, 0x0060, 0x0002
-	.2byte 0xffff, 0x0000
+	.short 0x0030, 0x0002, 0x0040, 0x0002, 0x0050, 0x0002, 0x0060, 0x0002
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082F4268:: @ 82F4268
-	.2byte 0x0000, 0x0002, 0x0004, 0x0002, 0x0008, 0x0002, 0x000c, 0x0002
-	.2byte 0x0010, 0x0002, 0x0014, 0x0002, 0xfffe, 0x0000
+	.short 0x0000, 0x0002, 0x0004, 0x0002, 0x0008, 0x0002, 0x000c, 0x0002
+	.short 0x0010, 0x0002, 0x0014, 0x0002, 0xfffe, 0x0000
 
 	.align 2
 gUnknown_082F4284:: @ 82F4284
-	.2byte 0x0018, 0x0004, 0x001c, 0x0004, 0x0020, 0x0004, 0x0024, 0x0004
-	.2byte 0x0028, 0x0004, 0x002c, 0x0004, 0x0030, 0x0004, 0x0034, 0x0004
-	.2byte 0xfffe, 0x0000
+	.short 0x0018, 0x0004, 0x001c, 0x0004, 0x0020, 0x0004, 0x0024, 0x0004
+	.short 0x0028, 0x0004, 0x002c, 0x0004, 0x0030, 0x0004, 0x0034, 0x0004
+	.short 0xfffe, 0x0000
 
 	.align 2
 gUnknown_082F42A8:: @ 82F42A8
-	.2byte 0x0014, 0x0000, 0xffff, 0x0000
+	.short 0x0014, 0x0000, 0xffff, 0x0000
 
 	.align 2
 gUnknown_082F42B0:: @ 82F42B0
-	.2byte 0x0000, 0x0000, 0xffff, 0x0000
+	.short 0x0000, 0x0000, 0xffff, 0x0000
 
 	.align 2
 gUnknown_082F42B8:: @ 82F42B8
-	.2byte 0x0100, 0x0100, 0x0000, 0x0000, 0x0000, 0x0000, 0x0102, 0x0000
-	.2byte 0x7ffe, 0x0001, 0x0000, 0x0000
+	.short 0x0100, 0x0100, 0x0000, 0x0000, 0x0000, 0x0000, 0x0102, 0x0000
+	.short 0x7ffe, 0x0001, 0x0000, 0x0000
 
 	.align 2
 gUnknown_082F42D0:: @ 82F42D0
-	.2byte 0x0100, 0x0100, 0x0000, 0x0000, 0x0000, 0x0000, 0x01fe, 0x0000
-	.2byte 0x7ffe, 0x0001, 0x0000, 0x0000
+	.short 0x0100, 0x0100, 0x0000, 0x0000, 0x0000, 0x0000, 0x01fe, 0x0000
+	.short 0x7ffe, 0x0001, 0x0000, 0x0000
 
 	.align 2
 gUnknown_082F42E8:: @ 82F42E8
-	.4byte gUnknown_082F423C
+	.int gUnknown_082F423C
 
 	.align 2
 gUnknown_082F42EC:: @ 82F42EC
-	.4byte gUnknown_082F4244
-	.4byte gUnknown_082F4254
+	.int gUnknown_082F4244
+	.int gUnknown_082F4254
 
 	.align 2
 gUnknown_082F42F4:: @ 82F42F4
-	.4byte gUnknown_082F4268
-	.4byte gUnknown_082F4284
+	.int gUnknown_082F4268
+	.int gUnknown_082F4284
 
 	.align 2
 gUnknown_082F42FC:: @ 82F42FC
-	.4byte gUnknown_082F42A8
+	.int gUnknown_082F42A8
 
 	.align 2
 gUnknown_082F4300:: @ 82F4300
-	.4byte gUnknown_082F42B0
+	.int gUnknown_082F42B0
 
 	.align 2
 gUnknown_082F4304:: @ 82F4304
-	.4byte gUnknown_082F42B8
-	.4byte gUnknown_082F42D0
+	.int gUnknown_082F42B8
+	.int gUnknown_082F42D0
 
 	.align 2
 gUnknown_082F430C:: @ 82F430C
@@ -302,54 +302,54 @@ gUnknown_082F436C:: @ 82F436C
 	.align 2
 gUnknown_082F4384:: @ 82F4384
 	.byte 0x09, 0x02, 0x08, 0x00, 0x9c, 0x00, 0x00, 0x00
-	.4byte gUnknown_082F420C
-	.4byte gUnknown_082F422C
+	.int gUnknown_082F420C
+	.int gUnknown_082F422C
 
 	.byte 0x08, 0x02, 0x08, 0x00, 0xb4, 0x00, 0x00, 0x00
-	.4byte gUnknown_082F420C
-	.4byte gUnknown_082F422C
+	.int gUnknown_082F420C
+	.int gUnknown_082F422C
 
 	.byte 0x08, 0x02, 0x08, 0x00, 0xcc, 0x00, 0x00, 0x00
-	.4byte gUnknown_082F420C
-	.4byte gUnknown_082F422C
+	.int gUnknown_082F420C
+	.int gUnknown_082F422C
 
 	.align 2
 gUnknown_082F43B4:: @ 82F43B4
-	.4byte gText_SpaceTimes2
-	.4byte gText_XDotY
-	.4byte gText_Var1Berry
-	.4byte gText_NeatnessRankings
-	.4byte gText_CoopRankings
-	.4byte gText_PressingPowerRankings
+	.int gText_SpaceTimes2
+	.int gText_XDotY
+	.int gText_Var1Berry
+	.int gText_NeatnessRankings
+	.int gText_CoopRankings
+	.int gText_PressingPowerRankings
 
 	.align 2
 gUnknown_082F43CC:: @ 82F43CC
-	.4byte NULL
-	.4byte sub_8022C58
-	.4byte sub_8022CB0
-	.4byte sub_8022D14
-	.4byte sub_8022E1C
-	.4byte sub_8022E3C
-	.4byte sub_8022E5C
-	.4byte sub_8022EAC
-	.4byte sub_8022F04
-	.4byte sub_8022F1C
-	.4byte sub_8023070
-	.4byte sub_80231B8
-	.4byte sub_80232EC
-	.4byte sub_80238F0
-	.4byte sub_8023998
-	.4byte sub_8023A30
-	.4byte sub_8023BC0
-	.4byte sub_8023CAC
-	.4byte sub_8024048
-	.4byte sub_8024134
-	.4byte sub_8024228
-	.4byte sub_80242E0
-	.4byte sub_80243BC
-	.4byte sub_8024444
-	.4byte sub_8024508
-	.4byte sub_8024568
+	.int NULL
+	.int sub_8022C58
+	.int sub_8022CB0
+	.int sub_8022D14
+	.int sub_8022E1C
+	.int sub_8022E3C
+	.int sub_8022E5C
+	.int sub_8022EAC
+	.int sub_8022F04
+	.int sub_8022F1C
+	.int sub_8023070
+	.int sub_80231B8
+	.int sub_80232EC
+	.int sub_80238F0
+	.int sub_8023998
+	.int sub_8023A30
+	.int sub_8023BC0
+	.int sub_8023CAC
+	.int sub_8024048
+	.int sub_8024134
+	.int sub_8024228
+	.int sub_80242E0
+	.int sub_80243BC
+	.int sub_8024444
+	.int sub_8024508
+	.int sub_8024568
 
 	.align 2
 gUnknown_082F4434:: @ 82F4434

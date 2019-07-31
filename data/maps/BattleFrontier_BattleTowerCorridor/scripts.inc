@@ -17,7 +17,7 @@ BattleFrontier_BattleTowerCorridor_EventScript_241AD3:: @ 8241AD3
 
 BattleFrontier_BattleTowerCorridor_MapScript2_241AE6: @ 8241AE6
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleTowerCorridor_EventScript_241AF0
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleTowerCorridor_EventScript_241AF0:: @ 8241AF0
 	setvar VAR_TEMP_0, 1

@@ -28,7 +28,7 @@ MossdeepCity_SpaceCenter_2F_EventScript_223D9F:: @ 8223D9F
 
 MossdeepCity_SpaceCenter_2F_MapScript2_223DB5: @ 8223DB5
 	map_script_2 VAR_MOSSDEEP_SPACE_CENTER_STATE_2, 1, MossdeepCity_SpaceCenter_2F_EventScript_223DBF
-	.2byte 0
+	.short 0
 
 MossdeepCity_SpaceCenter_2F_EventScript_223DBF:: @ 8223DBF
 	playse SE_PIN

@@ -5,7 +5,7 @@ SlateportCity_BattleTentLobby_MapScripts:: @ 8208730
 
 SlateportCity_BattleTentLobby_MapScript2_20873B: @ 820873B
 	map_script_2 VAR_TEMP_1, 0, SlateportCity_BattleTentLobby_EventScript_208745
-	.2byte 0
+	.short 0
 
 SlateportCity_BattleTentLobby_EventScript_208745:: @ 8208745
 	setvar VAR_TEMP_1, 1
@@ -18,7 +18,7 @@ SlateportCity_BattleTentLobby_MapScript2_20874F: @ 820874F
 	map_script_2 VAR_TEMP_0, 2, SlateportCity_BattleTentLobby_EventScript_208871
 	map_script_2 VAR_TEMP_0, 3, SlateportCity_BattleTentLobby_EventScript_2087B7
 	map_script_2 VAR_TEMP_0, 4, SlateportCity_BattleTentLobby_EventScript_208837
-	.2byte 0
+	.short 0
 
 SlateportCity_BattleTentLobby_EventScript_208779:: @ 8208779
 	setvar VAR_0x8004, 0

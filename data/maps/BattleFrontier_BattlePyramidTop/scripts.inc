@@ -15,7 +15,7 @@ BattleFrontier_BattlePyramidTop_MapScript1_2550B6: @ 82550B6
 
 BattleFrontier_BattlePyramidTop_MapScript2_2550CE: @ 82550CE
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattlePyramidTop_EventScript_2550D8
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePyramidTop_EventScript_2550D8:: @ 82550D8
 	setvar VAR_TEMP_1, 1
@@ -56,7 +56,7 @@ BattleFrontier_BattlePyramidTop_EventScript_25510C:: @ 825510C
 BattleFrontier_BattlePyramidTop_MapScript2_25516E: @ 825516E
 	map_script_2 VAR_TEMP_E, 0, BattleFrontier_BattlePyramidTop_EventScript_255180
 	map_script_2 VAR_TEMP_F, 1, BattleFrontier_BattlePyramidTop_EventScript_25518A
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattlePyramidTop_EventScript_255180:: @ 8255180
 	playbgm MUS_PYRAMID_TOP, 0

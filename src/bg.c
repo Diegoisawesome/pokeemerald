@@ -220,7 +220,7 @@ static void ShowBgInternal(u8 bg)
                 (sGpuBgConfigs.configs[bg].wraparound << 13) |
                 (sGpuBgConfigs.configs[bg].screenSize << 14);
 
-        SetGpuReg((bg << 1) + REG_OFFSET_BG0CNT, value);
+        SetGpuReg((bg << 1) + 0x8, value);
 
         sGpuBgConfigs.bgVisibilityAndMode |= 1 << (bg + 8);
         sGpuBgConfigs.bgVisibilityAndMode &= DISPCNT_ALL_BG_AND_MODE_BITS;
@@ -1296,9 +1296,7 @@ bool32 IsInvalidBg32(u8 bg)
 
 bool32 IsTileMapOutsideWram(u8 bg)
 {
-    if (sGpuBgConfigs2[bg].tilemap > (void*)IWRAM_END)
-        return TRUE;
-    else if (sGpuBgConfigs2[bg].tilemap == NULL)
+    if (sGpuBgConfigs2[bg].tilemap == NULL)
         return TRUE;
     else
         return FALSE;

@@ -4,7 +4,7 @@ VerdanturfTown_BattleTentCorridor_MapScripts:: @ 820208A
 
 VerdanturfTown_BattleTentCorridor_MapScript2_202090: @ 8202090
 	map_script_2 VAR_TEMP_0, 0, VerdanturfTown_BattleTentCorridor_EventScript_20209A
-	.2byte 0
+	.short 0
 
 VerdanturfTown_BattleTentCorridor_EventScript_20209A:: @ 820209A
 	lockall

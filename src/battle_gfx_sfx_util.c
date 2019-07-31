@@ -969,7 +969,7 @@ void BattleLoadSubstituteOrMonSpriteGfx(u8 battlerId, bool8 loadMonSprite)
         substitutePal = gSubstituteDollPal;
         for (; i < 4; i++)
         {
-            register void *dmaSrc asm("r0") = gMonSpritesGfxPtr->sprites[position];
+            void *dmaSrc = gMonSpritesGfxPtr->sprites[position];
             void *dmaDst = (i * 0x800) + dmaSrc;
             u32 dmaSize = 0x800;
             DmaCopy32(3, dmaSrc, dmaDst, dmaSize);

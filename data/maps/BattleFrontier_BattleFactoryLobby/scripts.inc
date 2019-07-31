@@ -5,7 +5,7 @@ BattleFrontier_BattleFactoryLobby_MapScripts:: @ 82583E8
 
 BattleFrontier_BattleFactoryLobby_MapScript2_2583F3: @ 82583F3
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleFactoryLobby_EventScript_2583FD
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleFactoryLobby_EventScript_2583FD:: @ 82583FD
 	setvar VAR_TEMP_1, 1
@@ -18,7 +18,7 @@ BattleFrontier_BattleFactoryLobby_MapScript2_258407: @ 8258407
 	map_script_2 VAR_TEMP_0, 2, BattleFrontier_BattleFactoryLobby_EventScript_258592
 	map_script_2 VAR_TEMP_0, 3, BattleFrontier_BattleFactoryLobby_EventScript_25849B
 	map_script_2 VAR_TEMP_0, 4, BattleFrontier_BattleFactoryLobby_EventScript_258506
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleFactoryLobby_EventScript_258431:: @ 8258431
 	setvar VAR_0x8004, 0

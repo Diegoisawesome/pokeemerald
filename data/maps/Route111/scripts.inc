@@ -106,7 +106,7 @@ Route111_EventScript_1F0E40:: @ 81F0E40
 
 Route111_MapScript2_1F0E46: @ 81F0E46
 	map_script_2 VAR_ROUTE_111_STATE, 1, Route111_EventScript_1F0E50
-	.2byte 0
+	.short 0
 
 Route111_EventScript_1F0E50:: @ 81F0E50
 	hideobjectat EVENT_OBJ_ID_PLAYER, MAP_LITTLEROOT_TOWN
@@ -114,7 +114,7 @@ Route111_EventScript_1F0E50:: @ 81F0E50
 
 Route111_MapScript2_1F0E56: @ 81F0E56
 	map_script_2 VAR_ROUTE_111_STATE, 1, Route111_EventScript_1F0E60
-	.2byte 0
+	.short 0
 
 Route111_EventScript_1F0E60:: @ 81F0E60
 	lockall

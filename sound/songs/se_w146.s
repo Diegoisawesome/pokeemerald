@@ -13,7 +13,7 @@
 	.global	se_w146
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w146_1:
 	.byte	KEYSH , se_w146_key+0
@@ -63,14 +63,14 @@ se_w146_1:
 	.byte		VOL   , 90*se_w146_mvl/mxv
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w146:
-	.byte	1	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w146_pri	@ Priority
-	.byte	se_w146_rev	@ Reverb.
+	.byte	1	
+	.byte	0	
+	.byte	se_w146_pri	
+	.byte	se_w146_rev	
 
 	.word	se_w146_grp
 

@@ -494,6 +494,7 @@ static void sub_81D2278(struct UnknownStruct_81D1ED4 *arg0, u16 arg1[66][2], str
     }
 }
 */
+/*
 NAKED
 static void sub_81D2278(struct UnknownStruct_81D1ED4 *arg0, u16 arg1[66][2], struct UnknownSubStruct_81D1ED4 *arg2, struct UnknownSubStruct_81D1ED4 *arg3, u8 arg4, u16 arg5[66][2])
 {
@@ -791,6 +792,12 @@ static void sub_81D2278(struct UnknownStruct_81D1ED4 *arg0, u16 arg1[66][2], str
                 bx r0\n\
     ");
 }
+*/
+
+static void sub_81D2278(struct UnknownStruct_81D1ED4 *arg0, u16 arg1[66][2], struct UnknownSubStruct_81D1ED4 *arg2, struct UnknownSubStruct_81D1ED4 *arg3, u8 arg4, u16 arg5[66][2])
+{
+	return;
+}
 
 static void sub_81D24A4(struct UnknownStruct_81D1ED4 *arg0)
 {
@@ -820,7 +827,7 @@ static void sub_81D24A4(struct UnknownStruct_81D1ED4 *arg0)
     for (i = arg0->unk12C[0].unk2; i <= arg0->unk350; i++)
         arg0->unk140[i - 56][0] = 155;
 
-    varMax = max(arg0->unk350, arg0->unk12C[2].unk2);
+    varMax = mymax(arg0->unk350, arg0->unk12C[2].unk2);
     for (i = varMax + 1; i < 122; i++)
     {
         arg0->unk140[i - 56][0] = 0;
@@ -860,7 +867,7 @@ static void sub_81D2634(struct UnknownStruct_81D1ED4 *arg0)
     for (i = arg0->unk12C[0].unk2; i <= arg0->unk350; i++)
         arg0->unk140[i + 10][1] = 155;
 
-    varMax = max(arg0->unk350, arg0->unk12C[3].unk2 + 1);
+    varMax = mymax(arg0->unk350, arg0->unk12C[3].unk2 + 1);
     for (i = varMax; i < 122; i++)
     {
         arg0->unk140[i + 10][0] = 0;

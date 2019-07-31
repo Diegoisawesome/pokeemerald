@@ -23,7 +23,7 @@ Route118_MapScript1_1F3DF3: @ 81F3DF3
 
 Route118_MapScript2_1F3E0A: @ 81F3E0A
 	map_script_2 VAR_SHOULD_END_UNUSUAL_WEATHER, 1, UnusualWeather_EventScript_EndEventAndCleanup_1
-	.2byte 0
+	.short 0
 
 Route118_EventScript_1F3E14:: @ 81F3E14
 	lock

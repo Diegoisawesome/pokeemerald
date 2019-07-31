@@ -14,25 +14,25 @@
 	.macro if_turn_less_than param, addr
 	.byte 0x02
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_turn_more_than param, addr
 	.byte 0x03
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_turn_eq param, addr
 	.byte 0x04
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_turn_not_eq param, addr
 	.byte 0x05
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ audience excitement
@@ -44,25 +44,25 @@
 	.macro if_excitement_less_than param, addr
 	.byte 0x07
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_excitement_more_than param, addr
 	.byte 0x08
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_excitement_eq param, addr
 	.byte 0x09
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_excitement_not_eq param, addr
 	.byte 0x0A
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ the order that the user goes in the current turn
@@ -74,25 +74,25 @@
 	.macro if_user_order_less_than param addr
 	.byte 0x0C
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_user_order_more_than param addr
 	.byte 0x0D
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_user_order_eq param addr
 	.byte 0x0E
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_user_order_not_eq param addr
 	.byte 0x0F
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ user condition
@@ -104,25 +104,25 @@
 	.macro if_user_condition_less_than param, addr
 	.byte 0x11
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_user_condition_more_than param, addr
 	.byte 0x12
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_user_condition_eq param, addr
 	.byte 0x13
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_user_condition_not_eq param, addr
 	.byte 0x14
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ 15
@@ -145,13 +145,13 @@
 	.macro if_contest_type_eq param, addr
 	.byte 0x20
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_contest_type_not_eq param, addr
 	.byte 0x21
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ move excitement (change in excitement due to move)
@@ -163,25 +163,25 @@
 	.macro if_move_excitement_less_than param, addr
 	.byte 0x23
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_move_excitement_more_than param, addr
 	.byte 0x24
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_move_excitement_eq param, addr
 	.byte 0x25
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_move_excitement_not_eq param, addr
 	.byte 0x26
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ move effect
@@ -193,13 +193,13 @@
 	.macro if_effect_eq param, addr
 	.byte 0x28
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_effect_not_eq param, addr
 	.byte 0x29
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ move effect type
@@ -211,13 +211,13 @@
 	.macro if_effect_type_eq param, addr
 	.byte 0x2B
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_effect_type_not_eq param, addr
 	.byte 0x2C
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ whether the current move is the most appealing in the user's moveset
@@ -228,7 +228,7 @@
 
 	.macro if_most_appealing_move addr
 	.byte 0x2E
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ 2F
@@ -253,25 +253,25 @@
 	.macro if_move_used_count_less_than param, addr
 	.byte 0x3C
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_move_used_count_more_than param, addr
 	.byte 0x3D
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_move_used_count_eq param, addr
 	.byte 0x3E
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_move_used_count_not_eq param, addr
 	.byte 0x3F
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ whether the current move is a combo starter (with another move in the moveset)
@@ -282,12 +282,12 @@
 
 	.macro if_combo_starter addr
 	.byte 0x41
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_not_combo_starter addr
 	.byte 0x42
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ whether the current move is a combo finisher (with another move in the moveset)
@@ -298,12 +298,12 @@
 
 	.macro if_combo_finisher addr
 	.byte 0x44
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_not_combo_finisher addr
 	.byte 0x45
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ whether the current move would finish a combo
@@ -314,12 +314,12 @@
 
 	.macro if_would_finish_combo addr
 	.byte 0x47
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_would_not_finish_combo addr
 	.byte 0x48
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ condition of mon (indexed by order)
@@ -333,28 +333,28 @@
 	.byte 0x4A
 	.byte \mon
 	.byte \value
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_condition_more_than mon, value, addr
 	.byte 0x4B
 	.byte \mon
 	.byte \value
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_condition_eq mon, value, addr
 	.byte 0x4C
 	.byte \mon
 	.byte \value
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_condition_not_eq mon, value, addr
 	.byte 0x4D
 	.byte \mon
 	.byte \value
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ whether the mon used a combo starter move
@@ -370,14 +370,14 @@
 	.byte 0x4F
 	.byte \mon
 	.byte \value
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_used_combo_starter_more_than mon, value, addr
 	.byte 0x50
 	.byte \mon
 	.byte \value
-	.4byte \addr
+	.int \addr
 	.endm
 
 
@@ -385,14 +385,14 @@
 	.byte 0x51
 	.byte \mon
 	.byte \value
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_used_combo_starter_not_eq mon, value, addr
 	.byte 0x52
 	.byte \mon
 	.byte \value
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ whether the mon can make an appeal
@@ -405,13 +405,13 @@
 	.macro if_can_participate mon, addr
 	.byte 0x54
 	.byte \mon
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_cannot_participate mon, addr
 	.byte 0x55
 	.byte \mon
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ 56
@@ -420,7 +420,7 @@
 	.macro contest_58 param addr
 	.byte 0x58
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ 59
@@ -463,19 +463,19 @@
 	.macro if_random param addr
 	.byte 0x7D
 	.byte \param
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ 7E
 
 	.macro jump addr
 	.byte 0x7F
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro call addr
 	.byte 0x80
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro end
@@ -488,12 +488,12 @@
 
 	.macro if_user_has_exciting_move addr
 	.byte 0x83
-	.4byte \addr
+	.int \addr
 	.endm
 
 	.macro if_user_doesnt_have_exciting_move addr
 	.byte 0x84
-	.4byte \addr
+	.int \addr
 	.endm
 
 @ 85
@@ -501,6 +501,6 @@
 
 	.macro if_effect_in_user_moveset param addr
 	.byte 0x87
-	.2byte \param
-	.4byte \addr
+	.short \param
+	.int \addr
 	.endm

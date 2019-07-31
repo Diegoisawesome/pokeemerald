@@ -4,7 +4,7 @@ AbandonedShip_HiddenFloorRooms_MapScripts:: @ 8238C49
 
 AbandonedShip_HiddenFloorRooms_MapScript2_238C4F: @ 8238C4F
 	map_script_2 VAR_TEMP_1, 0, AbandonedShip_HiddenFloorRooms_EventScript_238C59
-	.2byte 0
+	.short 0
 
 AbandonedShip_HiddenFloorRooms_EventScript_238C59:: @ 8238C59
 	setvar VAR_TEMP_1, 1

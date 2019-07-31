@@ -33,7 +33,7 @@ BattleFrontier_BattleArenaBattleRoom_EventScript_2574CC:: @ 82574CC
 
 BattleFrontier_BattleArenaBattleRoom_MapScript2_2574D2: @ 82574D2
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleArenaBattleRoom_EventScript_2574DC
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleArenaBattleRoom_EventScript_2574DC:: @ 82574DC
 	lockall
@@ -530,7 +530,7 @@ BattleFrontier_BattleArenaBattleRoom_Movement_257C0A: @ 8257C0A
 
 BattleFrontier_BattleArenaBattleRoom_MapScript2_257C0C: @ 8257C0C
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleArenaBattleRoom_EventScript_257C16
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleArenaBattleRoom_EventScript_257C16:: @ 8257C16
 	hideobjectat 8, MAP_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM

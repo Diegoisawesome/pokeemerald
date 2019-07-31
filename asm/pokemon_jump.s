@@ -1946,11 +1946,11 @@ sub_802E938: @ 802E938
 	.pool
 	.align 2, 0
 _0802E984:
-	.4byte _0802E998
-	.4byte _0802E9A6
-	.4byte _0802E9A6
-	.4byte _0802E9BA
-	.4byte _0802EA04
+	.int _0802E998
+	.int _0802E9A6
+	.int _0802E9A6
+	.int _0802E9BA
+	.int _0802EA04
 _0802E998:
 	adds r2, r6, 0
 	adds r2, 0x3E
@@ -2347,14 +2347,14 @@ _0802ECB2:
 	.pool
 	.align 2, 0
 _0802ECC4:
-	.4byte _0802ECE4
-	.4byte _0802ECF6
-	.4byte _0802ED1C
-	.4byte _0802ED2C
-	.4byte _0802ED4E
-	.4byte _0802ED86
-	.4byte _0802EDAC
-	.4byte _0802ED82
+	.int _0802ECE4
+	.int _0802ECF6
+	.int _0802ED1C
+	.int _0802ED2C
+	.int _0802ED4E
+	.int _0802ED86
+	.int _0802EDAC
+	.int _0802ED82
 _0802ECE4:
 	movs r1, 0x80
 	lsls r1, 4
@@ -2574,11 +2574,11 @@ sub_802EE5C: @ 802EE5C
 	.pool
 	.align 2, 0
 _0802EE7C:
-	.4byte _0802EE90
-	.4byte _0802EEA0
-	.4byte _0802EEC8
-	.4byte _0802EEFC
-	.4byte _0802EF34
+	.int _0802EE90
+	.int _0802EEA0
+	.int _0802EEC8
+	.int _0802EEFC
+	.int _0802EF34
 _0802EE90:
 	movs r0, 0x40
 	strh r0, [r4, 0x8]

@@ -148,16 +148,16 @@ _081C9A24:
 	.pool
 	.align 2, 0
 _081C9A34:
-	.4byte _081C9A5C
-	.4byte _081C9AEC
-	.4byte _081C9B30
-	.4byte _081C9B88
-	.4byte _081C9B9E
-	.4byte _081C9BA4
-	.4byte _081C9BB6
-	.4byte _081C9BC0
-	.4byte _081C9C0E
-	.4byte _081C9C4C
+	.int _081C9A5C
+	.int _081C9AEC
+	.int _081C9B30
+	.int _081C9B88
+	.int _081C9B9E
+	.int _081C9BA4
+	.int _081C9BB6
+	.int _081C9BC0
+	.int _081C9C0E
+	.int _081C9C4C
 _081C9A5C:
 	ldr r0, =gUnknown_08620194
 	movs r1, 0x3

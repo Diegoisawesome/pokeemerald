@@ -13,7 +13,7 @@
 	.global	se_w060
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w060_1:
 	.byte	KEYSH , se_w060_key+0
@@ -89,7 +89,7 @@ se_w060_1:
 	.byte		PAN   , c_v+0
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w060_2:
 	.byte	KEYSH , se_w060_key+0
@@ -127,14 +127,14 @@ se_w060_2:
 	.byte	W03
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w060:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w060_pri	@ Priority
-	.byte	se_w060_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w060_pri	
+	.byte	se_w060_rev	
 
 	.word	se_w060_grp
 

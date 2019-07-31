@@ -5,7 +5,7 @@ FallarborTown_BattleTentLobby_MapScripts:: @ 81FFE66
 
 FallarborTown_BattleTentLobby_MapScript2_1FFE71: @ 81FFE71
 	map_script_2 VAR_TEMP_1, 0, FallarborTown_BattleTentLobby_EventScript_1FFE7B
-	.2byte 0
+	.short 0
 
 FallarborTown_BattleTentLobby_EventScript_1FFE7B:: @ 81FFE7B
 	setvar VAR_TEMP_1, 1
@@ -18,7 +18,7 @@ FallarborTown_BattleTentLobby_MapScript2_1FFE85: @ 81FFE85
 	map_script_2 VAR_TEMP_0, 2, FallarborTown_BattleTentLobby_EventScript_1FFFCD
 	map_script_2 VAR_TEMP_0, 3, FallarborTown_BattleTentLobby_EventScript_1FFEED
 	map_script_2 VAR_TEMP_0, 4, FallarborTown_BattleTentLobby_EventScript_1FFF93
-	.2byte 0
+	.short 0
 
 FallarborTown_BattleTentLobby_EventScript_1FFEAF:: @ 81FFEAF
 	setvar VAR_0x8004, 0

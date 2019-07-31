@@ -9,7 +9,7 @@ Route101_OnTransition: @ 81EBCC5
 
 Route101_MapScript2_1EBCCB: @ 81EBCCB
 	map_script_2 VAR_ROUTE101_STATE, 0, Route101_EventScript_1EBCD5
-	.2byte 0
+	.short 0
 
 Route101_EventScript_1EBCD5:: @ 81EBCD5
 	setflag FLAG_HIDE_MAP_NAME_POPUP

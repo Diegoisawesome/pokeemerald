@@ -30,7 +30,7 @@ SkyPillar_Outside_EventScript_2392E7:: @ 82392E7
 
 SkyPillar_Outside_MapScript2_2392FA: @ 82392FA
 	map_script_2 VAR_RAYQUAZA_STATE, 3, SkyPillar_Outside_EventScript_239304
-	.2byte 0
+	.short 0
 
 SkyPillar_Outside_EventScript_239304:: @ 8239304
 	lockall

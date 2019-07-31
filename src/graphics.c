@@ -996,7 +996,7 @@ const u16 gTilesetAnims_BattleDomePals0_2[] = INCBIN_U16("graphics/battle_fronti
 const u16 gTilesetAnims_BattleDomePals0_3[] = INCBIN_U16("graphics/battle_frontier/dome_anim4.gbapal");
 
 // 8D856C0
-asm(".2byte 0x013F, 0x0119, 0x0113, 0x010E"); // unused?
+asm(".short 0x013F, 0x0119, 0x0113, 0x010E"); // unused?
 
 const u16 gUnknown_08D856C8[] = INCBIN_U16("graphics/battle_frontier/pyramid_light.gbapal"); // unfaded pal for the player light in battle pyramid
 

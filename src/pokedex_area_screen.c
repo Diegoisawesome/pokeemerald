@@ -45,10 +45,6 @@ struct PokeDexAreaScreenMapIdentity
 
 struct PokeDexAreaScreen
 {
-    /*0x000*/ void (*callback)(void); // unused
-    /*0x004*/ MainCallback prev; // unused
-    /*0x008*/ MainCallback next; // unused
-    /*0x00C*/ u16 state; // unused
     /*0x00E*/ u16 species;
     /*0x010*/ struct PokeDexAreaScreenMapIdentity overworldAreasWithMons[0x40];
     /*0x110*/ u16 numOverworldAreas;
@@ -66,7 +62,7 @@ struct PokeDexAreaScreen
     /*0x6E0*/ u16 numAreaMarkerSprites;
     /*0x6E2*/ u16 unk6E2;
     /*0x6E4*/ u16 unk6E4;
-    /*0x6E8*/ u8 *errno;
+    /*0x6E8*/ u8 * noerr;
     /*0x6EC*/ struct RegionMap regionMap;
     /*0xF70*/ u8 charBuffer[0x40];
     /*0xFB0*/ struct Sprite * areaUnknownSprites[3];
@@ -637,14 +633,14 @@ static void DoAreaGlow(void)
     }
 }
 
-void ShowPokedexAreaScreen(u16 species, u8 *errno)
+void ShowPokedexAreaScreen(u16 species, u8 *errnoarg)
 {
     u8 taskId;
 
     sPokedexAreaScreen = AllocZeroed(sizeof(*sPokedexAreaScreen));
     sPokedexAreaScreen->species = species;
-    sPokedexAreaScreen->errno = errno;
-    errno[0] = 0;
+    sPokedexAreaScreen->noerr = errnoarg;
+    errnoarg[0] = 0;
     taskId = CreateTask(Task_PokedexAreaScreen_0, 0);
     gTasks[taskId].data[0] = 0;
 }
@@ -743,7 +739,7 @@ static void Task_PokedexAreaScreen_1(u8 taskId)
         if (gPaletteFade.active)
             return;
         DestroyAreaMarkerSprites();
-        sPokedexAreaScreen->errno[0] = gTasks[taskId].data[1];
+        sPokedexAreaScreen->noerr[0] = gTasks[taskId].data[1];
         sub_813D6B4();
         DestroyTask(taskId);
         sub_81C4EB4();

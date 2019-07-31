@@ -504,16 +504,16 @@ _081CD3E2:
 	.pool
 	.align 2, 0
 _081CD3F4:
-	.4byte _081CD41C
-	.4byte _081CD428
-	.4byte _081CD434
-	.4byte _081CD440
-	.4byte _081CD490
-	.4byte _081CD4A8
-	.4byte _081CD4C0
-	.4byte _081CD4D8
-	.4byte _081CD4F0
-	.4byte _081CD508
+	.int _081CD41C
+	.int _081CD428
+	.int _081CD434
+	.int _081CD440
+	.int _081CD490
+	.int _081CD4A8
+	.int _081CD4C0
+	.int _081CD4D8
+	.int _081CD4F0
+	.int _081CD508
 _081CD41C:
 	movs r1, 0x2
 	ldrsh r0, [r2, r1]

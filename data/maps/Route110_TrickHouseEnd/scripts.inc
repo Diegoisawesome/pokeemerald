@@ -18,7 +18,7 @@ Route110_TrickHouseEnd_OnTransition: @ 826ACD0
 
 Route110_TrickHouseEnd_MapScript2_26ACDE: @ 826ACDE
 	map_script_2 VAR_TEMP_2, 0, Route110_TrickHouseEnd_EventScript_26ACE8
-	.2byte 0
+	.short 0
 
 Route110_TrickHouseEnd_EventScript_26ACE8:: @ 826ACE8
 	addobject 1
@@ -28,7 +28,7 @@ Route110_TrickHouseEnd_EventScript_26ACE8:: @ 826ACE8
 
 Route110_TrickHouseEnd_MapScript2_26ACF5: @ 826ACF5
 	map_script_2 VAR_TEMP_1, 0, Route110_TrickHouseEnd_EventScript_26ACFF
-	.2byte 0
+	.short 0
 
 Route110_TrickHouseEnd_EventScript_26ACFF:: @ 826ACFF
 	setvar VAR_TEMP_1, 1

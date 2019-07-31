@@ -17,9 +17,9 @@ gMiscBlank_Pal:: @ 858D7D0
 
 	.align 2
 gOamData_858D7F0:: @ 858D7F0
-	.2byte 0x4000
-	.2byte 0xC000
-	.2byte 0x2C00
+	.short 0x4000
+	.short 0xC000
+	.short 0x2C00
 
 	.align 2
 gSpriteTemplate_858D7F8:: @ 858D7F8
@@ -42,9 +42,9 @@ gUnknown_0858D850:: @ 858D850
 
 	.align 2
 gOamData_858D858:: @ 858D858
-	.2byte 0x0000
-	.2byte 0x0000
-	.2byte 0x0000
+	.short 0x0000
+	.short 0x0000
+	.short 0x0000
 
 	.align 2
 gSpriteTemplate_858D860:: @ 858D860
@@ -60,7 +60,7 @@ gUnknown_0858D880:: @ 858D880
 
 	.align 2
 gUnknown_0858D888:: @ 858D888
-	.4byte 0x000001e0, 0x00003181, 0x000031c2, 0x000031a3
+	.int 0x000001e0, 0x00003181, 0x000031c2, 0x000031a3
 
 	.align 2
 gUnknown_0858D898:: @ 858D898

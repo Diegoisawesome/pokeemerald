@@ -1214,7 +1214,7 @@ _081DD8BA:
 	tst r0, r3
 	beq _081DD938
 	adds r0, r5, 0
-	bl Clear64byte
+	bl Clear.int
 	movs r0, 0x80
 	strb r0, [r5]
 	movs r0, 0x2

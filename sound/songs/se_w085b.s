@@ -13,7 +13,7 @@
 	.global	se_w085b
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w085b_1:
 	.byte	KEYSH , se_w085b_key+0
@@ -42,7 +42,7 @@ se_w085b_1:
 	.byte	W18
 	.byte	FINE
 
-@********************** Track  2 **********************@
+
 
 se_w085b_2:
 	.byte	KEYSH , se_w085b_key+0
@@ -68,14 +68,14 @@ se_w085b_2:
 	.byte	W18
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w085b:
-	.byte	2	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w085b_pri	@ Priority
-	.byte	se_w085b_rev	@ Reverb.
+	.byte	2	
+	.byte	0	
+	.byte	se_w085b_pri	
+	.byte	se_w085b_rev	
 
 	.word	se_w085b_grp
 

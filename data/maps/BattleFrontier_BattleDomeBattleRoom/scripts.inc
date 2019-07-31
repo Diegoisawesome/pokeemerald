@@ -36,7 +36,7 @@ BattleFrontier_BattleDomeBattleRoom_EventScript_24BCFA:: @ 824BCFA
 
 BattleFrontier_BattleDomeBattleRoom_MapScript2_24BD00: @ 824BD00
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleDomeBattleRoom_EventScript_24BD0A
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleDomeBattleRoom_EventScript_24BD0A:: @ 824BD0A
 	lockall
@@ -544,7 +544,7 @@ BattleFrontier_BattleDomeBattleRoom_EventScript_24C440:: @ 824C440
 
 BattleFrontier_BattleDomeBattleRoom_MapScript2_24C481: @ 824C481
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleDomeBattleRoom_EventScript_24C48B
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleDomeBattleRoom_EventScript_24C48B:: @ 824C48B
 	hideobjectat 13, MAP_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM

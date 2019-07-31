@@ -21,7 +21,7 @@ Route110_EventScript_1EF293:: @ 81EF293
 
 Route110_MapScript2_1EF297: @ 81EF297
 	map_script_2 VAR_CYCLING_CHALLENGE_STATE, 1, Route110_EventScript_1EF2A1
-	.2byte 0
+	.short 0
 
 Route110_EventScript_1EF2A1:: @ 81EF2A1
 	special Special_BeginCyclingRoadChallenge

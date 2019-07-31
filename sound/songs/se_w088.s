@@ -13,7 +13,7 @@
 	.global	se_w088
 	.align	2
 
-@********************** Track  1 **********************@
+
 
 se_w088_1:
 	.byte	KEYSH , se_w088_key+0
@@ -49,14 +49,14 @@ se_w088_1:
 	.byte	W24
 	.byte	FINE
 
-@******************************************************@
+
 	.align	2
 
 se_w088:
-	.byte	1	@ NumTrks
-	.byte	0	@ NumBlks
-	.byte	se_w088_pri	@ Priority
-	.byte	se_w088_rev	@ Reverb.
+	.byte	1	
+	.byte	0	
+	.byte	se_w088_pri	
+	.byte	se_w088_rev	
 
 	.word	se_w088_grp
 

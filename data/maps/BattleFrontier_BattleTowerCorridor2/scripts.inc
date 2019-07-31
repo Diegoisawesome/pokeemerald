@@ -30,7 +30,7 @@ BattleFrontier_BattleTowerCorridor2_EventScript_248D91:: @ 8248D91
 
 BattleFrontier_BattleTowerCorridor2_MapScript2_248D95: @ 8248D95
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleTowerCorridor2_EventScript_248D9F
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleTowerCorridor2_EventScript_248D9F:: @ 8248D9F
 	hideobjectat EVENT_OBJ_ID_PLAYER, MAP_BATTLE_FRONTIER_BATTLE_TOWER_CORRIDOR2
@@ -41,7 +41,7 @@ BattleFrontier_BattleTowerCorridor2_EventScript_248D9F:: @ 8248D9F
 
 BattleFrontier_BattleTowerCorridor2_MapScript2_248DB2: @ 8248DB2
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleTowerCorridor2_EventScript_248DBC
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleTowerCorridor2_EventScript_248DBC:: @ 8248DBC
 	lockall

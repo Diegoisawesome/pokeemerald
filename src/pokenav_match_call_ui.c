@@ -377,10 +377,10 @@ bool32 ShouldShowDownArrow(void)
 
 void MatchCall_MoveWindow(s32 a0, bool32 a1_)
 {
-    register bool32 a1 asm("r4")= a1_;
+    bool32 a1 = a1_;
     s32 v1;
     struct UnknownSubStruct_81C81D4 *structPtr = GetSubstructPtr(0x11);
-    register struct MatchCallWindowState *subPtr asm("r5") = &structPtr->unk888;
+    struct MatchCallWindowState *subPtr = &structPtr->unk888;
 
     if (a0 < 0)
     {
@@ -403,7 +403,7 @@ void MatchCall_MoveWindow(s32 a0, bool32 a1_)
         
         sub_81C83AC(subPtr->unk10, gUnknown_0203CF44, v1, subPtr->unkC, subPtr->visibleEntries, &structPtr->unk0);
         // Needed to prevent GCC from combining the two sub_81C83AC calls.
-        asm("");
+        //asm("");
     }
     else
     {
@@ -675,7 +675,7 @@ u32 LoopedTask_sub_81C8870(s32 a0)
     u32 v2;
 
     // Needed to fix a register renaming issue.
-    register u16* temp asm("r1");
+    u16* temp;
     structPtr = GetSubstructPtr(0x11);
 
     switch (a0)
@@ -765,7 +765,7 @@ u32 LoopedTask_sub_81C8A28(s32 a0)
 {
     struct UnknownSubStruct_81C81D4 *structPtr;
     struct MatchCallWindowState *subPtr888;
-    register struct UnknownInnerStruct_81C81D4 *subPtr0 asm("r2");
+    struct UnknownInnerStruct_81C81D4 *subPtr0;
     s32 v4;
 
     if (IsDma3ManagerBusyWithBgCopy())
@@ -789,7 +789,7 @@ u32 LoopedTask_sub_81C8A28(s32 a0)
         s32 v1;
         s32 v2;
         u32 *v3;
-        register s32 v4 asm("r5");
+        s32 v4;
 
         v3 = &structPtr->unk89C;
         v1 = *v3 + 1;
@@ -803,7 +803,7 @@ u32 LoopedTask_sub_81C8A28(s32 a0)
         *v3 = 0;
         if (subPtr888->listLength <= subPtr888->visibleEntries)
         {
-            register u32 temp asm("r0");
+            u32 temp;
             temp = subPtr888->windowTopIndex;
             if (temp == 0)
                 return 9;
@@ -811,7 +811,7 @@ u32 LoopedTask_sub_81C8A28(s32 a0)
         }
         else
         {
-            register s32 temp asm("r1");
+            s32 temp;
             v2 = subPtr888->windowTopIndex + subPtr888->visibleEntries;
             temp = (s32)subPtr888->listLength;
             if (v2 <= temp)
@@ -889,7 +889,7 @@ void sub_81C8B70(struct UnknownSubSubStruct_0203CF40 *a0, u32 a1, u32 a2)
 void sub_81C8C64(struct UnknownSubSubStruct_0203CF40 *a0, u32 a1)
 {
     u16 *v1;
-    register u32 v2 asm("r0");
+    u32 v2;
     u32 v3;
 
     v1 = (u16*)GetBgTilemapBuffer(GetWindowAttribute(a0->windowId, WINDOW_BG));
@@ -907,8 +907,8 @@ void sub_81C8C64(struct UnknownSubSubStruct_0203CF40 *a0, u32 a1)
         v3 = a0->unk6;
     }
     {
-        register u16 v5 asm("r1");
-        register u32 v6 asm("r0");
+        u16 v5;
+        u32 v6;
         v6 = (v3 | v2);
         v6 = v6 << 16;
         v5 = v6 >> 16;
@@ -996,7 +996,7 @@ void sub_81C8ED0(void)
 
 void sub_81C8EF8(struct MatchCallWindowState *a0, struct UnknownInnerStruct_81C81D4 *a1)
 {
-    register u32 spriteId asm("r3");
+    u32 spriteId;
     s16 temp;
 
     spriteId = (u8)CreateSprite(&sMatchCallRightArrowSprite, a1->unk0.unk2 * 8 + 3, (a1->unk0.unk3 + 1) * 8, 7);
@@ -1127,7 +1127,7 @@ void sub_81C9160(struct MatchCallWindowState *a0, struct MatchCallListTemplate *
 
 u32 sub_81C91AC(struct UnknownInnerStruct_81C81D4 *a0, const struct BgTemplate *a1, struct MatchCallListTemplate *a2, s32 a3)
 {
-    register u32 raw_bg asm("r4") = ((a1->bg) << 30);
+    u32 raw_bg = ((a1->bg) << 30);
     u8 bg = raw_bg >> 30;
     u32 unknown = 0;
     struct WindowTemplate window;

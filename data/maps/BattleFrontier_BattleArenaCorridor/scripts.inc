@@ -4,7 +4,7 @@ BattleFrontier_BattleArenaCorridor_MapScripts:: @ 82573B9
 
 BattleFrontier_BattleArenaCorridor_MapScript2_2573BF: @ 82573BF
 	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleArenaCorridor_EventScript_2573C9
-	.2byte 0
+	.short 0
 
 BattleFrontier_BattleArenaCorridor_EventScript_2573C9:: @ 82573C9
 	delay 16

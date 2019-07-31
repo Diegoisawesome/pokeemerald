@@ -850,16 +850,16 @@ _081D0A80:
 	.pool
 	.align 2, 0
 _081D0A90:
-	.4byte _081D0AB8
-	.4byte _081D0B04
-	.4byte _081D0B74
-	.4byte _081D0B88
-	.4byte _081D0B9C
-	.4byte _081D0BB0
-	.4byte _081D0BC4
-	.4byte _081D0BD8
-	.4byte _081D0BE8
-	.4byte _081D0C3C
+	.int _081D0AB8
+	.int _081D0B04
+	.int _081D0B74
+	.int _081D0B88
+	.int _081D0B9C
+	.int _081D0BB0
+	.int _081D0BC4
+	.int _081D0BD8
+	.int _081D0BE8
+	.int _081D0C3C
 _081D0AB8:
 	ldr r0, =gUnknown_08624B98
 	movs r1, 0x2
@@ -1077,13 +1077,13 @@ sub_81D0C84: @ 81D0C84
 	.pool
 	.align 2, 0
 _081D0CA4:
-	.4byte _081D0CC0
-	.4byte _081D0CD0
-	.4byte _081D0CE4
-	.4byte _081D0CEE
-	.4byte _081D0CF8
-	.4byte _081D0D02
-	.4byte _081D0D16
+	.int _081D0CC0
+	.int _081D0CD0
+	.int _081D0CE4
+	.int _081D0CEE
+	.int _081D0CF8
+	.int _081D0D02
+	.int _081D0D16
 _081D0CC0:
 	movs r0, 0x5
 	bl PlaySE

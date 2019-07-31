@@ -110,27 +110,27 @@ _081CDEA8:
 	.pool
 	.align 2, 0
 _081CDEB8:
-	.4byte _081CDF0C
-	.4byte _081CDF18
-	.4byte _081CDF94
-	.4byte _081CDFB8
-	.4byte _081CE030
-	.4byte _081CE074
-	.4byte _081CE0B0
-	.4byte _081CE118
-	.4byte _081CE120
-	.4byte _081CE126
-	.4byte _081CE136
-	.4byte _081CE146
-	.4byte _081CE156
-	.4byte _081CE16C
-	.4byte _081CE1C8
-	.4byte _081CE1EC
-	.4byte _081CE218
-	.4byte _081CE23C
-	.4byte _081CE24A
-	.4byte _081CE25A
-	.4byte _081CE262
+	.int _081CDF0C
+	.int _081CDF18
+	.int _081CDF94
+	.int _081CDFB8
+	.int _081CE030
+	.int _081CE074
+	.int _081CE0B0
+	.int _081CE118
+	.int _081CE120
+	.int _081CE126
+	.int _081CE136
+	.int _081CE146
+	.int _081CE156
+	.int _081CE16C
+	.int _081CE1C8
+	.int _081CE1EC
+	.int _081CE218
+	.int _081CE23C
+	.int _081CE24A
+	.int _081CE25A
+	.int _081CE262
 _081CDF0C:
 	bl sub_81CD3C4
 	cmp r0, 0x1
@@ -621,16 +621,16 @@ _081CE394:
 	.pool
 	.align 2, 0
 _081CE3A4:
-	.4byte _081CE3CC
-	.4byte _081CE3D0
-	.4byte _081CE3DA
-	.4byte _081CE3F0
-	.4byte _081CE3F8
-	.4byte _081CE418
-	.4byte _081CE428
-	.4byte _081CE438
-	.4byte _081CE44E
-	.4byte _081CE468
+	.int _081CE3CC
+	.int _081CE3D0
+	.int _081CE3DA
+	.int _081CE3F0
+	.int _081CE3F8
+	.int _081CE418
+	.int _081CE428
+	.int _081CE438
+	.int _081CE44E
+	.int _081CE468
 _081CE3CC:
 	movs r0, 0
 	b _081CE3D2
@@ -771,15 +771,15 @@ sub_81CE4D8: @ 81CE4D8
 	.pool
 	.align 2, 0
 _081CE4F8:
-	.4byte _081CE51C
-	.4byte _081CE520
-	.4byte _081CE524
-	.4byte _081CE52E
-	.4byte _081CE53E
-	.4byte _081CE54E
-	.4byte _081CE55E
-	.4byte _081CE576
-	.4byte _081CE592
+	.int _081CE51C
+	.int _081CE520
+	.int _081CE524
+	.int _081CE52E
+	.int _081CE53E
+	.int _081CE54E
+	.int _081CE55E
+	.int _081CE576
+	.int _081CE592
 _081CE51C:
 	movs r0, 0
 	b _081CE526
@@ -893,14 +893,14 @@ sub_81CE5E4: @ 81CE5E4
 	.pool
 	.align 2, 0
 _081CE604:
-	.4byte _081CE624
-	.4byte _081CE628
-	.4byte _081CE632
-	.4byte _081CE648
-	.4byte _081CE660
-	.4byte _081CE670
-	.4byte _081CE680
-	.4byte _081CE696
+	.int _081CE624
+	.int _081CE628
+	.int _081CE632
+	.int _081CE648
+	.int _081CE660
+	.int _081CE670
+	.int _081CE680
+	.int _081CE696
 _081CE624:
 	movs r0, 0
 	b _081CE62A

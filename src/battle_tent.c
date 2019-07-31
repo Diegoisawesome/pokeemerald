@@ -341,7 +341,7 @@ static void sub_81BA040(void)
 {
     u16 trainerId;
     s32 i, j, k;
-    register const u16 *monSets asm("r9"); // Fix me. Compiler insists on moving that variable into stack.
+    const u16 *monSets; // Fix me. Compiler insists on moving that variable into stack.
     u16 species[3];
     u16 heldItems[3];
     s32 setsCount = 0;

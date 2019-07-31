@@ -687,12 +687,12 @@ _081CF42C:
 	.pool
 	.align 2, 0
 _081CF43C:
-	.4byte _081CF454
-	.4byte _081CF4AC
-	.4byte _081CF4C0
-	.4byte _081CF4E0
-	.4byte _081CF4F6
-	.4byte _081CF55A
+	.int _081CF454
+	.int _081CF4AC
+	.int _081CF4C0
+	.int _081CF4E0
+	.int _081CF4F6
+	.int _081CF55A
 _081CF454:
 	ldr r0, =gUnknown_08623590
 	movs r1, 0x2

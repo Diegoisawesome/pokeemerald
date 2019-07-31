@@ -13,11 +13,11 @@ LavaridgeTown_HerbShop_EventScript_1FE4D7:: @ 81FE4D7
 
 	.align 2
 LavaridgeTown_HerbShop_Pokemart_1FE4F0: @ 81FE4F0
-	.2byte ITEM_ENERGY_POWDER
-	.2byte ITEM_ENERGY_ROOT
-	.2byte ITEM_HEAL_POWDER
-	.2byte ITEM_REVIVAL_HERB
-	.2byte ITEM_NONE
+	.short ITEM_ENERGY_POWDER
+	.short ITEM_ENERGY_ROOT
+	.short ITEM_HEAL_POWDER
+	.short ITEM_REVIVAL_HERB
+	.short ITEM_NONE
 	release
 	end
 

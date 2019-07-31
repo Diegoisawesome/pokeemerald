@@ -704,12 +704,12 @@ _081CFECC:
 	.pool
 	.align 2, 0
 _081CFEDC:
-	.4byte _081CFEF4
-	.4byte _081CFF48
-	.4byte _081CFF76
-	.4byte _081CFF94
-	.4byte _081CFFA4
-	.4byte _081CFFDE
+	.int _081CFEF4
+	.int _081CFF48
+	.int _081CFF76
+	.int _081CFF94
+	.int _081CFFA4
+	.int _081CFFDE
 _081CFEF4:
 	ldr r0, =gUnknown_086237B0
 	movs r1, 0x2

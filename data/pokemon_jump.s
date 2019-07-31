@@ -6,15 +6,15 @@
 
 	.align 2
 gUnknown_082FB63C:: @ 82FB63C
-	.2byte 0x001a, 0x001f, 0x0024, 0x0029, 0x002e, 0x0033, 0x0038, 0x003d
+	.short 0x001a, 0x001f, 0x0024, 0x0029, 0x002e, 0x0033, 0x0038, 0x003d
 
 	.align 2
 gUnknown_082FB64C:: @ 82FB64C
-	.2byte 0x0000, 0x0001, 0x0001, 0x0002
+	.short 0x0000, 0x0001, 0x0001, 0x0002
 
 	.align 2
 gUnknown_082FB654:: @ 82FB654
-	.2byte 0x005f, 0x0066, 0x00e4, 0x0105
+	.short 0x005f, 0x0066, 0x00e4, 0x0105
 
 	.align 2
 gUnknown_082FB65C:: @ 82FB65C
@@ -41,18 +41,18 @@ gUnknown_082FB65C:: @ 82FB65C
 
 	.align 2
 gUnknown_082FB6EC:: @ 82FB6EC
-	.4byte 0x00000000, 0x00000000, 0x00000032, 0x00000064
-	.4byte 0x000000c8, 0x000001f4
+	.int 0x00000000, 0x00000000, 0x00000032, 0x00000064
+	.int 0x000000c8, 0x000001f4
 
 	.align 2
 gUnknown_082FB704:: @ 82FB704
-	.2byte 0x008a, 0x008d, 0x008e, 0x008f, 0x0090, 0x0091, 0x0092, 0x0093
+	.short 0x008a, 0x008d, 0x008e, 0x008f, 0x0090, 0x0091, 0x0092, 0x0093
 
 	.align 2
 gUnknown_082FB714:: @ 82FB714
-	.4byte 0x00001388, 0x00000001, 0x00001f40, 0x00000002
-	.4byte 0x00002ee0, 0x00000003, 0x00003e80, 0x00000004
-	.4byte 0x00004e20, 0x00000005
+	.int 0x00001388, 0x00000001, 0x00001f40, 0x00000002
+	.int 0x00002ee0, 0x00000003, 0x00003e80, 0x00000004
+	.int 0x00004e20, 0x00000005
 
 	.align 2
 gPkmnJumpPal1:: @ 82FB73C
@@ -110,21 +110,21 @@ gUnknown_082FBE40:: @ 82FBE40
 	spr_template 0x0000, 0x0000, gUnknown_082FBEC8, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 gUnknown_082FBE58:: @ 82FBE58
-	.2byte 0x0060, 0x0060, 0x0060, 0x0072, 0x0078, 0x0078, 0x0078, 0x0072
-	.2byte 0x0060, 0x0060, 0x0046, 0x0050, 0x0060, 0x0072, 0x0078, 0x0080
-	.2byte 0x0078, 0x0072, 0x0060, 0x0050, 0x0032, 0x0048, 0x0060, 0x0072
-	.2byte 0x0080, 0x0088, 0x0080, 0x0072, 0x0060, 0x0048, 0x002a, 0x0048
-	.2byte 0x0060, 0x0072, 0x0080, 0x0088, 0x0080, 0x0072, 0x0060, 0x0048
+	.short 0x0060, 0x0060, 0x0060, 0x0072, 0x0078, 0x0078, 0x0078, 0x0072
+	.short 0x0060, 0x0060, 0x0046, 0x0050, 0x0060, 0x0072, 0x0078, 0x0080
+	.short 0x0078, 0x0072, 0x0060, 0x0050, 0x0032, 0x0048, 0x0060, 0x0072
+	.short 0x0080, 0x0088, 0x0080, 0x0072, 0x0060, 0x0048, 0x002a, 0x0048
+	.short 0x0060, 0x0072, 0x0080, 0x0088, 0x0080, 0x0072, 0x0060, 0x0048
 
 gUnknown_082FBEA8:: @ 82FBEA8
-	.2byte 0x0010, 0x0028, 0x0048, 0x0068, 0x0088, 0x00a8, 0x00c8, 0x00e0
+	.short 0x0010, 0x0028, 0x0048, 0x0068, 0x0088, 0x00a8, 0x00c8, 0x00e0
 
 	.align 2
 gUnknown_082FBEB8:: @ 82FBEB8
-	.4byte gUnknown_082FBF78
-	.4byte gUnknown_082FBF90
-	.4byte gUnknown_082FBFA8
-	.4byte gUnknown_082FBFC0
+	.int gUnknown_082FBF78
+	.int gUnknown_082FBF90
+	.int gUnknown_082FBFA8
+	.int gUnknown_082FBFC0
 
 	.align 2
 gUnknown_082FBEC8:: @ 82FBED0
@@ -144,81 +144,81 @@ gUnknown_082FBEE0:: @ 82FBEE0
 
 	.align 2
 gUnknown_082FBEE8:: @ 82FBEE8
-	.2byte 0x0000, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0000, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBEF0:: @ 82FBEF0
-	.2byte 0x0008, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0008, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBEF8:: @ 82FBEF8
-	.2byte 0x0010, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0010, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF00:: @ 82FBF00
-	.2byte 0x0018, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0018, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF08:: @ 82FBF08
-	.2byte 0x0020, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0020, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF10:: @ 82FBF10
-	.2byte 0x0028, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0028, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF18:: @ 82FBF18
-	.2byte 0x0000, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0000, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF20:: @ 82FBF20
-	.2byte 0x0010, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0010, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF28:: @ 82FBF28
-	.2byte 0x0020, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0020, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF30:: @ 82FBF30
-	.2byte 0x0030, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0030, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF38:: @ 82FBF38
-	.2byte 0x0040, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0040, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF40:: @ 82FBF40
-	.2byte 0x0050, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0050, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBF48:: @ 82FBF48
-	.4byte gUnknown_082FBEE8
-	.4byte gUnknown_082FBEF0
-	.4byte gUnknown_082FBEF8
-	.4byte gUnknown_082FBF00
-	.4byte gUnknown_082FBF08
-	.4byte gUnknown_082FBF10
+	.int gUnknown_082FBEE8
+	.int gUnknown_082FBEF0
+	.int gUnknown_082FBEF8
+	.int gUnknown_082FBF00
+	.int gUnknown_082FBF08
+	.int gUnknown_082FBF10
 
 	.align 2
 gUnknown_082FBF60:: @ 82FBF60
-	.4byte gUnknown_082FBF18
-	.4byte gUnknown_082FBF20
-	.4byte gUnknown_082FBF28
-	.4byte gUnknown_082FBF30
-	.4byte gUnknown_082FBF38
-	.4byte gUnknown_082FBF40
+	.int gUnknown_082FBF18
+	.int gUnknown_082FBF20
+	.int gUnknown_082FBF28
+	.int gUnknown_082FBF30
+	.int gUnknown_082FBF38
+	.int gUnknown_082FBF40
 
 	.align 2
 gUnknown_082FBF78:: @ 82FBF78
@@ -242,23 +242,23 @@ gUnknown_082FBFD8:: @ 82FBFD8
 
 	.align 2
 gUnknown_082FBFE0:: @ 82FBFE0
-	.2byte 0x0000, 0x0000
-	.2byte 0xffff, 0x0000
+	.short 0x0000, 0x0000
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FBFE8:: @ 82FBFE8
-	.2byte 0x0000, 0x0004
-	.2byte 0x0004, 0x0004
-	.2byte 0x0008, 0x0004
-	.2byte 0x000c, 0x0004
-	.2byte 0xfffd, 0x0001
-	.2byte 0x0000, 0x0004
-	.2byte 0xffff, 0x0000
+	.short 0x0000, 0x0004
+	.short 0x0004, 0x0004
+	.short 0x0008, 0x0004
+	.short 0x000c, 0x0004
+	.short 0xfffd, 0x0001
+	.short 0x0000, 0x0004
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FC004:: @ 82FC004
-	.4byte gUnknown_082FBFE0
-	.4byte gUnknown_082FBFE8
+	.int gUnknown_082FBFE0
+	.int gUnknown_082FBFE8
 
 	.align 2
 gUnknown_082FC00C:: @ 82FC00C
@@ -306,7 +306,7 @@ gPkmnJumpResultsTilemap:: @ 82FDC38
 
 	.align 2
 gUnknown_082FE164:: @ 82FE164 struct BgTemplate
-	.4byte 0x000001b0, 0x000025e6, 0x000016c9, 0x000031df
+	.int 0x000001b0, 0x000025e6, 0x000016c9, 0x000031df
 
 	.align 2
 gUnknown_082FE174:: @ 82FE174
@@ -316,16 +316,16 @@ gUnknown_082FE174:: @ 82FE174
 
 	.align 2
 gUnknown_082FE18C:: @ 82FE18C
-	.4byte 0x00000000, sub_802D150
-	.4byte 0x00000001, sub_802D2E4
-	.4byte 0x00000002, sub_802D350
-	.4byte 0x00000003, sub_802D3BC
-	.4byte 0x00000004, sub_802D448
-	.4byte 0x00000005, sub_802D4F4
-	.4byte 0x00000006, sub_802D598
-	.4byte 0x00000007, sub_802D5E4
-	.4byte 0x00000009, sub_802D72C
-	.4byte 0x00000008, sub_802D688
+	.int 0x00000000, sub_802D150
+	.int 0x00000001, sub_802D2E4
+	.int 0x00000002, sub_802D350
+	.int 0x00000003, sub_802D3BC
+	.int 0x00000004, sub_802D448
+	.int 0x00000005, sub_802D4F4
+	.int 0x00000006, sub_802D598
+	.int 0x00000007, sub_802D5E4
+	.int 0x00000009, sub_802D72C
+	.int 0x00000008, sub_802D688
 
 	.align 2
 gUnknown_082FE1DC:: @ 82FE1DC
@@ -345,57 +345,57 @@ gUnknown_082FE1F4:: @ 82FE1F4
 
 	.align 2
 gUnknown_082FE1FC:: @ 82FE1FC
-	.2byte 0x0006, 0x0008, 0x0010, 0x0008
+	.short 0x0006, 0x0008, 0x0010, 0x0008
 
 	.align 2
 gUnknown_082FE204:: @ 82FE204
-	.2byte 0x0006, 0x0008, 0x000b, 0x0006, 0x0010, 0x0008
+	.short 0x0006, 0x0008, 0x000b, 0x0006, 0x0010, 0x0008
 
 	.align 2
 gUnknown_082FE210:: @ 82FE210
-	.2byte 0x0002, 0x0006, 0x0006, 0x0008, 0x0010, 0x0008, 0x0014, 0x0006
+	.short 0x0002, 0x0006, 0x0006, 0x0008, 0x0010, 0x0008, 0x0014, 0x0006
 
 	.align 2
 gUnknown_082FE220:: @ 82FE220
-	.2byte 0x0002, 0x0006, 0x0006, 0x0008, 0x000b, 0x0006
-	.2byte 0x0010, 0x0008, 0x0014, 0x0006
+	.short 0x0002, 0x0006, 0x0006, 0x0008, 0x000b, 0x0006
+	.short 0x0010, 0x0008, 0x0014, 0x0006
 
 	.align 2
 gUnknown_082FE234:: @ 82FE234
-	.4byte gUnknown_082FE1FC
-	.4byte gUnknown_082FE204
-	.4byte gUnknown_082FE210
-	.4byte gUnknown_082FE220
+	.int gUnknown_082FE1FC
+	.int gUnknown_082FE204
+	.int gUnknown_082FE210
+	.int gUnknown_082FE220
 
 	.align 2
 gUnknown_082FE244:: @ 82FE244
-	.2byte 0x0058, 0x0098
+	.short 0x0058, 0x0098
 
 gUnknown_082FE248:: @ 82FE248
-	.2byte 0x0058, 0x0078, 0x0098
+	.short 0x0058, 0x0078, 0x0098
 
 gUnknown_082FE24E:: @ 82FE24E
-	.2byte 0x0038, 0x0058, 0x0098, 0x00b8
+	.short 0x0038, 0x0058, 0x0098, 0x00b8
 
 gUnknown_082FE256:: @ 82FE256
-	.2byte 0x0038, 0x0058, 0x0078, 0x0098, 0x00b8
+	.short 0x0038, 0x0058, 0x0078, 0x0098, 0x00b8
 
 	.align 2
 gUnknown_082FE260:: @ 82FE260
-	.4byte gUnknown_082FE244
-	.4byte gUnknown_082FE248
-	.4byte gUnknown_082FE24E
-	.4byte gUnknown_082FE256
+	.int gUnknown_082FE244
+	.int gUnknown_082FE248
+	.int gUnknown_082FE24E
+	.int gUnknown_082FE256
 
 	.align 2
 gUnknown_082FE270:: @ 82FE270
-	.4byte 0x1c010100, 0x00010f09
+	.int 0x1c010100, 0x00010f09
 
 	.align 2
 gUnknown_082FE278:: @ 82FE278
-	.4byte gText_JumpsInARow
-	.4byte gText_BestScore2
-	.4byte gText_ExcellentsInARow
+	.int gText_JumpsInARow
+	.int gText_BestScore2
+	.int gText_ExcellentsInARow
 
 	.align 2
 gPkmnJump321StartPal1:: @ 82FE284
@@ -417,42 +417,42 @@ gUnknown_082FE6D8:: @ 82FE6D8
 
 	.align 2
 gUnknown_082FE6E8:: @ 82FE6E8
-	.2byte 0x0000, 0x0000
-	.2byte 0xffff, 0x0000
+	.short 0x0000, 0x0000
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FE6F0:: @ 82FE6F0
-	.2byte 0x0010, 0x0000
-	.2byte 0xffff, 0x0000
+	.short 0x0010, 0x0000
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FE6F8:: @ 82FE6F8
-	.2byte 0x0020, 0x0000
-	.2byte 0xffff, 0x0000
+	.short 0x0020, 0x0000
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FE700:: @ 82FE700
-	.2byte 0x0040, 0x0000
-	.2byte 0xffff, 0x0000
+	.short 0x0040, 0x0000
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FE708:: @ 82FE708
-	.2byte 0x0030, 0x0000
-	.2byte 0xffff, 0x0000
+	.short 0x0030, 0x0000
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FE710:: @ 82FE710
-	.2byte 0x0050, 0x0000
-	.2byte 0xffff, 0x0000
+	.short 0x0050, 0x0000
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FE718:: @ 82FE718
-	.4byte gUnknown_082FE6E8
-	.4byte gUnknown_082FE6F0
-	.4byte gUnknown_082FE6F8
-	.4byte gUnknown_082FE700
-	.4byte gUnknown_082FE708
-	.4byte gUnknown_082FE710
+	.int gUnknown_082FE6E8
+	.int gUnknown_082FE6F0
+	.int gUnknown_082FE6F8
+	.int gUnknown_082FE700
+	.int gUnknown_082FE708
+	.int gUnknown_082FE710
 
 	.align 2
 gUnknown_082FE730:: @ 82FE730
@@ -460,10 +460,10 @@ gUnknown_082FE730:: @ 82FE730
 
 	.align 2
 gUnknown_082FE748:: @ 82FE748
-	.4byte sub_802E83C
-	.4byte sub_802E8C8
-	.4byte sub_802EA50
-	.4byte sub_802EAB0
+	.int sub_802E83C
+	.int sub_802E8C8
+	.int sub_802EA50
+	.int sub_802EAB0
 
 	.align 2
 gPkmnJump321StartPal2:: @ 82FE758
@@ -491,80 +491,80 @@ gUnknown_082FEBE4:: @ 82FEBE4
 
 	.align 2
 gUnknown_082FEBEC:: @ 82FEBEC
-	.2byte 0x0000, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0000, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FEBF4:: @ 82FEBF4
-	.2byte 0x0010, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0010, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FEBFC:: @ 82FEBFC
-	.2byte 0x0020, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0020, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FEC04:: @ 82FEC04
-	.4byte gUnknown_082FEBEC
-	.4byte gUnknown_082FEBF4
-	.4byte gUnknown_082FEBFC
+	.int gUnknown_082FEBEC
+	.int gUnknown_082FEBF4
+	.int gUnknown_082FEBFC
 
 	.align 2
 gUnknown_082FEC10:: @ 82FEC10
-	.2byte 0x0030, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0030, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FEC18:: @ 82FEC18
-	.2byte 0x0050, 0x0001
-	.2byte 0xffff, 0x0000
+	.short 0x0050, 0x0001
+	.short 0xffff, 0x0000
 
 	.align 2
 gUnknown_082FEC20:: @ 82FEC20
-	.4byte gUnknown_082FEC10
-	.4byte gUnknown_082FEC18
+	.int gUnknown_082FEC10
+	.int gUnknown_082FEC18
 
 	.align 2
 gUnknown_082FEC28:: @ 82FEC28
-	.2byte 0x0100, 0x0100
-	.2byte 0x0000, 0x0000
-	.2byte 0x7fff, 0x0000
-	.2byte 0x0000, 0x0000
+	.short 0x0100, 0x0100
+	.short 0x0000, 0x0000
+	.short 0x7fff, 0x0000
+	.short 0x0000, 0x0000
 
 	.align 2
 gUnknown_082FEC38:: @ 82FEC38
-	.2byte 0x0100, 0x0100
-	.2byte 0x0000, 0x0000
-	.2byte 0x0010, 0xfff0
-	.2byte 0x0800, 0x0000
-	.2byte 0x7fff, 0x0000
-	.2byte 0x0000, 0x0000
+	.short 0x0100, 0x0100
+	.short 0x0000, 0x0000
+	.short 0x0010, 0xfff0
+	.short 0x0800, 0x0000
+	.short 0x7fff, 0x0000
+	.short 0x0000, 0x0000
 
 	.align 2
 gUnknown_082FEC50:: @ 82FEC50
-	.2byte 0xffee, 0x0012
-	.2byte 0x0800, 0x0000
-	.2byte 0x7fff, 0x0000
-	.2byte 0x0000, 0x0000
+	.short 0xffee, 0x0012
+	.short 0x0800, 0x0000
+	.short 0x7fff, 0x0000
+	.short 0x0000, 0x0000
 
 	.align 2
 gUnknown_082FEC60:: @ 82FEC60
-	.2byte 0x0006, 0xfffa
-	.2byte 0x0800, 0x0000
-	.2byte 0xfffc, 0x0004
-	.2byte 0x0800, 0x0000
-	.2byte 0x0100, 0x0100
-	.2byte 0x0000, 0x0000
-	.2byte 0x7fff, 0x0000
-	.2byte 0x0000, 0x0000
+	.short 0x0006, 0xfffa
+	.short 0x0800, 0x0000
+	.short 0xfffc, 0x0004
+	.short 0x0800, 0x0000
+	.short 0x0100, 0x0100
+	.short 0x0000, 0x0000
+	.short 0x7fff, 0x0000
+	.short 0x0000, 0x0000
 
 	.align 2
 gUnknown_082FEC80:: @ 82FEC80
-	.4byte gUnknown_082FEC28
-	.4byte gUnknown_082FEC38
-	.4byte gUnknown_082FEC50
-	.4byte gUnknown_082FEC60
+	.int gUnknown_082FEC28
+	.int gUnknown_082FEC38
+	.int gUnknown_082FEC50
+	.int gUnknown_082FEC60
 
 gUnknown_082FEC90:: @ 82FEC90
 	spr_template 0x0000, 0x0000, gUnknown_082FEBDC, gUnknown_082FEC04, NULL, gUnknown_082FEC80, SpriteCallbackDummy
