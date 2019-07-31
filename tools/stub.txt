@@ -1,5 +1,0 @@
-STUB_FUNC(void MultiBootInit(struct MultiBootParam *mp))
-STUB_FUNC(int MultiBootMain(struct MultiBootParam *mp))
-STUB_FUNC(void MultiBootStartProbe(struct MultiBootParam *mp))
-STUB_FUNC(void MultiBootStartMaster(struct MultiBootParam *mp, const u8 *srcp, int length, u8 palette_color, s8 palette_speed))
-STUB_FUNC(int MultiBootCheckComplete(struct MultiBootParam *mp))
