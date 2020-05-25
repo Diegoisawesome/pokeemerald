@@ -40,7 +40,7 @@ bool isRunning = true;
 double simTime = 0;
 double lastGameTime = 0;
 double curGameTime = 0;
-double fixedTimestep = 1000.0 / 60.0; // 16.666667ms
+double fixedTimestep = 1.0 / 60.0; // 16.666667ms
 double timeScale = 1.0;
 
 extern void AgbMain(void);
@@ -106,17 +106,16 @@ int main(int argc, char **argv)
     while (isRunning)
     {
         ProcessEvents();
+        double dt = fixedTimestep / timeScale; // TODO: Fix speedup
 
         curGameTime = SDL_GetPerformanceCounter();
-        double deltaTime = (double)((curGameTime - lastGameTime) * 1000 / (double)SDL_GetPerformanceFrequency());
-        if (deltaTime > 250.0)
-            deltaTime = 250.0;
+        double deltaTime = (double)((curGameTime - lastGameTime) / (double)SDL_GetPerformanceFrequency());
+        if (deltaTime > .025)
+            deltaTime = dt;
         lastGameTime = curGameTime;
 
         accumulator += deltaTime;
 
-        double dt = fixedTimestep/* / timeScale*/; // TODO: Fix speedup
-        printf("%lf\n", accumulator);
         while (accumulator >= dt && SDL_AtomicGet(&isFrameAvailable))
         {
             VDraw(sdlTexture);
