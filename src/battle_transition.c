@@ -2559,6 +2559,10 @@ static bool8 Phase2_Slice_Func3(struct Task *task)
 {
     DmaStop(0);
     sub_8149F84();
+#ifdef PORTABLE
+    gMain.vblankCallback = NULL; // fixes use after free of sTransitionStructPtr in callbacks
+    gMain.hblankCallback = NULL;
+#endif
     DestroyTask(FindTaskIdByFunc(Phase2Task_Slice));
     return FALSE;
 }
