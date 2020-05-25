@@ -41,7 +41,7 @@ u16 WaitForFlashWrite_DUMMY(u8 phase, u8 *addr, u8 lastData)
 u16 EraseFlashChip_DUMMY(void)
 {
     puts("EraseFlashChip_DUMMY");
-    FILE * savefile = fopen("pokeruby.sav", "w+b");
+    FILE * savefile = fopen("pokeemerald.sav", "w+b");
     fclose(savefile);
     return 0;
 }
