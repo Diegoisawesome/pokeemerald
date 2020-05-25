@@ -1816,7 +1816,15 @@ void SetBattlerSpriteYOffsetFromYScale(u8 spriteId)
 {
     int var = 64 - GetBattlerYDeltaFromSpriteId(spriteId) * 2;
     u16 matrix = gSprites[spriteId].oam.matrixNum;
+
+#ifdef PORTABLE
+    // divide by zero occurs here
+    int var2 = 128;
+    if (gOamMatrices[matrix].d != 0)
+        var2 = (var << 8) / gOamMatrices[matrix].d;
+#else
     int var2 = (var << 8) / gOamMatrices[matrix].d;
+#endif
 
     if (var2 > 128)
         var2 = 128;
@@ -1829,7 +1837,15 @@ void SetBattlerSpriteYOffsetFromOtherYScale(u8 spriteId, u8 otherSpriteId)
 {
     int var = 64 - GetBattlerYDeltaFromSpriteId(otherSpriteId) * 2;
     u16 matrix = gSprites[spriteId].oam.matrixNum;
+
+#ifdef PORTABLE
+    // divide by zero occurs here
+    int var2 = 128;
+    if (gOamMatrices[matrix].d != 0)
+        var2 = (var << 8) / gOamMatrices[matrix].d;
+#else
     int var2 = (var << 8) / gOamMatrices[matrix].d;
+#endif
 
     if (var2 > 128)
         var2 = 128;

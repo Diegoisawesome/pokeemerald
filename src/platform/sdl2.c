@@ -141,8 +141,8 @@ int main(int argc, char **argv)
 // Key mappings
 #define KEY_A_BUTTON      SDLK_x
 #define KEY_B_BUTTON      SDLK_z
-#define KEY_START_BUTTON  SDLK_RETURN
-#define KEY_SELECT_BUTTON SDLK_BACKSPACE
+#define KEY_START_BUTTON  SDLK_RSHIFT
+#define KEY_SELECT_BUTTON SDLK_BACKSLASH
 #define KEY_L_BUTTON      SDLK_a
 #define KEY_R_BUTTON      SDLK_s
 #define KEY_DPAD_UP       SDLK_UP
@@ -733,7 +733,7 @@ static void RenderBGScanline(uint16_t control, uint16_t hoffs, uint16_t voffs, i
 
         unsigned int mapX = xx / 8;
         unsigned int mapY = yy / 8;
-        uint16_t entry = bgmap[mapY * mapWidth + mapX];
+        uint16_t entry = bgmap[mapY * 32 + mapX];
 
         unsigned int tileNum = entry & 0x3FF;
         unsigned int paletteNum = (entry >> 12) & 0xF;

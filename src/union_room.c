@@ -4113,7 +4113,7 @@ void sub_8016934(void)
     gUnknown_02022C20[0] = EOS;
 }
 
-void sub_801697C(u8 taskId)
+/*void sub_801697C(u8 taskId)
 {
     s32 i;
     u8 text[32];
@@ -4180,7 +4180,7 @@ void sub_801697C(u8 taskId)
         DestroyTask(taskId);
         break;
     }
-}
+}*/
 
 bool16 sp182_move_string(void)
 {

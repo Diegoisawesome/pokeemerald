@@ -147,6 +147,7 @@ void ReadFlash(u16 sectorNum, u32 offset, u8 *dest, u32 size)
     FILE * savefile = fopen("pokeemerald.sav", "r+b");
     if (savefile == NULL)
     {
+        puts("Error opening save file.");
         return;
     }
     if (fseek(savefile, (sectorNum << gFlash->sector.shift) + offset, SEEK_SET))

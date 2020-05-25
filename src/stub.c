@@ -6,6 +6,8 @@
 #define STUB_FUNC(func) func { puts("function \"" #func "\" is a stub"); }
 #define STUB_FUNC_QUIET(func) func {}
 
+STUB_FUNC_QUIET(bool8 HandleLinkConnection())
+STUB_FUNC_QUIET(void sub_801697C())
 STUB_FUNC(void sub_8021A28())
 STUB_FUNC(void sub_8021D34())
 STUB_FUNC(void sub_8022070())

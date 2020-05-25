@@ -1831,7 +1831,7 @@ void sub_800B3A4(u32 who)
     }
 }
 
-bool8 HandleLinkConnection(void)
+/*bool8 HandleLinkConnection(void)
 {
     bool32 r4;
     bool32 r5;
@@ -1858,7 +1858,7 @@ bool8 HandleLinkConnection(void)
         }
     }
     return FALSE;
-}
+}*/
 
 void sub_800B488(void)
 {

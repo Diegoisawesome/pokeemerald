@@ -3923,6 +3923,10 @@ static void FreePSSData(void)
     sub_80D01B8();
     FREE_AND_SET_NULL(sPSSData);
     FreeAllWindowBuffers();
+#ifdef PORTABLE
+    ResetSpriteData(); // UB: sprites reference sPSSData after free
+    SetVBlankHBlankCallbacksToNull(); // UB: VBlank also does
+#endif
 }
 
 static void SetScrollingBackground(void)
@@ -4284,6 +4288,10 @@ static void sub_80CA9EC(void)
 
 static void sub_80CAA14(void)
 {
+#ifdef PORTABLE
+    if (sPSSData == NULL) // UB: references sPSSData after being freed
+        return;
+#endif
     if (sPSSData->unk_02C7 && ++sPSSData->unk_02C8 > 30)
     {
         sPSSData->unk_02C8 = 0;
@@ -5138,7 +5146,12 @@ static bool8 sub_80CC0A0(void)
 
 static void SetMovingMonPriority(u8 priority)
 {
+#ifdef PORTABLE
+    if (sPSSData->movingMonSprite != NULL) // UB: Used before being created
+        sPSSData->movingMonSprite->oam.priority = priority;
+#else
     sPSSData->movingMonSprite->oam.priority = priority;
+#endif
 }
 
 static void sub_80CC100(struct Sprite *sprite)

@@ -340,6 +340,9 @@ static void CloseTrainerCard(u8 taskId)
     FreeAllWindowBuffers();
     FREE_AND_SET_NULL(sData);
     DestroyTask(taskId);
+#ifdef PORTABLE
+    SetVBlankHBlankCallbacksToNull(); // UB: Fixes use after free of sData in VBlank callback
+#endif
 }
 
 static void sub_80C2760(u8 taskId)
