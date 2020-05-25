@@ -36,6 +36,7 @@ SDL_sem *vBlankSemaphore;
 SDL_atomic_t isFrameAvailable;
 bool speedUp = false;
 unsigned int videoScale = 1;
+bool videoScaleChanged = false;
 bool isRunning = true;
 double simTime = 0;
 double lastGameTime = 0;
@@ -64,7 +65,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    sdlWindow = SDL_CreateWindow("pokeemerald", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DISPLAY_WIDTH * 2, DISPLAY_HEIGHT * 2, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    sdlWindow = SDL_CreateWindow("pokeemerald", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DISPLAY_WIDTH * videoScale, DISPLAY_HEIGHT * videoScale, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (sdlWindow == NULL)
     {
         fprintf(stderr, "Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -128,6 +129,12 @@ int main(int argc, char **argv)
             SDL_SemPost(vBlankSemaphore);
 
             accumulator -= dt;
+        }
+
+        if (videoScaleChanged)
+        {
+            SDL_SetWindowSize(sdlWindow, DISPLAY_WIDTH * videoScale, DISPLAY_HEIGHT * videoScale);
+            videoScaleChanged = false;
         }
 
         SDL_RenderPresent(sdlRenderer);
@@ -226,8 +233,8 @@ void ProcessEvents(void)
                     videoScale = h / DISPLAY_HEIGHT;
                 if (videoScale < 1)
                     videoScale = 1;
-                // TODO: Fix hang
-                //SDL_SetWindowSize(sdlWindow, DISPLAY_WIDTH * videoScale, DISPLAY_HEIGHT * videoScale);
+
+                videoScaleChanged = true;
             }
             break;
         }
