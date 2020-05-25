@@ -1741,7 +1741,11 @@ void PrepareAffineAnimInTaskData(struct Task *task, u8 spriteId, const union Aff
 
 bool8 RunAffineAnimFromTaskData(struct Task *task)
 {
+#ifdef PORTABLE
+    gAnimTaskAffineAnim = &((union AffineAnimCmd *)LoadPointerFromVars(task->data[13], task->data[14]))[task->data[7]];
+#else
     gAnimTaskAffineAnim = LoadPointerFromVars(task->data[13], task->data[14]) + (task->data[7] << 3);
+#endif
     switch (gAnimTaskAffineAnim->type)
     {
     default:

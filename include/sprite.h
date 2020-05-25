@@ -89,9 +89,6 @@ struct AffineAnimFrameCmd
     s16 yScale;
     u8 rotation;
     u8 duration;
-#ifdef PORTABLE
-    u8 filler[2]; // to stop from optimizing to 6 bytes and screwing up RunAffineAnimFromTaskData
-#endif
 };
 
 struct AffineAnimLoopCmd
