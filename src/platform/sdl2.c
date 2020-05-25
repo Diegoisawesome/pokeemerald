@@ -33,14 +33,15 @@ SDL_Window *sdlWindow;
 SDL_Renderer *sdlRenderer;
 SDL_Texture *sdlTexture;
 SDL_sem *vBlankSemaphore;
-SDL_TimerID vBlankTimerId;
+SDL_atomic_t isFrameAvailable;
 bool speedUp = false;
 unsigned int videoScale = 1;
 bool isRunning = true;
-Uint64 simTime = 0;
-Uint64 realGameTime = 0;
-float fixedTimestep = 1.0 / 60.0;
-float timeScale = 1.0;
+double simTime = 0;
+double lastGameTime = 0;
+double curGameTime = 0;
+double fixedTimestep = 1000.0 / 60.0; // 16.666667ms
+double timeScale = 1.0;
 
 extern void AgbMain(void);
 
@@ -63,7 +64,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    sdlWindow = SDL_CreateWindow("pokeemerald", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, DISPLAY_WIDTH * 2, DISPLAY_HEIGHT * 2, SDL_WINDOW_SHOWN);
+    sdlWindow = SDL_CreateWindow("pokeemerald", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DISPLAY_WIDTH * 2, DISPLAY_HEIGHT * 2, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (sdlWindow == NULL)
     {
         fprintf(stderr, "Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -92,33 +93,44 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    fixedTimestep *= SDL_GetPerformanceFrequency();
-    simTime = realGameTime = SDL_GetPerformanceCounter();
+    simTime = curGameTime = lastGameTime = SDL_GetPerformanceCounter();
 
+    isFrameAvailable.value = 0;
     vBlankSemaphore = SDL_CreateSemaphore(0);
 
     VDraw(sdlTexture);
     SDL_CreateThread(DoMain, "AgbMain", NULL);
 
+    double accumulator = 0.0;
+
     while (isRunning)
     {
         ProcessEvents();
 
-        realGameTime = SDL_GetPerformanceCounter();
+        curGameTime = SDL_GetPerformanceCounter();
+        double deltaTime = (double)((curGameTime - lastGameTime) * 1000 / (double)SDL_GetPerformanceFrequency());
+        if (deltaTime > 250.0)
+            deltaTime = 250.0;
+        lastGameTime = curGameTime;
 
-        while (simTime < realGameTime)
+        accumulator += deltaTime;
+
+        double dt = fixedTimestep/* / timeScale*/; // TODO: Fix speedup
+        printf("%lf\n", accumulator);
+        while (accumulator >= dt && SDL_AtomicGet(&isFrameAvailable))
         {
+            VDraw(sdlTexture);
+            SDL_RenderClear(sdlRenderer);
+            SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
+
             if (gIntrTable[4] != NULL)
                 gIntrTable[4]();
 
             SDL_SemPost(vBlankSemaphore);
 
-            simTime += fixedTimestep / timeScale;
+            accumulator -= dt;
         }
 
-        VDraw(sdlTexture);
-        SDL_RenderClear(sdlRenderer);
-        SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
         SDL_RenderPresent(sdlRenderer);
     }
 
@@ -197,7 +209,7 @@ void ProcessEvents(void)
                 if (!speedUp)
                 {
                     speedUp = true;
-                    timeScale = 2.0;
+                    timeScale = 5.0;
                 }
                 break;
             }
@@ -215,7 +227,8 @@ void ProcessEvents(void)
                     videoScale = h / DISPLAY_HEIGHT;
                 if (videoScale < 1)
                     videoScale = 1;
-                //surface = SDL_SetVideoMode(DISPLAY_WIDTH * videoScale, DISPLAY_HEIGHT * videoScale, 32, SDL_HWSURFACE | SDL_RESIZABLE);
+                // TODO: Fix hang
+                //SDL_SetWindowSize(sdlWindow, DISPLAY_WIDTH * videoScale, DISPLAY_HEIGHT * videoScale);
             }
             break;
         }
@@ -1226,5 +1239,6 @@ int DoMain(void *data)
 
 void VBlankIntrWait(void)
 {
+    SDL_AtomicSet(&isFrameAvailable, 1);
     SDL_SemWait(vBlankSemaphore);
 }
