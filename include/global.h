@@ -23,6 +23,7 @@
 #define memcpy         _memcpy
 #define memset         _memset
 #define strcmp         _strcmp
+#define strcpy         _strcpy
 #define getc           _getc
 #define printf         _printf
 #define CpuSet         _CpuSet
