@@ -6,7 +6,7 @@
 #include <windows.h>
 #endif
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #define NO_UNDERSCORE_HACK
 
@@ -29,11 +29,24 @@ unsigned char VRAM_[VRAM_SIZE] __attribute__ ((aligned (4)));
 unsigned char OAM[OAM_SIZE] __attribute__ ((aligned (4)));
 unsigned char FLASH_BASE[131072] __attribute__ ((aligned (4)));
 
-SDL_Surface *surface;
+SDL_Window *sdlWindow;
+SDL_Renderer *sdlRenderer;
+SDL_Texture *sdlTexture;
+SDL_sem *vBlankSemaphore;
+SDL_TimerID vBlankTimerId;
 bool speedUp = false;
 unsigned int videoScale = 1;
+bool isRunning = true;
+Uint64 simTime = 0;
+Uint64 realGameTime = 0;
+float fixedTimestep = 1.0 / 60.0;
+float timeScale = 1.0;
 
 extern void AgbMain(void);
+
+int DoMain(void *param);
+void ProcessEvents(void);
+void VDraw(SDL_Texture *texture);
 
 int main(int argc, char **argv)
 {
@@ -44,27 +57,83 @@ int main(int argc, char **argv)
     freopen( "CON", "w", stdout ) ;
 #endif
 
-    SDL_Init(SDL_INIT_VIDEO);
-    surface = SDL_SetVideoMode(DISPLAY_WIDTH, DISPLAY_HEIGHT, 32, SDL_HWSURFACE | SDL_RESIZABLE);
-    if (surface == NULL)
+    if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        //fputs("SDL_SetVideoMode failed.\n", stderr);
-        puts("SDL_SetVideoMode failed.\n");
+        fprintf(stderr, "SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
         return 1;
     }
-    SDL_WM_SetCaption("pokeemerald", NULL);
 
-    AgbMain();
+    sdlWindow = SDL_CreateWindow("pokeemerald", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, DISPLAY_WIDTH * 2, DISPLAY_HEIGHT * 2, SDL_WINDOW_SHOWN);
+    if (sdlWindow == NULL)
+    {
+        fprintf(stderr, "Window could not be created! SDL_Error: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_PRESENTVSYNC);
+    if (sdlRenderer == NULL)
+    {
+        fprintf(stderr, "Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    SDL_SetRenderDrawColor(sdlRenderer, 255, 255, 255, 255);
+    SDL_RenderClear(sdlRenderer);
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
+    SDL_RenderSetLogicalSize(sdlRenderer, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+
+    sdlTexture = SDL_CreateTexture(sdlRenderer,
+                                   SDL_PIXELFORMAT_ARGB8888,
+                                   SDL_TEXTUREACCESS_STREAMING,
+                                   240, 160);
+    if (sdlTexture == NULL)
+    {
+        fprintf(stderr, "Texture could not be created! SDL_Error: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    fixedTimestep *= SDL_GetPerformanceFrequency();
+    simTime = realGameTime = SDL_GetPerformanceCounter();
+
+    vBlankSemaphore = SDL_CreateSemaphore(0);
+
+    VDraw(sdlTexture);
+    SDL_CreateThread(DoMain, "AgbMain", NULL);
+
+    while (isRunning)
+    {
+        ProcessEvents();
+
+        realGameTime = SDL_GetPerformanceCounter();
+
+        while (simTime < realGameTime)
+        {
+            if (gIntrTable[4] != NULL)
+                gIntrTable[4]();
+
+            SDL_SemPost(vBlankSemaphore);
+
+            simTime += fixedTimestep / timeScale;
+        }
+
+        VDraw(sdlTexture);
+        SDL_RenderClear(sdlRenderer);
+        SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
+        SDL_RenderPresent(sdlRenderer);
+    }
+
+    SDL_DestroyWindow(sdlWindow);
+    SDL_Quit();
     return 0;
 }
 
 // Key mappings
-#define KEY_A_BUTTON      SDLK_v
-#define KEY_B_BUTTON      SDLK_b
+#define KEY_A_BUTTON      SDLK_x
+#define KEY_B_BUTTON      SDLK_z
 #define KEY_START_BUTTON  SDLK_RETURN
-#define KEY_SELECT_BUTTON SDLK_SPACE
-#define KEY_L_BUTTON      SDLK_c
-#define KEY_R_BUTTON      SDLK_n
+#define KEY_SELECT_BUTTON SDLK_BACKSPACE
+#define KEY_L_BUTTON      SDLK_a
+#define KEY_R_BUTTON      SDLK_s
 #define KEY_DPAD_UP       SDLK_UP
 #define KEY_DPAD_DOWN     SDLK_DOWN
 #define KEY_DPAD_LEFT     SDLK_LEFT
@@ -76,9 +145,10 @@ case KEY_##key:  keys &= ~key; break;
 #define HANDLE_KEYDOWN(key) \
 case KEY_##key:  keys |= key; break;
 
-u16 Platform_GetKeyInput(void)
+static u16 keys;
+
+void ProcessEvents(void)
 {
-    static u16 keys;
     SDL_Event event;
 
     while (SDL_PollEvent(&event))
@@ -86,7 +156,7 @@ u16 Platform_GetKeyInput(void)
         switch (event.type)
         {
         case SDL_QUIT:
-            exit(0);
+            isRunning = false;
             break;
         case SDL_KEYUP:
             switch (event.key.keysym.sym)
@@ -101,8 +171,12 @@ u16 Platform_GetKeyInput(void)
             HANDLE_KEYUP(DPAD_DOWN)
             HANDLE_KEYUP(DPAD_LEFT)
             HANDLE_KEYUP(DPAD_RIGHT)
-            case SDLK_TAB:
-                speedUp = false;
+            case SDLK_SPACE:
+                if (speedUp)
+                {
+                    speedUp = false;
+                    timeScale = 1.0;
+                }
                 break;
             }
             break;
@@ -119,15 +193,20 @@ u16 Platform_GetKeyInput(void)
             HANDLE_KEYDOWN(DPAD_DOWN)
             HANDLE_KEYDOWN(DPAD_LEFT)
             HANDLE_KEYDOWN(DPAD_RIGHT)
-            case SDLK_TAB:
-                speedUp = true;
+            case SDLK_SPACE:
+                if (!speedUp)
+                {
+                    speedUp = true;
+                    timeScale = 2.0;
+                }
                 break;
             }
             break;
-        case SDL_VIDEORESIZE:
+        case SDL_WINDOWEVENT:
+            if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
             {
-                unsigned int w = event.resize.w;
-                unsigned int h = event.resize.h;
+                unsigned int w = event.window.data1;
+                unsigned int h = event.window.data2;
                 
                 videoScale = 0;
                 if (w / DISPLAY_WIDTH > videoScale)
@@ -136,12 +215,15 @@ u16 Platform_GetKeyInput(void)
                     videoScale = h / DISPLAY_HEIGHT;
                 if (videoScale < 1)
                     videoScale = 1;
-                surface = SDL_SetVideoMode(DISPLAY_WIDTH * videoScale, DISPLAY_HEIGHT * videoScale, 32, SDL_HWSURFACE | SDL_RESIZABLE);
+                //surface = SDL_SetVideoMode(DISPLAY_WIDTH * videoScale, DISPLAY_HEIGHT * videoScale, 32, SDL_HWSURFACE | SDL_RESIZABLE);
             }
             break;
         }
     }
-    
+}
+
+u16 Platform_GetKeyInput(void)
+{
     return keys;
 }
 
@@ -843,7 +925,10 @@ static void RenderTextBGLayer(uint16_t bgcnt, uint16_t bghoffs, uint16_t bgvoffs
     int vcount;
 
     for (vcount = 0; vcount < DISPLAY_HEIGHT; vcount++)
+    {
+        REG_VCOUNT = vcount;
         RenderBGScanline(bgcnt, bghoffs, bgvoffs, vcount, pixels + vcount * DISPLAY_WIDTH);
+    }
 }
 
 static void RenderAffineBGLayer(uint16_t bgcnt, int32_t x, int32_t y, uint32_t *pixels)
@@ -851,7 +936,10 @@ static void RenderAffineBGLayer(uint16_t bgcnt, int32_t x, int32_t y, uint32_t *
     int vcount;
     
     for (vcount = 0; vcount < DISPLAY_HEIGHT; vcount++)
+    {
+        REG_VCOUNT = vcount;
         RenderRotScaleBGScanline(bgcnt, x, y, vcount, pixels + vcount * DISPLAY_WIDTH);
+    }
 }
 
 static uint32_t *target1layer;
@@ -1093,52 +1181,50 @@ static void DrawFrame(uint32_t *pixels)
     }
 }
 
-unsigned long int lastTime = 0;
-
 void ScaleImage(const uint32_t *src, uint32_t *dest, unsigned int scale)
 {
     unsigned int x, y;
 
-    for (x = 0; x < scale * DISPLAY_WIDTH; x++)
+    if (scale == 1)
     {
-        for (y = 0; y < scale * DISPLAY_HEIGHT; y++)
+        memcpy(dest, src, DISPLAY_WIDTH * DISPLAY_HEIGHT * sizeof(uint32_t));
+    }
+    else
+    {
+        for (x = 0; x < scale * DISPLAY_WIDTH; x++)
         {
-            dest[y * scale * DISPLAY_WIDTH + x] = src[(y / scale) * DISPLAY_WIDTH + (x / scale)];
+            for (y = 0; y < scale * DISPLAY_HEIGHT; y++)
+            {
+                dest[y * scale * DISPLAY_WIDTH + x] = src[(y / scale) * DISPLAY_WIDTH + (x / scale)];
+            }
         }
     }
 }
 
-void VBlankIntrWait(void)
+uint32_t *memsetu32(uint32_t *dst, uint32_t fill, size_t count)
+{
+    for (int i = 0; i < count; i++)
+    {
+        *dst++ = fill;
+    }
+}
+
+void VDraw(SDL_Texture *texture)
 {
     static uint32_t image[DISPLAY_WIDTH * DISPLAY_HEIGHT];
 
-    unsigned long int time = SDL_GetTicks();
-    if ((1000 / 60) > (time - lastTime) && !speedUp)
-    {
-        SDL_Delay((1000 / 60) - (time - lastTime));
-    }
-    lastTime = SDL_GetTicks();
-
-    if (SDL_MUSTLOCK(surface))
-        SDL_LockSurface(surface);
-    if (videoScale == 1)
-    {
-        memset(surface->pixels, 0, surface->h * surface->pitch);
-        DrawFrame(surface->pixels);
-    }
-    else
-    {
-        memset(image, 0, sizeof(image));
-        DrawFrame(image);
-        ScaleImage(image, surface->pixels, videoScale);
-    }
-    if (SDL_MUSTLOCK(surface))
-        SDL_UnlockSurface(surface);
-    SDL_Flip(surface);
-    gIntrTable[4]();
-    /*
-    if (!speedUp)
-        SDL_Delay(1000 / 60);
-    */
+    memsetu32(image, ConvertPixel(*(uint16_t *)PLTT), ARRAY_COUNT(image));
+    DrawFrame(image);
+    SDL_UpdateTexture(texture, NULL, image, DISPLAY_WIDTH * sizeof (Uint32));
+    REG_VCOUNT = 161; // prep for being in VBlank period
 }
 
+int DoMain(void *data)
+{
+    AgbMain();
+}
+
+void VBlankIntrWait(void)
+{
+    SDL_SemWait(vBlankSemaphore);
+}
