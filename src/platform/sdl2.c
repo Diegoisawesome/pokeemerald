@@ -28,6 +28,7 @@ unsigned char VRAM_[VRAM_SIZE] __attribute__ ((aligned (4)));
 unsigned char OAM[OAM_SIZE] __attribute__ ((aligned (4)));
 unsigned char FLASH_BASE[131072] __attribute__ ((aligned (4)));
 
+SDL_Thread *mainLoopThread;
 SDL_Window *sdlWindow;
 SDL_Renderer *sdlRenderer;
 SDL_Texture *sdlTexture;
@@ -102,7 +103,7 @@ int main(int argc, char **argv)
     vBlankSemaphore = SDL_CreateSemaphore(0);
 
     VDraw(sdlTexture);
-    SDL_CreateThread(DoMain, "AgbMain", NULL);
+    mainLoopThread = SDL_CreateThread(DoMain, "AgbMain", NULL);
 
     double accumulator = 0.0;
 
@@ -671,7 +672,7 @@ void ObjAffineSet(struct ObjAffineSrcData *src, void *dest, s32 count, s32 offse
         s16 ry = src[i].yScale;
         u16 theta = src[i].rotation>>8;
 
-        s32 a = (s32)sineTable[(theta+0x40)&255];
+        s32 a = (s32)sineTable[(theta + 64) & 255];
         s32 b = (s32)sineTable[theta];
 
         s16 dx =  ((s32)rx * a)>>14;
@@ -865,10 +866,10 @@ static void RenderRotScaleBGScanline(int bgNum, uint16_t control, uint16_t x, ui
     uint16_t *pal = (uint16_t *)PLTT;
     int prio = ((bgcnt->priority) << 25) + 0x1000000;
 
-    u16 pa = getBgPA(bgNum);
-    u16 pb = getBgPB(bgNum);
-    u16 pc = getBgPC(bgNum);
-    u16 pd = getBgPD(bgNum);
+    s16 pa = getBgPA(bgNum);
+    s16 pb = getBgPB(bgNum);
+    s16 pc = getBgPC(bgNum);
+    s16 pd = getBgPD(bgNum);
 
     int sizeX = 128;
     int sizeY = 128;
@@ -893,7 +894,7 @@ static void RenderRotScaleBGScanline(int bgNum, uint16_t control, uint16_t x, ui
 
     int yshift = ((control >> 14) & 3) + 4;
 
-    int dx = pa & 0x7FFF;
+    /*int dx = pa & 0x7FFF;
     if (pa & 0x8000)
         dx |= 0xFFFF8000;
     int dmx = pb & 0x7FFF;
@@ -904,13 +905,13 @@ static void RenderRotScaleBGScanline(int bgNum, uint16_t control, uint16_t x, ui
         dy |= 0xFFFF8000;
     int dmy = pd & 0x7FFF;
     if (pd & 0x8000)
-        dmy |= 0xFFFF8000;
+        dmy |= 0xFFFF8000;*/
 
     int currentX = getBgX(bgNum);
     int currentY = getBgY(bgNum);
 
-    currentX += lineNum * dmx;
-    currentY += lineNum * dmy;
+    currentX += lineNum * pb;
+    currentY += lineNum * pd;
 
     int realX = currentX;
     int realY = currentY;
@@ -932,8 +933,8 @@ static void RenderRotScaleBGScanline(int bgNum, uint16_t control, uint16_t x, ui
             if (pixel != 0)
                 line[x] = ConvertPixel(pal[pixel]) | prio;
 
-            realX += dx;
-            realY += dy;
+            realX += pa;
+            realY += pc;
         }
     }
     else
@@ -959,8 +960,8 @@ static void RenderRotScaleBGScanline(int bgNum, uint16_t control, uint16_t x, ui
                 if (pixel != 0)
                     line[x] = ConvertPixel(pal[pixel]) | prio;
             }
-            realX += dx;
-            realY += dy;
+            realX += pa;
+            realY += pc;
         }
     }
 }
@@ -1059,7 +1060,7 @@ static void DrawSprites(uint32_t layers[4][DISPLAY_WIDTH * DISPLAY_HEIGHT])
                             continue;
                         }
                         */
-                        u16 pa, pb, pc, pd;
+                        s16 pa, pb, pc, pd;
 
                         //TODO: This is what i (MCboy) thought of for getting the affine parameters
                         //TODO: there is probably a better way to do this
@@ -1111,7 +1112,7 @@ static void DrawSprites(uint32_t layers[4][DISPLAY_WIDTH * DISPLAY_HEIGHT])
                             color = ConvertPixel(palette[pixel]);
 
                             if (scrx < DISPLAY_WIDTH && scry < DISPLAY_HEIGHT && scry > 0 && scrx > 0)
-                                pixels[scry * DISPLAY_WIDTH + scrx] = ConvertPixel(palette[pixel]);
+                                pixels[scry * DISPLAY_WIDTH + scrx] = color;
                         }
                     }
                 }
