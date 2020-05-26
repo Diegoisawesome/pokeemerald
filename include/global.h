@@ -34,11 +34,19 @@
 #define SoftReset _SoftReset
 #define LZ77UnCompVram _LZ77UnCompVram
 #define LZ77UnCompWram _LZ77UnCompWram
-#define Platform_GetKeyInput _Platform_GetKeyInput
 #define AgbMain _AgbMain
 #define gIntrTable _gIntrTable
 #define VBlankIntrWait _VBlankIntrWait
-#define GPIOPortDirection _GPIOPortDirection
+#define ConvertBcdToBinary _ConvertBcdToBinary
+#define DoSoftReset _DoSoftReset
+#define Platform_GetKeyInput _Platform_GetKeyInput
+#define Platform_GetStatus _Platform_GetStatus
+#define Platform_SetStatus _Platform_SetStatus
+#define Platform_GetDateTime _Platform_GetDateTime
+#define Platform_SetDateTime _Platform_SetDateTime
+#define Platform_GetTime _Platform_GetTime
+#define Platform_SetTime _Platform_SetTime
+#define Platform_SetAlarm _Platform_SetAlarm
 #endif
 
 #include "config.h" // we need to define config before gba headers as print stuff needs the functions nulled before defines.
@@ -52,6 +60,7 @@
 #define asm_comment(x) asm volatile("@ -- " x " -- ")
 #define asm_unified(x) asm(".syntax unified\n" x "\n.syntax divided")
 #define NAKED __attribute__((naked))
+#define ALIGN32 __attribute__((aligned(4)))
 
 // IDE support
 #if defined (__APPLE__) || defined (__CYGWIN__) || defined (_MSC_VER)
@@ -187,7 +196,7 @@ struct Time
     /*0x02*/ s8 hours;
     /*0x03*/ s8 minutes;
     /*0x04*/ s8 seconds;
-};
+} ALIGN32;
 
 #define DEX_FLAGS_NO ((POKEMON_SLOTS_NUMBER / 8) + ((POKEMON_SLOTS_NUMBER % 8) ? 1 : 0))
 
@@ -342,7 +351,7 @@ struct BattleDomeTrainer
     u16 isEliminated:1;
     u16 eliminatedAt:2;
     u16 unk3:3;
-};
+} ALIGN32;
 
 #define DOME_TOURNAMENT_TRAINERS_COUNT 16
 
@@ -569,7 +578,7 @@ struct Pokeblock
     u8 bitter;
     u8 sour;
     u8 feel;
-};
+} ALIGN32;
 
 struct Roamer
 {
@@ -619,7 +628,7 @@ struct MailStruct
     /*0x1A*/ u8 trainerId[4];
     /*0x1E*/ u16 species;
     /*0x20*/ u16 itemId;
-};
+} ALIGN32;
 
 struct MauvilleManCommon
 {

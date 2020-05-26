@@ -450,7 +450,6 @@ bool8 IsDma3ManagerBusyWithBgCopy(void)
     int i;
 
 #ifdef PORTABLE
-    extern void VBlankIntrWait(void);
     // HACK: this is often called in a tight loop, not allowing the VBlank thread to run.
     // Suspend thread for now.
     VBlankIntrWait();

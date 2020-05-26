@@ -5,6 +5,10 @@
 	.int \ptr
 	.endm
 
+.ifndef NO_UNDERSCORE_HACK
+	.set DoSoftReset, _DoSoftReset
+.endif
+
 .set __special__, 0
 		.align 2
 gSpecials:: @ 81DBA64

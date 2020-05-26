@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <time.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -12,14 +13,12 @@
 
 #include "global.h"
 #include "platform.h"
+#include "rtc.h"
 #include "gba/defines.h"
 #include "gba/m4a_internal.h"
 //#include "gba/flash_internal.h"
 
 extern void (*const gIntrTable[])(void);
-
-// GBA memory
-vu16 GPIOPortDirection;
 
 u16 INTR_CHECK;
 void *INTR_VECTOR;
@@ -43,12 +42,15 @@ double lastGameTime = 0;
 double curGameTime = 0;
 double fixedTimestep = 1.0 / 60.0; // 16.666667ms
 double timeScale = 1.0;
+struct SiiRtcInfo internalClock;
 
 extern void AgbMain(void);
+extern void DoSoftReset(void);
 
 int DoMain(void *param);
 void ProcessEvents(void);
 void VDraw(SDL_Texture *texture);
+static void UpdateInternalClock(void);
 
 int main(int argc, char **argv)
 {
@@ -103,6 +105,10 @@ int main(int argc, char **argv)
     SDL_CreateThread(DoMain, "AgbMain", NULL);
 
     double accumulator = 0.0;
+
+    memset(&internalClock, 0, sizeof(internalClock));
+    internalClock.status = SIIRTCINFO_24HOUR;
+    UpdateInternalClock();
 
     while (isRunning)
     {
@@ -215,6 +221,12 @@ void ProcessEvents(void)
             HANDLE_KEYDOWN(DPAD_DOWN)
             HANDLE_KEYDOWN(DPAD_LEFT)
             HANDLE_KEYDOWN(DPAD_RIGHT)
+            case SDLK_r:
+                if (event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL))
+                {
+                    DoSoftReset();
+                }
+                break;
             case SDLK_SPACE:
                 if (!speedUp)
                 {
@@ -1523,4 +1535,95 @@ void VBlankIntrWait(void)
 {
     SDL_AtomicSet(&isFrameAvailable, 1);
     SDL_SemWait(vBlankSemaphore);
+}
+
+u8 BinToBcd(u8 bin)
+{
+    int placeCounter = 1;
+    u8 out = 0;
+    do
+    {
+        out |= (bin % 10) * placeCounter;
+        placeCounter *= 16;
+    }
+    while ((bin /= 10) > 0);
+
+    return out;
+}
+
+void Platform_GetStatus(struct SiiRtcInfo *rtc)
+{
+    rtc->status = internalClock.status;
+}
+
+void Platform_SetStatus(struct SiiRtcInfo *rtc)
+{
+    internalClock.status = rtc->status;
+}
+
+static void UpdateInternalClock(void)
+{
+    time_t rawTime = time(NULL);
+    struct tm *time = localtime(&rawTime);
+
+    internalClock.year = BinToBcd(time->tm_year - 100);
+    internalClock.month = BinToBcd(time->tm_mon) + 1;
+    internalClock.day = BinToBcd(time->tm_mday);
+    internalClock.dayOfWeek = BinToBcd(time->tm_wday);
+    internalClock.hour = BinToBcd(time->tm_hour);
+    internalClock.minute = BinToBcd(time->tm_min);
+    internalClock.second = BinToBcd(time->tm_sec);
+}
+
+void Platform_GetDateTime(struct SiiRtcInfo *rtc)
+{
+    UpdateInternalClock();
+
+    rtc->year = internalClock.year;
+    rtc->month = internalClock.month;
+    rtc->day = internalClock.day;
+    rtc->dayOfWeek = internalClock.dayOfWeek;
+    rtc->hour = internalClock.hour;
+    rtc->minute = internalClock.minute;
+    rtc->second = internalClock.second;
+    printf("GetDateTime: %d-%02d-%02d %02d:%02d:%02d\n", ConvertBcdToBinary(rtc->year),
+                                                         ConvertBcdToBinary(rtc->month),
+                                                         ConvertBcdToBinary(rtc->day),
+                                                         ConvertBcdToBinary(rtc->hour),
+                                                         ConvertBcdToBinary(rtc->minute),
+                                                         ConvertBcdToBinary(rtc->second));
+}
+
+void Platform_SetDateTime(struct SiiRtcInfo *rtc)
+{
+    internalClock.month = rtc->month;
+    internalClock.day = rtc->day;
+    internalClock.dayOfWeek = rtc->dayOfWeek;
+    internalClock.hour = rtc->hour;
+    internalClock.minute = rtc->minute;
+    internalClock.second = rtc->second;
+}
+
+void Platform_GetTime(struct SiiRtcInfo *rtc)
+{
+    UpdateInternalClock();
+
+    rtc->hour = internalClock.hour;
+    rtc->minute = internalClock.minute;
+    rtc->second = internalClock.second;
+    printf("GetTime: %02d:%02d:%02d\n", ConvertBcdToBinary(rtc->hour),
+                                        ConvertBcdToBinary(rtc->minute),
+                                        ConvertBcdToBinary(rtc->second));
+}
+
+void Platform_SetTime(struct SiiRtcInfo *rtc)
+{
+    internalClock.hour = rtc->hour;
+    internalClock.minute = rtc->minute;
+    internalClock.second = rtc->second;
+}
+
+void Platform_SetAlarm(u8 *alarmData)
+{
+    // TODO
 }
