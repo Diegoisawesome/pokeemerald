@@ -974,12 +974,16 @@ const u8 spriteSizes[][2] =
     {32, 64},
 };
 
-static void DrawSprites(uint32_t layers[4][DISPLAY_WIDTH * DISPLAY_HEIGHT])
+// Parts of this code heavily borrowed from NanoboyAdvance.
+static void DrawSprites(uint32_t layers[4][DISPLAY_WIDTH], uint16_t vcount)
 {
     int i;
     unsigned int x;
     unsigned int y;
     void *objtiles = VRAM_ + 0x10000;
+    unsigned int blendMode = (REG_BLDCNT >> 6) & 3;
+
+    int16_t matrix[2][2] = {};
 
     if (!(REG_DISPCNT & (1 << 6)))
     {
@@ -988,13 +992,15 @@ static void DrawSprites(uint32_t layers[4][DISPLAY_WIDTH * DISPLAY_HEIGHT])
 
     for (i = 127; i >= 0; i--)
     {
-        struct OamData *oam = (struct OamData *)(OAM + 8 * i);
+        struct OamData *oam = &((struct OamData *)OAM)[i];
         unsigned int width;
         unsigned int height;
         uint32_t *pixels;
-        unsigned int blendMode = (REG_BLDCNT >> 6) & 3;
 
-        if (!(oam->affineMode & 1) && oam->affineMode & 2) // Sprite disabled
+        bool isAffine  = oam->affineMode & 1;
+        bool doubleSizeOrDisabled = (oam->affineMode >> 1) & 1;
+
+        if (!(isAffine) && doubleSizeOrDisabled) // disable for non-affine
         {
             continue;
         }
@@ -1017,7 +1023,9 @@ static void DrawSprites(uint32_t layers[4][DISPLAY_WIDTH * DISPLAY_HEIGHT])
             height = spriteSizes[oam->size][1];
         }
         else
-            break; // prohibited
+        {
+            continue; // prohibited, do not draw
+        }
 
         int rect_width = width;
         int rect_height = height;
@@ -1027,226 +1035,119 @@ static void DrawSprites(uint32_t layers[4][DISPLAY_WIDTH * DISPLAY_HEIGHT])
 
         pixels = layers[oam->priority];
 
-        // TODO: Still buggy please finish
-        if (oam->affineMode & 1) // Rotation/Scaling enabled
-        {
-            int x, y;
-            x = oam->x + half_width;
-            y = oam->y + half_height;
+        int32_t x = oam->x;
+        int32_t y = oam->y;
 
-            if (oam->affineMode & 2) // double size flag
+        if (x >= 240)
+            x -= 512;
+        if (y >= 160)
+            y -= 256;
+
+        if (isAffine)
+        {
+            //TODO: there is probably a better way to do this
+            u8 matrixNum = oam->matrixNum * 4;
+
+            struct OamData *oam1 = &((struct OamData *)OAM)[matrixNum];
+            struct OamData *oam2 = &((struct OamData *)OAM)[matrixNum + 1];
+            struct OamData *oam3 = &((struct OamData *)OAM)[matrixNum + 2];
+            struct OamData *oam4 = &((struct OamData *)OAM)[matrixNum + 3];
+
+            matrix[0][0] = oam1->affineParam;
+            matrix[0][1] = oam2->affineParam;
+            matrix[1][0] = oam3->affineParam;
+            matrix[1][1] = oam4->affineParam;
+
+            if (doubleSizeOrDisabled) // double size for affine
             {
-                x += half_width;
-                y += half_height;
                 rect_width *= 2;
                 rect_height *= 2;
                 half_width *= 2;
                 half_height *= 2;
             }
-
-            if (oam->bpp == 0) // 16-color mode
-            {
-                uint8_t *tiledata = (uint8_t *)objtiles;
-                uint16_t *palette = (uint16_t *)(PLTT + 0x200) + oam->paletteNum * 16;
-                for (int local_y = -half_width; local_y <= half_height; local_y++)
-                {
-                    for (int local_x = -half_width; local_x <= half_width; local_x++)
-                    {
-                        int global_x = local_x + x;
-                        int global_y = local_y + y;
-                        /*
-                        if (global_x < 0 || global_x >= 240)
-                        {
-                            continue;
-                        }
-                        */
-                        s16 pa, pb, pc, pd;
-
-                        //TODO: This is what i (MCboy) thought of for getting the affine parameters
-                        //TODO: there is probably a better way to do this
-                        u8 matrixNum = oam->matrixNum * 4;
-
-                        struct OamData *oam1 = (struct OamData2 *)(OAM + 8 * (matrixNum));
-                        struct OamData *oam2 = (struct OamData2 *)(OAM + 8 * (matrixNum + 1));
-                        struct OamData *oam3 = (struct OamData2 *)(OAM + 8 * (matrixNum + 2));
-                        struct OamData *oam4 = (struct OamData2 *)(OAM + 8 * (matrixNum + 3));
-
-                        pa = oam1->affineParam;
-                        pb = oam2->affineParam;
-                        pc = oam3->affineParam;
-                        pd = oam4->affineParam;
-
-                        int tex_x = ((pa * local_x + pb * local_y) >> 8) + (width / 2);
-                        int tex_y = ((pc * local_x + pd * local_y) >> 8) + (height / 2);
-
-                        /* Check if transformed coordinates are inside bounds. */
-
-                        if (tex_x >= width || tex_y >= height || tex_x < 0 || tex_y < 0)
-                            continue;
-
-                        int tile_x = tex_x % 8;
-                        int tile_y = tex_y % 8;
-                        int block_x = tex_x / 8;
-                        int block_y = tex_y / 8;
-
-                        int tile_num = (oam->tileNum + block_y * (REG_DISPCNT & 0x40 ? (width / 8) : 16)) + block_x;
-
-                        uint16_t pixel = tiledata[(tile_num * 32) + (tile_y * 4) + (tile_x / 2)];
-
-                        if (tile_x & 1)
-                            pixel >>= 4;
-                        else
-                            pixel &= 0xF;
-
-                        if (pixel != 0)
-                        {
-                            unsigned int scrx, scry;
-                            uint32_t color;
-                            // u8 disHeightBot = REG_WIN0V ? REG_WIN0V : DISPLAY_HEIGHT;
-                            // u8 disWidthBot = REG_WIN0H ? REG_WIN0H : DISPLAY_WIDTH;
-                            // u8 disHeightTop = REG_WIN0V ? REG_WIN0V >> 8 : 0;
-                            // u8 disWidthTop = REG_WIN0H ? REG_WIN0H >> 8 : 0;
-
-                            scrx = (unsigned int)(global_x & 0x1FF);
-                            scry = (unsigned int)(global_y & 0xFF);
-                            color = ConvertPixel(palette[pixel]);
-
-                            if (scrx < DISPLAY_WIDTH && scry < DISPLAY_HEIGHT && scry > 0 && scrx > 0)
-                                pixels[scry * DISPLAY_WIDTH + scrx] = color;
-                        }
-                    }
-                }
-            }
-            else // 256-color mode
-            {
-                uint8_t *tiledata = (uint8_t *)objtiles;
-                uint16_t *palette = (uint16_t *)(PLTT + 0x200);
-
-                for (y = 0; y < height; y++)
-                {
-                    for (x = 0; x < width; x++)
-                    {
-                        unsigned int tileNum = oam->tileNum / 2 + (x / 8) + (y / 8) * (width / 8);
-                        unsigned int tilex = x % 8;
-                        unsigned int tiley = y % 8;
-                        uint8_t pixel = tiledata[tileNum * 64 + tiley * 8 + tilex];
-
-                        if (pixel != 0)
-                        {
-                            unsigned int scrx = (oam->x + x) & 0x1FF;
-                            unsigned int scry = (oam->y + y) & 0xFF;
-
-                            // u8 disHeightBot = REG_WIN0V ? REG_WIN0V : DISPLAY_HEIGHT;
-                            // u8 disWidthBot = REG_WIN0H ? REG_WIN0H : DISPLAY_WIDTH;
-                            // u8 disHeightTop = REG_WIN0V ? REG_WIN0V >> 8 : 0;
-                            // u8 disWidthTop = REG_WIN0H ? REG_WIN0H >> 8 : 0;
-
-                            if (scrx < DISPLAY_WIDTH && scry < DISPLAY_HEIGHT && scry > 0 && scrx > 0)
-                                pixels[scry * DISPLAY_WIDTH + scrx] = ConvertPixel(palette[pixel]);
-                        }
-                    }
-                }
-            }
         }
-        else // Normal sprite (no rotation/scaling)
+        else
         {
-            if (oam->bpp == 0) // 16-color mode
-            {
-                uint8_t *tiledata = (uint8_t *)objtiles;
-                uint16_t *palette = (uint16_t *)(PLTT + 0x200) + oam->paletteNum * 16;
+            // Identity
+            matrix[0][0] = 0x100;
+            matrix[0][1] = 0;
+            matrix[1][0] = 0;
+            matrix[1][1] = 0x100;
+        }
 
-                for (y = 0; y < height; y++)
-                {
-                    for (x = 0; x < width; x++)
-                    {
-                        // offset into the sprite
-                        unsigned int xx = x;
-                        unsigned int yy = y;
+        x += half_width;
+        y += half_height;
 
-                        if (oam->matrixNum & (1 << 3))
-                            xx = width - 1 - x;
-                        if (oam->matrixNum & (1 << 4))
-                            yy = height - 1 - y;
+        // Does this sprite actually draw on this scanline?
+        if (vcount >= (y - half_height) && vcount < (y + half_height))
+        {
+            int local_y = vcount - y;
+            int number  = oam->tileNum;
+            int palette = oam->paletteNum;
+            bool flipX  = !isAffine && ((oam->matrixNum >> 3) & 1);
+            bool flipY  = !isAffine && ((oam->matrixNum >> 4) & 1);
+            bool is8BPP  = oam->bpp & 1;
 
-                        unsigned int tileNum = oam->tileNum + (xx / 8) + (yy / 8) * (width / 8);
-                        unsigned int tilex = xx % 8;
-                        unsigned int tiley = yy % 8;
-                        uint8_t pixel = tiledata[tileNum * 32 + tiley * 4 + tilex / 2];
-
-                        if (tilex & 1)
-                            pixel >>= 4;
-                        else
-                            pixel &= 0xF;
-
-                        if (pixel != 0)
-                        {
-                            unsigned int scrx = (oam->x + x) & 0x1FF;
-                            unsigned int scry = (oam->y + y) & 0xFF;
-
-                            // u8 disHeightBot = REG_WIN0V ? REG_WIN0V : DISPLAY_HEIGHT;
-                            // u8 disWidthBot = REG_WIN0H ? REG_WIN0H : DISPLAY_WIDTH;
-                            // u8 disHeightTop = REG_WIN0V ? REG_WIN0V >> 8 : 0;
-                            // u8 disWidthTop = REG_WIN0H ? REG_WIN0H >> 8 : 0;
-
-                            if (scrx < DISPLAY_WIDTH && scry < DISPLAY_HEIGHT && scry > 0 && scrx > 0)
-                                pixels[scry * DISPLAY_WIDTH + scrx] = ConvertPixel(palette[pixel]);
-                        }
-                    }
-                }
-            }
-            else // 256-color mode
+            for (int local_x = -half_width; local_x <= half_width; local_x++)
             {
                 uint8_t *tiledata = (uint8_t *)objtiles;
                 uint16_t *palette = (uint16_t *)(PLTT + 0x200);
 
-                for (y = 0; y < height; y++)
+                unsigned int global_x = local_x + x;
+
+                if (global_x < 0 || global_x >= 240)
+                    continue;
+
+                int tex_x = ((matrix[0][0] * local_x + matrix[0][1] * local_y) >> 8) + (width / 2);
+                int tex_y = ((matrix[1][0] * local_x + matrix[1][1] * local_y) >> 8) + (height / 2);
+
+                /* Check if transformed coordinates are inside bounds. */
+
+                if (tex_x >= width || tex_y >= height || tex_x < 0 || tex_y < 0)
+                    continue;
+
+                if (flipX)
+                    tex_x = width  - tex_x - 1;
+                if (flipY)
+                    tex_y = height - tex_y - 1;
+
+                int tile_x = tex_x % 8;
+                int tile_y = tex_y % 8;
+                int block_x = tex_x / 8;
+                int block_y = tex_y / 8;
+
+                int block_offset = ((block_y * (REG_DISPCNT & 0x40 ? (width / 8) : 16)) + block_x);
+                uint16_t pixel = 0;
+
+                if (!is8BPP)
                 {
-                    for (x = 0; x < width; x++)
-                    {
-                        unsigned int tileNum = oam->tileNum / 2 + (x / 8) + (y / 8) * (width / 8);
-                        unsigned int tilex = x % 8;
-                        unsigned int tiley = y % 8;
-                        uint8_t pixel = tiledata[tileNum * 64 + tiley * 8 + tilex];
+                    pixel = tiledata[(block_offset + oam->tileNum) * 32 + (tile_y * 4) + (tile_x / 2)];
+                    if (tile_x & 1)
+                        pixel >>= 4;
+                    else
+                        pixel &= 0xF;
+                    palette += oam->paletteNum * 16;
+                }
+                else
+                {
+                    pixel = tiledata[(block_offset * 2 + oam->tileNum) * 32 + (tile_y * 8) + tile_x];
+                }
 
-                        if (pixel != 0)
-                        {
-                            unsigned int scrx = (oam->x + x) & 0x1FF;
-                            unsigned int scry = (oam->y + y) & 0xFF;
+                if (pixel != 0)
+                {
+                    uint32_t color;
+                    // u8 disHeightBot = REG_WIN0V ? REG_WIN0V : DISPLAY_HEIGHT;
+                    // u8 disWidthBot = REG_WIN0H ? REG_WIN0H : DISPLAY_WIDTH;
+                    // u8 disHeightTop = REG_WIN0V ? REG_WIN0V >> 8 : 0;
+                    // u8 disWidthTop = REG_WIN0H ? REG_WIN0H >> 8 : 0;
 
-                            //u8 disHeightBot = REG_WIN0V ? REG_WIN0V : DISPLAY_HEIGHT;
-                            //u8 disWidthBot = REG_WIN0H ? REG_WIN0H : DISPLAY_WIDTH;
-                            //u8 disHeightTop = REG_WIN0V ? REG_WIN0V >> 8 : 0;
-                            //u8 disWidthTop = REG_WIN0H ? REG_WIN0H >> 8 : 0;
+                    color = ConvertPixel(palette[pixel]);
 
-                            if (scrx < DISPLAY_WIDTH && scry < DISPLAY_HEIGHT && scry > 0 && scrx > 0)
-                                pixels[scry * DISPLAY_WIDTH + scrx] = ConvertPixel(palette[pixel]);
-                        }
-                    }
+                    if (global_x < DISPLAY_WIDTH && global_x >= 0)
+                        pixels[global_x] = color;
                 }
             }
         }
-    }
-}
-
-static void RenderTextBGLayer(uint16_t bgcnt, uint16_t bghoffs, uint16_t bgvoffs, uint32_t *pixels)
-{
-    int vcount;
-
-    for (vcount = 0; vcount < DISPLAY_HEIGHT; vcount++)
-    {
-        REG_VCOUNT = vcount;
-        RenderBGScanline(bgcnt, bghoffs, bgvoffs, vcount, pixels + vcount * DISPLAY_WIDTH);
-    }
-}
-
-static void RenderAffineBGLayer(uint32_t bgnum, uint16_t bgcnt, int32_t x, int32_t y, uint32_t *pixels)
-{
-    int vcount;
-    
-    for (vcount = 0; vcount < DISPLAY_HEIGHT; vcount++)
-    {
-        REG_VCOUNT = vcount;
-        RenderRotScaleBGScanline(bgnum, bgcnt, x, y, vcount, pixels + vcount * DISPLAY_WIDTH);
     }
 }
 
@@ -1361,14 +1262,15 @@ static void ProcessBGBlending(uint32_t *layer, int bg)
 }
 #endif
 
-static void DrawFrame(uint32_t *pixels)
+static void DrawScanline(uint32_t *pixels, uint16_t vcount)
 {
     unsigned int mode = REG_DISPCNT & 3;
     unsigned int bgEnabled = (REG_DISPCNT >> 8) & 0xF;
     int i;
     int j;
-    int bg;
-    static uint32_t layers[4][DISPLAY_WIDTH * DISPLAY_HEIGHT];
+    static uint32_t layers[4][DISPLAY_WIDTH];
+
+    int bgnum;
     // I have no clue how blending is supposed to work.
     unsigned int blendMode = (REG_BLDCNT >> 6) & 3;
     int blendPriority1 = -5;
@@ -1378,16 +1280,16 @@ static void DrawFrame(uint32_t *pixels)
 
     if (blendMode == 1)
     {
-        for (bg = 0; bg <= 3; bg++)
+        for (bgnum = 0; bgnum <= 3; bgnum++)
         {
-            if (bgEnabled & (1 << bg))
+            if (bgEnabled & (1 << bgnum))
             {
-                uint16_t bgcnt = *(uint16_t *)(REG_ADDR_BG0CNT + bg * 2);
+                uint16_t bgcnt = *(uint16_t *)(REG_ADDR_BG0CNT + bgnum * 2);
                 unsigned int priority = bgcnt & 3;
 
-                if (REG_BLDCNT & (1 << bg))
+                if (REG_BLDCNT & (1 << bgnum))
                     blendPriority1 = priority;
-                if (REG_BLDCNT & (1 << (8 + bg)))
+                if (REG_BLDCNT & (1 << (8 + bgnum)))
                     blendPriority2 = priority;
             }
         }
@@ -1397,43 +1299,44 @@ static void DrawFrame(uint32_t *pixels)
     {
     case 0:
         // All backgrounds are text mode
-        for (bg = 3; bg >= 0; bg--)
+        for (bgnum = 3; bgnum >= 0; bgnum--)
         {
-            if (bgEnabled & (1 << bg))
+            if (bgEnabled & (1 << bgnum))
             {
-                uint16_t bgcnt = *(uint16_t *)(REG_ADDR_BG0CNT + bg * 2);
-                uint16_t bghoffs = *(uint16_t *)(REG_ADDR_BG0HOFS + bg * 4);
-                uint16_t bgvoffs = *(uint16_t *)(REG_ADDR_BG0VOFS + bg * 4);
+                uint16_t bgcnt = *(uint16_t *)(REG_ADDR_BG0CNT + bgnum * 2);
+                uint16_t bghoffs = *(uint16_t *)(REG_ADDR_BG0HOFS + bgnum * 4);
+                uint16_t bgvoffs = *(uint16_t *)(REG_ADDR_BG0VOFS + bgnum * 4);
                 unsigned int priority = bgcnt & 3;
 
-                RenderTextBGLayer(bgcnt, bghoffs, bgvoffs, layers[priority]);
-                //ProcessBGBlending(layers[priority], bg);
+                RenderBGScanline(bgcnt, bghoffs, bgvoffs, vcount, layers[priority]);
+                //ProcessBGBlending(layers[priority], bgnum);
             }
         }
         break;
     case 1:
         // BG2 is affine
-        bg = 2;
-        if (bgEnabled & (1 << bg))
+        bgnum = 2;
+        if (bgEnabled & (1 << bgnum))
         {
-            uint16_t bgcnt = *(uint16_t *)(REG_ADDR_BG0CNT + bg * 2);
+            uint16_t bgcnt = *(uint16_t *)(REG_ADDR_BG0CNT + bgnum * 2);
             unsigned int priority = bgcnt & 3;
 
-            RenderAffineBGLayer(bg, bgcnt, REG_BG2X, REG_BG2Y, layers[priority]);
-            //ProcessBGBlending(layers[priority], bg);
+            RenderRotScaleBGScanline(bgnum, bgcnt, REG_BG2X, REG_BG2Y, vcount, layers[priority]);
+            //ProcessBGBlending(layers[priority], bgnum);
         }
         // BG0 and BG1 are text mode
-        for (bg = 1; bg >= 0; bg--)
+        for (bgnum = 1; bgnum >= 0; bgnum--)
         {
-            if (bgEnabled & (1 << bg))
+            if (bgEnabled & (1 << bgnum))
             {
-                uint16_t bgcnt = *(uint16_t *)(REG_ADDR_BG0CNT + bg * 2);
-                uint16_t bghoffs = *(uint16_t *)(REG_ADDR_BG0HOFS + bg * 4);
-                uint16_t bgvoffs = *(uint16_t *)(REG_ADDR_BG0VOFS + bg * 4);
+                uint16_t bgcnt = *(uint16_t *)(REG_ADDR_BG0CNT + bgnum * 2);
+                uint16_t bghoffs = *(uint16_t *)(REG_ADDR_BG0HOFS + bgnum * 4);
+                uint16_t bgvoffs = *(uint16_t *)(REG_ADDR_BG0VOFS + bgnum * 4);
                 unsigned int priority = bgcnt & 3;
 
-                RenderTextBGLayer(bgcnt, bghoffs, bgvoffs, layers[priority]);
-                //ProcessBGBlending(layers[priority], bg);
+                RenderBGScanline(bgcnt, bghoffs, bgvoffs, vcount, layers[priority]);
+                //RenderTextBGLayer(bgcnt, bghoffs, bgvoffs, layers[priority]);
+                //ProcessBGBlending(layers[priority], bgnum);
             }
         }
         break;
@@ -1443,7 +1346,7 @@ static void DrawFrame(uint32_t *pixels)
     }
 
     if (REG_DISPCNT & DISPCNT_OBJ_ON)
-        DrawSprites(layers);
+        DrawSprites(layers, vcount);
 
     // Copy to screen
     
@@ -1459,7 +1362,7 @@ static void DrawFrame(uint32_t *pixels)
             unsigned int eva = REG_BLDALPHA & 0x1F;
             unsigned int evb = (REG_BLDALPHA >> 8) & 0x1F;
 
-            for (j = 0; j < DISPLAY_WIDTH * DISPLAY_HEIGHT; j++)
+            for (j = 0; j < DISPLAY_WIDTH; j++)
             {
                 if ((src[j] & (0xFF << 24)))
                 {
@@ -1481,30 +1384,10 @@ static void DrawFrame(uint32_t *pixels)
             i--;
         }
 
-        for (j = 0; j < DISPLAY_WIDTH * DISPLAY_HEIGHT; j++)
+        for (j = 0; j < DISPLAY_WIDTH; j++)
         {
             if ((src[j] & (0xFF << 24)))
                 dest[j] = src[j];
-        }
-    }
-}
-
-void ScaleImage(const uint32_t *src, uint32_t *dest, unsigned int scale)
-{
-    unsigned int x, y;
-
-    if (scale == 1)
-    {
-        memcpy(dest, src, DISPLAY_WIDTH * DISPLAY_HEIGHT * sizeof(uint32_t));
-    }
-    else
-    {
-        for (x = 0; x < scale * DISPLAY_WIDTH; x++)
-        {
-            for (y = 0; y < scale * DISPLAY_HEIGHT; y++)
-            {
-                dest[y * scale * DISPLAY_WIDTH + x] = src[(y / scale) * DISPLAY_WIDTH + (x / scale)];
-            }
         }
     }
 }
@@ -1517,11 +1400,35 @@ uint32_t *memsetu32(uint32_t *dst, uint32_t fill, size_t count)
     }
 }
 
+static void DrawFrame(uint32_t *pixels)
+{
+    int i;
+    int j;
+    static uint32_t scanlines[DISPLAY_HEIGHT][DISPLAY_WIDTH];
+
+    memsetu32(scanlines, ConvertPixel(*(uint16_t *)PLTT), DISPLAY_WIDTH * DISPLAY_HEIGHT);
+
+    for (i = 0; i < DISPLAY_HEIGHT; i++)
+    {
+        DrawScanline(scanlines[i], i);
+    }
+
+    // Copy to screen
+    for (i = 0; i < DISPLAY_HEIGHT; i++)
+    {
+        uint32_t *src = scanlines[i];
+        for (j = 0; j < DISPLAY_WIDTH; j++)
+        {
+            pixels[i * DISPLAY_WIDTH + j] = src[j];
+        }
+    }
+}
+
 void VDraw(SDL_Texture *texture)
 {
     static uint32_t image[DISPLAY_WIDTH * DISPLAY_HEIGHT];
 
-    memsetu32(image, ConvertPixel(*(uint16_t *)PLTT), ARRAY_COUNT(image));
+    memset(image, 0, sizeof(image));
     DrawFrame(image);
     SDL_UpdateTexture(texture, NULL, image, DISPLAY_WIDTH * sizeof (Uint32));
     REG_VCOUNT = 161; // prep for being in VBlank period
