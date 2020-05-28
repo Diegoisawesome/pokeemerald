@@ -185,10 +185,6 @@ const union AnimCmd *const gUnknown_08596BF8[] =
 {
     gUnknown_08596BC8,
     gUnknown_08596BD0,
-};
-
-const union AnimCmd *const gUnknown_08596C00[] =
-{
     gUnknown_08596BD8,
     gUnknown_08596BE0,
 };
@@ -299,7 +295,7 @@ const struct SpriteTemplate gUnknown_08596CE0 =
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gUnknown_08524974,
-    .anims = gUnknown_08596C00,
+    .anims = &gUnknown_08596BF8[2],
     .images = NULL,
     .affineAnims = gUnknown_08596C90,
     .callback = sub_80A8EE4,
