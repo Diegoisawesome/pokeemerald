@@ -28,6 +28,30 @@ unsigned char VRAM_[VRAM_SIZE] __attribute__ ((aligned (4)));
 unsigned char OAM[OAM_SIZE] __attribute__ ((aligned (4)));
 unsigned char FLASH_BASE[131072] __attribute__ ((aligned (4)));
 
+#define DMA_COUNT 4
+
+struct DMATransfer {
+    union {
+        const void *src;
+        const u16 *src16;
+        const u32 *src32;
+    };
+    union {
+        void *dst;
+        vu16 *dst16;
+        vu32 *dst32;
+    };
+    u32 size;
+    u16 control;
+} DMAList[DMA_COUNT];
+
+enum {
+    DMA_NOW,
+    DMA_VBLANK,
+    DMA_HBLANK,
+    DMA_SPECIAL
+};
+
 SDL_Thread *mainLoopThread;
 SDL_Window *sdlWindow;
 SDL_Renderer *sdlRenderer;
@@ -38,6 +62,7 @@ bool speedUp = false;
 unsigned int videoScale = 1;
 bool videoScaleChanged = false;
 bool isRunning = true;
+bool paused = false;
 double simTime = 0;
 double lastGameTime = 0;
 double curGameTime = 0;
@@ -52,6 +77,7 @@ int DoMain(void *param);
 void ProcessEvents(void);
 void VDraw(SDL_Texture *texture);
 static void UpdateInternalClock(void);
+static void RunDMAs(u32 type);
 
 int main(int argc, char **argv)
 {
@@ -114,31 +140,41 @@ int main(int argc, char **argv)
     while (isRunning)
     {
         ProcessEvents();
-        double dt = fixedTimestep / timeScale; // TODO: Fix speedup
 
-        curGameTime = SDL_GetPerformanceCounter();
-        double deltaTime = (double)((curGameTime - lastGameTime) / (double)SDL_GetPerformanceFrequency());
-        if (deltaTime > (dt * 5))
-            deltaTime = dt;
-        lastGameTime = curGameTime;
-
-        accumulator += deltaTime;
-
-        while (accumulator >= dt)
+        if (!paused)
         {
-            if (SDL_AtomicGet(&isFrameAvailable))
+            double dt = fixedTimestep / timeScale; // TODO: Fix speedup
+
+            curGameTime = SDL_GetPerformanceCounter();
+            double deltaTime = (double)((curGameTime - lastGameTime) / (double)SDL_GetPerformanceFrequency());
+            if (deltaTime > (dt * 5))
+                deltaTime = dt;
+            lastGameTime = curGameTime;
+
+            accumulator += deltaTime;
+
+            while (accumulator >= dt)
             {
-                VDraw(sdlTexture);
-                SDL_RenderClear(sdlRenderer);
-                SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
-                SDL_AtomicSet(&isFrameAvailable, 0);
+                if (SDL_AtomicGet(&isFrameAvailable))
+                {
+                    VDraw(sdlTexture);
+                    SDL_RenderClear(sdlRenderer);
+                    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
+                    SDL_AtomicSet(&isFrameAvailable, 0);
 
-                if (gIntrTable[4] != NULL)
-                    gIntrTable[4]();
+                    REG_DISPSTAT |= INTR_FLAG_VBLANK;
 
-                SDL_SemPost(vBlankSemaphore);
+                    RunDMAs(DMA_HBLANK);
 
-                accumulator -= dt;
+                    if (REG_DISPSTAT & DISPSTAT_VBLANK_INTR)
+                        gIntrTable[4]();
+
+                    REG_DISPSTAT &= ~INTR_FLAG_VBLANK;
+
+                    SDL_SemPost(vBlankSemaphore);
+
+                    accumulator -= dt;
+                }
             }
         }
 
@@ -228,6 +264,12 @@ void ProcessEvents(void)
                     DoSoftReset();
                 }
                 break;
+            case SDLK_p:
+                if (event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL))
+                {
+                    paused = !paused;
+                }
+                break;
             case SDLK_SPACE:
                 if (!speedUp)
                 {
@@ -295,21 +337,97 @@ static void CPUWriteByte(void *dest, uint8_t val)
     *(uint8_t *)dest = val;
 }
 
-void DmaSet(int dmaNum, const void *src, void *dest, u32 control)
+static void RunDMAs(u32 type)
 {
-    int i;
-    for (i=0; i<(control & 0x1ffff); i++)
+    for (int dmaNum = 0; dmaNum < DMA_COUNT; dmaNum++)
     {
-        if ((control) & DMA_SRC_FIXED){
-            if ((control) & DMA_16BIT)
-                    ((vu32 *)(dest))[i] = ((vu32 *)(src))[0];
-            else    ((vu16 *)(dest))[i] = ((vu16 *)(src))[0];
-        } else {
-            if ((control) & DMA_32BIT)
-                    ((vu32 *)(dest))[i] = ((vu32 *)(src))[i];
-            else    ((vu16 *)(dest))[i] = ((vu16 *)(src))[i];
+        struct DMATransfer *dma = &DMAList[dmaNum];
+        u32 dmaCntReg = (&REG_DMA0CNT)[dmaNum * 3];
+        if (!((dmaCntReg >> 16) & DMA_ENABLE))
+        {
+            dma->control &= ~DMA_ENABLE;
+        }
+        
+        if ( (dma->control & DMA_ENABLE) &&
+           (((dma->control & DMA_START_MASK) >> 12) == type))
+        {
+            //printf("DMA%d src=%p, dest=%p, control=%d\n", dmaNum, dma->src, dma->dest, dma->control);
+            for (int i = 0; i < (dma->size); i++)
+            {
+                if ((dma->control) & DMA_32BIT)
+                     *dma->dst32 = *dma->src32;
+                else *dma->dst16 = *dma->src16;
+
+                // process destination pointer changes
+                if (((dma->control) & DMA_DEST_MASK) == DMA_DEST_INC)
+                {
+                    if ((dma->control) & DMA_32BIT)
+                            dma->dst32++;
+                    else    dma->dst16++;
+                }
+                else if (((dma->control) & DMA_DEST_MASK) == DMA_DEST_DEC)
+                {
+                    if ((dma->control) & DMA_32BIT)
+                            dma->dst32--;
+                    else    dma->dst16--;
+                }
+                else if (((dma->control) & DMA_DEST_MASK) == DMA_DEST_RELOAD) // TODO
+                {
+                    if ((dma->control) & DMA_32BIT)
+                            dma->dst32++;
+                    else    dma->dst16++;
+                }
+
+                // process source pointer changes
+                if (((dma->control) & DMA_SRC_MASK) == DMA_SRC_INC)
+                {
+                    if ((dma->control) & DMA_32BIT)
+                            dma->src32++;
+                    else    dma->src16++;
+                }
+                else if (((dma->control) & DMA_SRC_MASK) == DMA_SRC_DEC)
+                {
+                    if ((dma->control) & DMA_32BIT)
+                            dma->src32--;
+                    else    dma->src16--;
+                }
+            }
+
+            if (dma->control & DMA_REPEAT)
+            {
+                dma->size = ((&REG_DMA0CNT)[dmaNum * 3] & 0x1FFFF);
+                if (((dma->control) & DMA_DEST_MASK) == DMA_DEST_RELOAD)
+                {
+                    dma->dst = ((&REG_DMA0DAD)[dmaNum * 3]);
+                }
+            }
+            else
+            {
+                dma->control &= ~DMA_ENABLE;
+            }
         }
     }
+}
+
+void DmaSet(int dmaNum, const void *src, void *dest, u32 control)
+{
+    if (dmaNum >= DMA_COUNT)
+    {
+        fprintf(stderr, "DmaSet with invalid DMA number: dmaNum=%d, src=%p, dest=%p, control=%d\n", dmaNum, src, dest, control);
+        return;
+    }
+
+    (&REG_DMA0SAD)[dmaNum * 3] = src;
+    (&REG_DMA0DAD)[dmaNum * 3] = dest;
+    (&REG_DMA0CNT)[dmaNum * 3] = control;
+
+    struct DMATransfer *dma = &DMAList[dmaNum];
+    dma->src = src;
+    dma->dst = dest;
+    dma->size = control & 0x1ffff;
+    dma->control = control >> 16;
+
+    RunDMAs(DMA_NOW);
 }
 
 void CpuSet(const void *src, void *dst, u32 cnt)
@@ -725,35 +843,96 @@ static const uint16_t bgMapSizes[][2] =
     {64, 64},
 };
 
-static void RenderBGScanline(uint16_t control, uint16_t hoffs, uint16_t voffs, int lineNum, uint32_t *line)
+static void RenderBGScanline(int bgNum, uint16_t control, uint16_t hoffs, uint16_t voffs, int lineNum, uint32_t *line)
 {
     unsigned int charBaseBlock = (control >> 2) & 3;
     unsigned int screenBaseBlock = (control >> 8) & 0x1F;
     //bool is8bit = (control >> 7) & 1;
     unsigned int mapWidth = bgMapSizes[control >> 14][0];
     unsigned int mapHeight = bgMapSizes[control >> 14][1];
+    unsigned int mapWidthInPixels = mapWidth * 8;
+    unsigned int mapHeightInPixels = mapHeight * 8;
 
     uint8_t *bgtiles = (uint8_t *)(VRAM_ + charBaseBlock * 0x4000);
     uint16_t *bgmap = (uint16_t *)(VRAM_ + screenBaseBlock * 0x800);
     uint16_t *pal = (uint16_t *)PLTT;
+
+    /*bool inWin0  = true;
+    bool outWin0 = true;
+    bool inWin1  = true;
+    bool outWin1 = true;
+
+    uint8_t win0Coords[2][2] = {
+        {REG_WIN0H >> 4, REG_WIN0V >> 4},
+        {REG_WIN0H & 0xF, REG_WIN0V & 0xF},
+    };
+
+    uint8_t win1Coords[2][2] = {
+        {REG_WIN1H >> 4, REG_WIN1V >> 4},
+        {REG_WIN1H & 0xF, REG_WIN1V & 0xF},
+    };
+
+    if (REG_DISPCNT & DISPCNT_WIN0_ON)
+    {
+        if (!(REG_WININ & (1 << bgNum)))
+        {
+            inWin0 = false;
+        }
+        if (!(REG_WINOUT & (1 << bgNum)))
+        {
+            outWin0 = false;
+        }
+    }
+
+    if (REG_DISPCNT & DISPCNT_WIN1_ON)
+    {
+        if (!(REG_WININ & (1 << (bgNum + 8))))
+        {
+            inWin1 = false;
+        }
+        if (!(REG_WINOUT & (1 << (bgNum + 8))))
+        {
+            outWin1 = false;
+        }
+    }
+
+    // is line in win0?
+    if (!inWin0 && ((line <  win0Coords[0][1]) ||
+                    (line >= win0Coords[1][1])))
+        return;
+
+    // is line in win1?
+    if (!inWin1 && ((line <  win1Coords[0][1]) ||
+                    (line >= win1Coords[1][1])))
+        return;*/
 
     hoffs &= 0x1FF;
     voffs &= 0x1FF;
 
     for (unsigned int x = 0; x < DISPLAY_WIDTH; x++)
     {
-        // adjust for scroll
-        unsigned int xx = x + hoffs;
-        unsigned int yy = lineNum + voffs;
+        // is x in win0?
+        /*if (!inWin0 && ((x <  win0Coords[0][0]) ||
+                        (x >= win0Coords[1][0])))
+            continue;
 
-        if (xx > mapWidth * 8 || yy > mapHeight * 8)
+        // is x in win1?
+        if (!inWin1 && ((x <  win1Coords[0][0]) ||
+                        (x >= win1Coords[1][0])))
+            continue;*/
+
+        // adjust for scroll
+        unsigned int xx = (x + hoffs) & 0x1FF;
+        unsigned int yy = (lineNum + voffs) & 0x1FF;
+
+        if (xx > mapWidthInPixels || yy > mapHeightInPixels)
         {
             //if (!(control & (1 << 13)))
             //    continue;
         }
             
-        xx %= mapWidth * 8;
-        yy %= mapHeight * 8;
+        xx %= mapWidthInPixels;
+        yy %= mapHeightInPixels;
 
         unsigned int mapX = xx / 8;
         unsigned int mapY = yy / 8;
@@ -771,7 +950,7 @@ static void RenderBGScanline(uint16_t control, uint16_t hoffs, uint16_t voffs, i
         if (entry & (1 << 11))
             tileY = 7 - tileY;
 
-        uint8_t pixel = bgtiles[tileNum * 32 + tileY * 4 + tileX / 2];
+        uint8_t pixel = bgtiles[(tileNum * 32) + (tileY * 4) + (tileX / 2)];
         if (tileX & 1)
             pixel >>= 4;
         else
@@ -1308,7 +1487,7 @@ static void DrawScanline(uint32_t *pixels, uint16_t vcount)
                 uint16_t bgvoffs = *(uint16_t *)(REG_ADDR_BG0VOFS + bgnum * 4);
                 unsigned int priority = bgcnt & 3;
 
-                RenderBGScanline(bgcnt, bghoffs, bgvoffs, vcount, layers[priority]);
+                RenderBGScanline(bgnum, bgcnt, bghoffs, bgvoffs, vcount, layers[priority]);
                 //ProcessBGBlending(layers[priority], bgnum);
             }
         }
@@ -1334,7 +1513,7 @@ static void DrawScanline(uint32_t *pixels, uint16_t vcount)
                 uint16_t bgvoffs = *(uint16_t *)(REG_ADDR_BG0VOFS + bgnum * 4);
                 unsigned int priority = bgcnt & 3;
 
-                RenderBGScanline(bgcnt, bghoffs, bgvoffs, vcount, layers[priority]);
+                RenderBGScanline(bgnum, bgcnt, bghoffs, bgvoffs, vcount, layers[priority]);
                 //RenderTextBGLayer(bgcnt, bghoffs, bgvoffs, layers[priority]);
                 //ProcessBGBlending(layers[priority], bgnum);
             }
@@ -1364,11 +1543,11 @@ static void DrawScanline(uint32_t *pixels, uint16_t vcount)
 
             for (j = 0; j < DISPLAY_WIDTH; j++)
             {
-                if ((src[j] & (0xFF << 24)))
+                if ((target1[j] & (0xFF << 24)) && (target2[j] & (0xFF << 24)))
                 {
-                    unsigned int r = ((target1[j] >>  0) & 0xFF) * eva / 31 + ((target2[j] >>  0) & 0xFF) * evb / 31;
-                    unsigned int g = ((target1[j] >>  8) & 0xFF) * eva / 31 + ((target2[j] >>  8) & 0xFF) * evb / 31;
-                    unsigned int b = ((target1[j] >> 16) & 0xFF) * eva / 31 + ((target2[j] >> 16) & 0xFF) * evb / 31;
+                    unsigned int r = ((target1[j] >>  0) & 0xFF) * eva / 16 + ((target2[j] >>  0) & 0xFF) * evb / 16;
+                    unsigned int g = ((target1[j] >>  8) & 0xFF) * eva / 16 + ((target2[j] >>  8) & 0xFF) * evb / 16;
+                    unsigned int b = ((target1[j] >> 16) & 0xFF) * eva / 16 + ((target2[j] >> 16) & 0xFF) * evb / 16;
                     unsigned int a = (target1[j] >> 24) & 0xFF;
                     
                     if (r > 255)
@@ -1410,7 +1589,17 @@ static void DrawFrame(uint32_t *pixels)
 
     for (i = 0; i < DISPLAY_HEIGHT; i++)
     {
+        REG_VCOUNT = i;
         DrawScanline(scanlines[i], i);
+
+        REG_DISPSTAT |= INTR_FLAG_HBLANK;
+
+        RunDMAs(DMA_HBLANK);
+
+        if (REG_DISPSTAT & DISPSTAT_HBLANK_INTR)
+            gIntrTable[3]();
+
+        REG_DISPSTAT &= ~INTR_FLAG_HBLANK;
     }
 
     // Copy to screen
