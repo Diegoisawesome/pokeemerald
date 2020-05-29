@@ -529,6 +529,11 @@ void RemoveMapNamePopUpWindow(void)
 {
     if (sMapNamePopupWindowId != 0xFF)
     {
+#ifdef PORTABLE
+        // Moved here from HideMapNamePopUpWindow in map_name_popup.c
+        // See comment there about UB
+        ClearStdWindowAndFrame(sMapNamePopupWindowId, TRUE);
+#endif
         RemoveWindow(sMapNamePopupWindowId);
         sMapNamePopupWindowId = 0xFF;
     }

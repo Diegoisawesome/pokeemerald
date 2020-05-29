@@ -857,70 +857,11 @@ static void RenderBGScanline(int bgNum, uint16_t control, uint16_t hoffs, uint16
     uint16_t *bgmap = (uint16_t *)(VRAM_ + screenBaseBlock * 0x800);
     uint16_t *pal = (uint16_t *)PLTT;
 
-    /*bool inWin0  = true;
-    bool outWin0 = true;
-    bool inWin1  = true;
-    bool outWin1 = true;
-
-    uint8_t win0Coords[2][2] = {
-        {REG_WIN0H >> 4, REG_WIN0V >> 4},
-        {REG_WIN0H & 0xF, REG_WIN0V & 0xF},
-    };
-
-    uint8_t win1Coords[2][2] = {
-        {REG_WIN1H >> 4, REG_WIN1V >> 4},
-        {REG_WIN1H & 0xF, REG_WIN1V & 0xF},
-    };
-
-    if (REG_DISPCNT & DISPCNT_WIN0_ON)
-    {
-        if (!(REG_WININ & (1 << bgNum)))
-        {
-            inWin0 = false;
-        }
-        if (!(REG_WINOUT & (1 << bgNum)))
-        {
-            outWin0 = false;
-        }
-    }
-
-    if (REG_DISPCNT & DISPCNT_WIN1_ON)
-    {
-        if (!(REG_WININ & (1 << (bgNum + 8))))
-        {
-            inWin1 = false;
-        }
-        if (!(REG_WINOUT & (1 << (bgNum + 8))))
-        {
-            outWin1 = false;
-        }
-    }
-
-    // is line in win0?
-    if (!inWin0 && ((line <  win0Coords[0][1]) ||
-                    (line >= win0Coords[1][1])))
-        return;
-
-    // is line in win1?
-    if (!inWin1 && ((line <  win1Coords[0][1]) ||
-                    (line >= win1Coords[1][1])))
-        return;*/
-
     hoffs &= 0x1FF;
     voffs &= 0x1FF;
 
     for (unsigned int x = 0; x < DISPLAY_WIDTH; x++)
     {
-        // is x in win0?
-        /*if (!inWin0 && ((x <  win0Coords[0][0]) ||
-                        (x >= win0Coords[1][0])))
-            continue;
-
-        // is x in win1?
-        if (!inWin1 && ((x <  win1Coords[0][0]) ||
-                        (x >= win1Coords[1][0])))
-            continue;*/
-
         // adjust for scroll
         unsigned int xx = (x + hoffs) & 0x1FF;
         unsigned int yy = (lineNum + voffs) & 0x1FF;
